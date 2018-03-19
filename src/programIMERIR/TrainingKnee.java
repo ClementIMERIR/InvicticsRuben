@@ -81,7 +81,7 @@ public class TrainingKnee extends RoboticsAPIApplication {
 					Class.forName("com.mysql.jdbc.Driver");
 					connection = DriverManager.getConnection(URL, login, password);
 					// interaction avec la base
-					sql = "SELECT Prenom FROM infos_patients WHERE Nom = "+nom;
+					sql = "SELECT Prenom FROM infos_patients WHERE Nom = '$nom'";
 					stmt = connection.createStatement();
 					resultat = stmt.executeQuery(sql);		
 					/* Récupération des données du résultat de la requête de lecture */
