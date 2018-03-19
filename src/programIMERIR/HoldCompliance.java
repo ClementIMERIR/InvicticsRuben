@@ -105,7 +105,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			if(event == UserKeyEvent.KeyDown){
 				getLogger().info("Button startDrawing triggered");
 				getLogger().info("Avant copy penInfos = " + penTCP.getX() + " , " + penTCP.getY() + " , "  + penTCP.getZ());
-				penTCP.copyWithRedundancy(robot.getFrame("/WorkingTable/StartingPoint"));
+				//penTCP.copyWithRedundancy(robot.getFrame("/WorkingTable/StartingPoint"));
 				getLogger().info("Apres copy penInfos = " + penTCP.getX() + " , " + penTCP.getY() + " , "  + penTCP.getZ());
 				//draw();
 				robot.move(linRel(penTCP.getX(), penTCP.getY(), 0));
