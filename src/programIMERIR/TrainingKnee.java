@@ -81,7 +81,7 @@ public class TrainingKnee extends RoboticsAPIApplication {
 					connection = DriverManager.getConnection(URL, login, password);
 					// interaction avec la base
 					getLogger().info("nom:"+nom);
-					sql = "SELECT Prenom FROM infos_patients WHERE Nom = ("+nom+")";//'$nom'";
+					sql = "SELECT prenom FROM infos_patients WHERE nom = ("+nom+")";//'$nom'";
 					stmt = connection.createStatement();
 					resultat = stmt.executeQuery(sql);		
 					/* Récupération des données du résultat de la requête de lecture */
