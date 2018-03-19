@@ -67,6 +67,7 @@ public class TrainingKnee extends RoboticsAPIApplication {
 		anglespeed = getApplicationData().getProcessData("anglespeed")
 				.getValue();
 		nom = getApplicationData().getProcessData("Nom").getValue();
+		System.out.println("nom:" +nom);
 		answer = -1;
 		URL = "jdbc:mysql://172.31.1.66/imerir";
 		login = "imerir";
