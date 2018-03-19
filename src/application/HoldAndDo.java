@@ -165,7 +165,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		allowMovementKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 		//Make the robot compliant according to "mode" which makes his stiffness low
 		while (moving) {
-			robot.move(positionHold(mode, 1, TimeUnit.SECONDS));
+			pliers.move(positionHold(mode, 1, TimeUnit.SECONDS));
 			jointPosition = robot.getCurrentJointPosition().get();// Register the current position
 		}
 		//Make the allowMovementKey LED go RED
