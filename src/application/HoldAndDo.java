@@ -13,6 +13,7 @@ import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.deviceModel.PositionInformation;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
+import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.ITransformationProvider;
 import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.SceneGraphObject;
@@ -206,7 +207,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		
 		ITransformation transformation = XyzAbcTransformation.ofTranslation(pliers.getFrame("/Sander").getX(), pliers.getFrame("/Sander").getY(), pliers.getFrame("/Sander").getZ());
 
-		Vector toolVector = robot.getPositionInformation(pliers.getFrame("/Sander")).getTranslationOffset();
+		Frame toolVector = robot.getPositionInformation(pliers.getFrame("/Sander")).getCurrentCartesianPosition();
 		
 		ITransformationProvider transformationProvider = new StaticTransformationProvider(transformation);
 		ObjectFrame parent = getApplicationData().getFrame("/Workspace");
