@@ -42,8 +42,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	@Named("Pliers")
 	private Tool pliers;
 
-	private CartesianImpedanceControlMode mode;
-//	private JointImpedanceControlMode mode;
+//	private CartesianImpedanceControlMode mode;
+	private JointImpedanceControlMode mode;
 	private double[] jointPosition;
 	
 	private IUserKeyBar buttonBar;
@@ -61,11 +61,11 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	public void initialize() {
 		pliers.attachTo(robot.getFlange());//"Fixation" de l'outil à la bride du robot.
 		
-//		mode = new JointImpedanceControlMode(10, 10, 10, 10, 10, 10, 1);
-//		mode.setStiffness(10, 10, 10, 10, 10, 10, 1);
+		mode = new JointImpedanceControlMode(10, 10, 10, 10, 10, 10, 1);
+		mode.setStiffness(10, 10, 10, 10, 10, 10, 1);
 		
-		mode = new CartesianImpedanceControlMode();
-		mode.parametrize(CartDOF.ALL).setStiffness(30);
+//		mode = new CartesianImpedanceControlMode();
+//		mode.parametrize(CartDOF.ALL).setStiffness(30);
 		
 		//The listener of the allowMovementKey button
 		IUserKeyListener moveButtonListener = new IUserKeyListener() {
@@ -165,7 +165,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		allowMovementKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 		//Make the robot compliant according to "mode" which makes his stiffness low
 		while (moving) {
-			robot.move(positionHold(mode, 1, TimeUnit.SECONDS));
+			//robot.move(positionHold(mode, 1, TimeUnit.SECONDS));
 			jointPosition = robot.getCurrentJointPosition().get();// Register the current position
 		}
 		//Make the allowMovementKey LED go RED
