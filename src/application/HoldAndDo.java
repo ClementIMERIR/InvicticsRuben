@@ -159,6 +159,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		while (moving) {
 			robot.move(positionHold(mode, 1, TimeUnit.SECONDS));
 			jointPosition = robot.getCurrentJointPosition().get();// Register the current position
+			robot.move(ptp(jointPosition));
 		}
 		//Make the allowMovementKey LED go RED
 		getLogger().info("Stop touching the robot.\nThe robot is not compliant anymore.");
@@ -198,7 +199,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		
 		ITransformation transformation = XyzAbcTransformation.ofTranslation(pliers.getFrame("/Sander").getX(), pliers.getFrame("/Sander").getY(), pliers.getFrame("/Sander").getZ());
 		//ITransformation transformation2 = XyzAbcTransformation.ofTranslation(pliers.getFrame("/Sander").getX(), pliers.getFrame("/Sander").getY(), pliers.getFrame("/Sander").getZ());
-		
+
 		ITransformationProvider transformationProvider = new StaticTransformationProvider(transformation);
 		ObjectFrame parent = getApplicationData().getFrame("/Workspace");
 		ObjectFrame newPointFrame = new ObjectFrame(pointNameString, parent , owner, transformationProvider);
