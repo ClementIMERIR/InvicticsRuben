@@ -109,6 +109,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				//penTCP.copyWithRedundancy(robot.getFrame("/WorkingTable/StartingPoint"));
 				//draw();
 				penTCP.move(linRel(currentFrame.getX(), currentFrame.getY(), -100));
+				penTCP.move(lin(getApplicationData().getFrame("/Foam/P1")));
 			}
 		}
 	};
@@ -161,7 +162,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		double sumForces;
 		Frame currFrameState;
 		do{
-			data = robot.getExternalForceTorque(robot.getFlange());
+			data = robot.getExternalForceTorque(penTCP);
 			force = data.getForce();
 			sumForces = Math.abs(force.getX()) + Math.abs(force.getY())	+ Math.abs(force.getZ());
 			getLogger().info("Forces : " + force.getX() + " , " + force.getY() + " , " + force.getZ());
@@ -169,7 +170,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			robot.move(positionHold(freeMode,300, TimeUnit.MILLISECONDS));
 		}while(sumForces >= 10);
 		
-		currFrameState = robot.getCurrentCartesianPosition(robot.getFlange());
+		currFrameState = robot.getCurrentCartesianPosition(penTCP);
 		currFrameState.setAlphaRad(Math.toRadians(-180));
 		currFrameState.setBetaRad(Math.toRadians(0));
 		currFrameState.setGammaRad(Math.toRadians(180));
