@@ -80,7 +80,7 @@ public class TrainingKnee extends RoboticsAPIApplication {
 					Class.forName("com.mysql.jdbc.Driver");
 					connection = DriverManager.getConnection(URL, login, password);
 					// interaction avec la base
-					sql = "SELECT Prenom FROM infos_patients WHERE Nom = 'ouzahra'";//'$nom'";
+					sql = "SELECT Prenom FROM infos_patients WHERE Nom = '$nom'";
 					stmt = connection.createStatement();
 					resultat = stmt.executeQuery(sql);		
 					/* Récupération des données du résultat de la requête de lecture */
@@ -137,7 +137,7 @@ public class TrainingKnee extends RoboticsAPIApplication {
 			}
 			answer = getApplicationUI().displayModalDialog(
 					ApplicationDialogType.QUESTION,
-					"voulez vous refaire un cycle Mr/Mme :" + nom + "?", "oui",
+					"voulez vous refaire un cycle Mr/Mme :" + nom +current_nom+ "?", "oui",
 					"non");
 		}
 		answer = -1;
