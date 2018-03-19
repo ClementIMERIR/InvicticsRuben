@@ -186,23 +186,14 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
-		getLogger().info("1");
 		pliers.getFrame("/Sander").move(ptp(framePoints.get(0)).setJointVelocityRel(1.0));
-		getLogger().info("2");
 		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil) {
-			getLogger().info("3");
 			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, -10.0).setJointVelocityRel(1.0));
-			getLogger().info("4");
 			pliers.getFrame("/Sander").move(linRel(0.0, framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
-			getLogger().info("5");
 			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, 60.0).setJointVelocityRel(1.0));
-			getLogger().info("6");
 			pliers.getFrame("/Sander").move(linRel(0.0, -framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
-			getLogger().info("7");
 			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, -50.0).setJointVelocityRel(1.0));
-			getLogger().info("8");
 			pliers.getFrame("/Sander").move(linRel(i, 0.0, 0.0).setJointVelocityRel(1.0));
-			getLogger().info("9");
 		}
 		robot.move(ptpHome());
 		
