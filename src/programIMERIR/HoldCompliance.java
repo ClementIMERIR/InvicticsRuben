@@ -109,7 +109,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				//penTCP.copyWithRedundancy(robot.getFrame("/WorkingTable/StartingPoint"));
 				//draw();
 				//penTCP.move(linRel(currentFrame.getX(), currentFrame.getY(), -100));
-					penTCP.move(linRel(0,0,-100));
+					penTCP.move(linRel(0,0,500).setCartVelocity(0.2));
 			}
 		}
 	};
