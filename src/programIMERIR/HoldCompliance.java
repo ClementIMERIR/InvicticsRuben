@@ -149,7 +149,6 @@ public class HoldCompliance extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 		// your application execution starts here
-		robot.move(ptp(getApplicationData().getFrame("/WorkingTable/WaitingPoint")));
 		penTCP.move(ptp(getApplicationData().getFrame("/WorkingTable/WaitingPoint")));
 		grabForceObserver.enable();	
 		while(true){
