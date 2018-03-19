@@ -138,7 +138,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		grabForce = ForceCondition.createSpatialForceCondition(robot.getFlange(), 10);
 		grabForceObserver = getObserverManager().createConditionObserver(grabForce, NotificationType.EdgesOnly,grabForceListener);
 		//Condition de force activée pour une force supérieure à 2N lors d'une collision du marqueur sur une surface
-		penCollision = ForceCondition.createNormalForceCondition(robot.getFrame("/Pen/PenTCP"), CoordinateAxis.Z, 2);
+		penCollision = ForceCondition.createNormalForceCondition(pen.getFrame("/PenTCP"), CoordinateAxis.Z, 2);
 		penCollisionObserver = getObserverManager().createConditionObserver(penCollision, NotificationType.EdgesOnly,penCollisionListener);
 		pen.attachTo(robot.getFlange());
 		penTCP = pen.getFrame("/Pen/PenTCP");
