@@ -94,6 +94,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		// your application execution starts here
 		
 		//robot.move(ptp(getApplicationData().getFrame("/WorkingTable/WaitingPoint")));
+		robot.move(ptp(getApplicationData().getFrame("/WorkingTable/P5")));
 		robot.move(linRel(200, 50, 1000, Math.toRadians(-180), Math.toRadians(0), Math.toRadians(180)));
 		grabForceObserver.enable();
 		//getObserverManager().waitFor(grabForce);
