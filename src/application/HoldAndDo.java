@@ -198,12 +198,13 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		SceneGraphObject owner = pliers;
 		
 		ITransformation transformation = XyzAbcTransformation.ofTranslation(pliers.getFrame("/Sander").getX(), pliers.getFrame("/Sander").getY(), pliers.getFrame("/Sander").getZ());
-		
+		getLogger().info("1");
 		Vector toolVector = robot.getPositionInformation(pliers.getFrame("/Sander")).getTranslationOffset();
-		
+		getLogger().info("2");
 		ITransformationProvider transformationProvider = new StaticTransformationProvider(transformation);
 		ObjectFrame parent = getApplicationData().getFrame("/Workspace");
 		ObjectFrame newPointFrame = new ObjectFrame(pointNameString, parent , owner, transformationProvider);
+		//ObjectFrame newPointFrame = new ObjectFrame(pointNameString, parent , owner, transformationProvider);
 
 		getLogger().info(String.valueOf(toolVector.getX()) + "|" + String.valueOf(toolVector.getY()) + "|" + String.valueOf(toolVector.getZ()));
 
