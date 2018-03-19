@@ -67,7 +67,7 @@ public class TrainingKnee extends RoboticsAPIApplication {
 		anglespeed = getApplicationData().getProcessData("anglespeed")
 				.getValue();
 		nom = getApplicationData().getProcessData("Nom").getValue();
-		System.out.println("nom:" +nom);
+		getLogger().info("nom:"+nom);
 		answer = -1;
 		URL = "jdbc:mysql://172.31.1.66/imerir";
 		login = "imerir";
@@ -81,7 +81,7 @@ public class TrainingKnee extends RoboticsAPIApplication {
 					Class.forName("com.mysql.jdbc.Driver");
 					connection = DriverManager.getConnection(URL, login, password);
 					// interaction avec la base
-					sql = "SELECT Prenom FROM infos_patients WHERE Nom = '$nom'";
+					sql = "SELECT Prenom FROM infos_patients WHERE Nom = "+nom;
 					stmt = connection.createStatement();
 					resultat = stmt.executeQuery(sql);		
 					/* Récupération des données du résultat de la requête de lecture */
