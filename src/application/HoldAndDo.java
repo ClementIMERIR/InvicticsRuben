@@ -55,7 +55,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	
 	@Override
 	public void initialize() {
-		pliers.attachTo(robot.getFlange());//"Fixation" de l'outil à la bride du robot.
+		//pliers.attachTo(robot.getFlange());//"Fixation" de l'outil à la bride du robot.
 		
 		mode = new JointImpedanceControlMode(10, 10, 10, 10, 10, 10, 1);
 		mode.setStiffness(10, 10, 10, 10, 10, 10, 1);
