@@ -11,6 +11,7 @@ import javax.inject.Named;
 
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.deviceModel.PositionInformation;
 import com.kuka.roboticsAPI.geometricModel.ITransformationProvider;
 import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.SceneGraphObject;
@@ -201,7 +202,9 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		ObjectFrame frame = pliers.getFrame("/Sander");
 		getLogger().info("1");
-		Vector toolVector = robot.getPositionInformation(frame).getTranslationOffset();
+		PositionInformation posInfo = robot.getPositionInformation(frame);
+		getLogger().info("1");
+		Vector toolVector = posInfo.getTranslationOffset();
 		getLogger().info("1");
 		
 		ITransformationProvider transformationProvider = new StaticTransformationProvider(transformation);
