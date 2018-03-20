@@ -26,6 +26,7 @@ import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.math.CoordinateAxis;
 import com.kuka.roboticsAPI.motionModel.IMotion;
 import com.kuka.roboticsAPI.motionModel.Motion;
+import com.kuka.roboticsAPI.motionModel.RelativeLIN;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.JointImpedanceControlMode;
 import com.kuka.roboticsAPI.requestModel.GetCurrentConfigurationRequest;
@@ -111,7 +112,10 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				getLogger().info("penInfos = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 				grabForceObserver.disable();
 				penCollisionObserver.enable();
-				penTCP.move(linRel(0,0,currentFrame.getZ()).breakWhen(penCollision));
+				RelativeLIN descente = linRel(0,0,currentFrame.getZ());
+				descente.setCartVelocity(0.2);
+				descente.breakWhen(penCollision);
+				penTCP.move(descente);
 			}
 		}
 	};
