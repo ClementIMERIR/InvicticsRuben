@@ -1,14 +1,12 @@
 package application;
 
 
-import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.positionHold;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptpHome;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -182,18 +180,18 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	 * Make the robot polish the area between the 4 points
 	 */
 	private void polish(){
+		robot.move(ptpHome());
 		getLogger().info("Ponçage...");
 		polishKey.setText(UserKeyAlignment.MiddleLeft, "Ponçage...");
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
-		getLogger().info("1");
 		ObjectFrame test = framePoints.get(0);
-		getLogger().info("1");
 		ObjectFrame test2 = pliers.getFrame("/Sander");
+
+//		test2.move(ptp(test));
 		getLogger().info("1");
-		test2.move(ptp(test));
-		getLogger().info("1");
+		
 		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil) {
 			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, -10.0).setJointVelocityRel(1.0));
 			pliers.getFrame("/Sander").move(linRel(0.0, framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
