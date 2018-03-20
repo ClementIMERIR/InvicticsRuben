@@ -229,7 +229,12 @@
         <toolTemplate class="" name="Pen">
             <frames>
                 <frame id="_3956ac0a-cc2c-4cbc-92bf-1f4930064e1d" name="PenTCP">
-                    <transformation a="0.0" b="-3.141592653589793" c="0.0" x="-0.7304491249396794" y="-0.35532343486414886" z="129.64248355401455"/>
+                    <transformation a="0.0" b="0.0" c="0.0" x="-0.7304491249396794" y="-0.35532343486414886" z="129.64248355401455"/>
+                    <frames>
+                        <frame id="_70768387-fe5d-424d-ad38-bd506c0ea24f" name="PenAlignWorld">
+                            <transformation a="0.0" b="-3.141592653589793" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                        </frame>
+                    </frames>
                 </frame>
             </frames>
             <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.1"/>
