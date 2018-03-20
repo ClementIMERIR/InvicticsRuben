@@ -235,75 +235,75 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		
 		//move relatif
 		//définition des parametres du déplacement 
-//		RelativeLIN moveSquareSide = linRel(0,0,-10);
+		RelativeLIN moveSquareSide = linRel(0,0,-10);
+		moveSquareSide.setMode(drawMode);
+		moveSquareSide.setCartVelocity(100);
+		
+		displayLogForces(penWorldAlign);
+
+		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
+				+moveSquareSide.getOffset().getY()+","
+				+moveSquareSide.getOffset().getZ()+")");
+		//définition du déplacement de p0 a p1
+		moveSquareSide.setXOffset(squareSize);
+		moveSquareSide.setYOffset(0);
+		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
+				+moveSquareSide.getOffset().getY()+","
+				+moveSquareSide.getOffset().getZ()+")");
+		penWorldAlign.move(moveSquareSide);
+		
+		displayLogForces(penWorldAlign);
+		
+		//défintion du déplacement de p1 a p2
+		moveSquareSide.setXOffset(0);
+		moveSquareSide.setYOffset(squareSize);
+		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
+				+moveSquareSide.getOffset().getY()+","
+				+moveSquareSide.getOffset().getZ()+")");
+		penWorldAlign.move(moveSquareSide);
+		
+		displayLogForces(penWorldAlign);
+		
+		//défintion du déplacement de p2 a p3		
+		moveSquareSide.setXOffset(-squareSize);
+		moveSquareSide.setYOffset(0);
+		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
+				+moveSquareSide.getOffset().getY()+","
+				+moveSquareSide.getOffset().getZ()+")");
+		penWorldAlign.move(moveSquareSide);
+		
+		displayLogForces(penWorldAlign);
+		
+		//défintion du déplacement de p3 a p0
+		moveSquareSide.setXOffset(0);
+		moveSquareSide.setYOffset(-squareSize);
+		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
+				+moveSquareSide.getOffset().getY()+","
+				+moveSquareSide.getOffset().getZ()+")");
+		penWorldAlign.move(moveSquareSide);
+		
+		displayLogForces(penWorldAlign);
+		
+//		//avec le move de l'API
+//		LIN moveSquareSide = lin(p1);
 //		moveSquareSide.setMode(drawMode);
 //		moveSquareSide.setCartVelocity(100);
+//		penTCP.move(moveSquareSide);
 //		
-//		displayLogForces(penWorldAlign);
+//		moveSquareSide = lin(p2);
+//		moveSquareSide.setMode(drawMode);
+//		moveSquareSide.setCartVelocity(100);
+//		penTCP.move(moveSquareSide);
 //
-//		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
-//				+moveSquareSide.getOffset().getY()+","
-//				+moveSquareSide.getOffset().getZ()+")");
-//		//définition du déplacement de p0 a p1
-//		moveSquareSide.setXOffset(squareSize);
-//		moveSquareSide.setYOffset(0);
-//		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
-//				+moveSquareSide.getOffset().getY()+","
-//				+moveSquareSide.getOffset().getZ()+")");
-//		penWorldAlign.move(moveSquareSide);
+//		moveSquareSide = lin(p3);
+//		moveSquareSide.setMode(drawMode);
+//		moveSquareSide.setCartVelocity(100);
+//		penTCP.move(moveSquareSide);
 //		
-//		displayLogForces(penWorldAlign);
-//		
-//		//défintion du déplacement de p1 a p2
-//		moveSquareSide.setXOffset(0);
-//		moveSquareSide.setYOffset(squareSize);
-//		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
-//				+moveSquareSide.getOffset().getY()+","
-//				+moveSquareSide.getOffset().getZ()+")");
-//		penWorldAlign.move(moveSquareSide);
-//		
-//		displayLogForces(penWorldAlign);
-//		
-//		//défintion du déplacement de p2 a p3		
-//		moveSquareSide.setXOffset(-squareSize);
-//		moveSquareSide.setYOffset(0);
-//		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
-//				+moveSquareSide.getOffset().getY()+","
-//				+moveSquareSide.getOffset().getZ()+")");
-//		penWorldAlign.move(moveSquareSide);
-//		
-//		displayLogForces(penWorldAlign);
-//		
-//		//défintion du déplacement de p3 a p0
-//		moveSquareSide.setXOffset(0);
-//		moveSquareSide.setYOffset(-squareSize);
-//		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
-//				+moveSquareSide.getOffset().getY()+","
-//				+moveSquareSide.getOffset().getZ()+")");
-//		penWorldAlign.move(moveSquareSide);
-//		
-//		displayLogForces(penWorldAlign);
-		
-		//avec le move de l'API
-		LIN moveSquareSide = lin(p1);
-		moveSquareSide.setMode(drawMode);
-		moveSquareSide.setCartVelocity(100);
-		penTCP.move(moveSquareSide);
-		
-		moveSquareSide = lin(p2);
-		moveSquareSide.setMode(drawMode);
-		moveSquareSide.setCartVelocity(100);
-		penTCP.move(moveSquareSide);
-
-		moveSquareSide = lin(p3);
-		moveSquareSide.setMode(drawMode);
-		moveSquareSide.setCartVelocity(100);
-		penTCP.move(moveSquareSide);
-		
-		moveSquareSide = lin(p0);
-		moveSquareSide.setMode(drawMode);
-		moveSquareSide.setCartVelocity(100);
-		penTCP.move(moveSquareSide);
+//		moveSquareSide = lin(p0);
+//		moveSquareSide.setMode(drawMode);
+//		moveSquareSide.setCartVelocity(100);
+//		penTCP.move(moveSquareSide);
 		
 		//avec le movePenTo perso
 //		movePenTo(p0.getX(), p0.getY());
