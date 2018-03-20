@@ -68,7 +68,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 	@Inject
 	@Named("Pen")
 	private Tool pen;
-	private ObjectFrame penTCP;
+	private ObjectFrame penWorldAlign;
 	
 	@Inject
 	private CartesianImpedanceControlMode freeMode;
@@ -106,13 +106,13 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		public void onKeyEvent(IUserKey key, UserKeyEvent event) {
 			if(event == UserKeyEvent.KeyDown){
 				getLogger().info("Button startDrawing triggered");
-				Frame currentFrame = robot.getCurrentCartesianPosition(penTCP);
+				Frame currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
 				getLogger().info("penInfos = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 				//penTCP.copyWithRedundancy(robot.getFrame("/WorkingTable/StartingPoint"));
 				grabForceObserver.disable();
 				penCollisionObserver.enable();
 				//drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
-				penTCP.move(linRel(0,0,currentFrame.getZ()));
+				penWorldAlign.move(linRel(0,0,-currentFrame.getZ()).breakWhen(penCollision));
 			}
 		}
 	};
@@ -126,7 +126,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				int missedEvents) {
 			penCollisionObserver.disable();
 			getLogger().info("Pen Collision");
-			Frame currentFrame = robot.getCurrentCartesianPosition(penTCP);
+			Frame currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
 			getLogger().info("SquareSize = " + squareSize);
 			getLogger().info("FrameInfo = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 			drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
@@ -136,7 +136,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 	@Override
 	public void initialize() {
 		// initialize your application here
-		penTCP = pen.getFrame("PenTCP");
+		penWorldAlign = pen.getFrame("PenTCP/PenAlignWorld");
 		pen.attachTo(robot.getFlange());
 		squareSize = getApplicationData().getProcessData("squareSize").getValue();
 		
@@ -160,14 +160,14 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		grabForceObserver = getObserverManager().createConditionObserver(grabForce, NotificationType.EdgesOnly,grabForceListener);
 		
 		//Condition de force activée pour une force supérieure à 2N lors d'une collision du marqueur sur une surface
-		penCollision = ForceCondition.createSpatialForceCondition(penTCP, 2);
+		penCollision = ForceCondition.createSpatialForceCondition(penWorldAlign, 2);
 		penCollisionObserver = getObserverManager().createConditionObserver(penCollision, NotificationType.EdgesOnly,penCollisionListener);
 	}
 
 	@Override
 	public void run() {
 		// your application execution starts here
-		penTCP.move(ptp(getApplicationData().getFrame("/WorkingTable/WaitingPoint")));
+		penWorldAlign.move(ptp(getApplicationData().getFrame("/WorkingTable/WaitingPoint")));
 		grabForceObserver.enable();	
 		while(true){
 			ThreadUtil.milliSleep(1000);
@@ -190,11 +190,11 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			robot.move(positionHold(freeMode,300, TimeUnit.MILLISECONDS));
 		}while(sumForces >= 10);
 		
-		currFrameState = robot.getCurrentCartesianPosition(penTCP);
+		currFrameState = robot.getCurrentCartesianPosition(penWorldAlign);
 		currFrameState.setAlphaRad(Math.toRadians(-180));
 		currFrameState.setBetaRad(Math.toRadians(0));
 		currFrameState.setGammaRad(Math.toRadians(180));
-		penTCP.move(ptp(currFrameState));
+		penWorldAlign.move(ptp(currFrameState));
 		
 		//pen.getFrame("/Pen/PenTCP").copyWithRedundancy(robot.getFrame("/WorkingTable/StartingPoint"));
 	}
@@ -209,12 +209,12 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		Vector force;
 		double movedestX, movedestY, moveZ, accuracy = 1000;
 		do{
-			currentFrame = robot.getCurrentCartesianPosition(penTCP);
-			force = robot.getExternalForceTorque(penTCP).getForce();
+			currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
+			force = robot.getExternalForceTorque(penWorldAlign).getForce();
 			movedestX = (destX - currentFrame.getX())/accuracy;
 			movedestY = (destY - currentFrame.getY())/accuracy;
 			moveZ = force.getZ();
-			penTCP.move(linRel(movedestX,movedestY,moveZ));
+			penWorldAlign.move(linRel(movedestX,movedestY,moveZ));
 		}while(currentFrame.getX() != destX && currentFrame.getY() != destY);
 	}
 	
@@ -230,11 +230,17 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				+"p2:("+p2.getX()+","+p2.getY()+")"
 				+"p3:("+p3.getX()+","+p3.getY()+")");
 		
+		//move relatif
+		penWorldAlign.move(linRel(squareSize,0,0));
+		penWorldAlign.move(linRel(0,squareSize,0));
+		penWorldAlign.move(linRel(-squareSize,0,0));
+		penWorldAlign.move(linRel(0,-squareSize,0));
+		
 		//avec le move de l'API
-		penTCP.move(lin(p1).setMode(drawMode));
-		penTCP.move(lin(p2).setMode(drawMode));
-		penTCP.move(lin(p3).setMode(drawMode));
-		penTCP.move(lin(p0).setMode(drawMode));
+//		penTCP.move(lin(p1).setMode(drawMode));
+//		penTCP.move(lin(p2).setMode(drawMode));
+//		penTCP.move(lin(p3).setMode(drawMode));
+//		penTCP.move(lin(p0).setMode(drawMode));
 		
 		//avec le movePenTo perso
 //		movePenTo(p0.getX(), p0.getY());
