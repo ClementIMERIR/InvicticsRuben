@@ -1,9 +1,12 @@
 package application;
 
 
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.circ;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.positionHold;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptpHome;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -13,6 +16,7 @@ import javax.inject.Named;
 
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.geometricModel.AbstractFrame;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.ITransformationProvider;
@@ -34,6 +38,8 @@ import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyLEDSize;
 /**
  * 
  * @author Clément Bourdarie
+ * @author Alexandre
+ * @version 1.0
  */
 public class HoldAndDo extends RoboticsAPIApplication {
 	@Inject
@@ -60,7 +66,6 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	//Variables polishing
 	private ArrayList<ObjectFrame> framePoints;
 	double largeurOutil = 60;
-	private double[] startingJoints;
 	
 	@Override
 	public void initialize() {
@@ -190,6 +195,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	
 	/**
 	 * Make the robot polish the area between the 4 points
+	 * Une fois le robot équipé de son outil, il peut poncer la planche de bois
+	 * La fonction permet le balayage de toute la planche une fois que les 4 points ont été calibrés.
 	 */
 	private void polish(){
 		getLogger().info("Ponçage...");
@@ -197,39 +204,27 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
+		robot.move(ptpHome());
 
-//		robot.move(linRel(framePoints.get(0).getX(), 0.0, 0.0).setJointVelocityRel(0.5));
-//		robot.move(linRel(framePoints.get(1).getX(), 0.0, 0.0).setJointVelocityRel(0.5));
-//		robot.move(linRel(framePoints.get(0).getX(), 0.0, 0.0).setJointVelocityRel(0.5));
+		pliers.getFrame("Sander").move(ptp((AbstractFrame)framePoints.get(0)));
+		pliers.getFrame("Sander").move(lin((AbstractFrame)framePoints.get(1)));
+		robot.move(circ(getApplicationData().getFrame("/Workspace/P3"),
+				(AbstractFrame)framePoints.get(0)));
 		
-		double minX = 9999;
-		double minY = 9999;
-		double maxX = 0;
-		double maxY = 0;
-		double distanceX = 0;
-		double distanceY = 0;
+		pliers.getFrame("Sander").move(ptp((AbstractFrame)framePoints.get(0)).setJointVelocityRel(1.0));
 		
-		for(ObjectFrame point : framePoints){
-			minX = point.getX() < minX ? point.getX() : minX;
-			minY = point.getY() < minY ? point.getY() : minY;
-			
-			maxX = point.getX() > minX ? point.getX() : minX;
-			maxY = point.getY() > minY ? point.getY() : minY;
+		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil) {
+			pliers.getFrame("Sander").move(linRel(0.0, 0.0, -10.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, 0.0, 60.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, -framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, 0.0, -50.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(i, 0.0, 0.0).setJointVelocityRel(1.0));
 		}
+		robot.move(ptpHome());
 		
-		distanceX = maxX - minX;
-		distanceY = maxY - minY;
-		
-		//pliers.getFrame("Sander").move(lin(framePoints.get(0)));
-		robot.move(ptp(startingJoints));
-		for(int i = 0 ; i < maxY ; i += largeurOutil/2) {
-			pliers.getFrame("Sander").move(linRel(distanceX, 0, 0).setJointVelocityRel(1.0));
-			pliers.getFrame("Sander").move(linRel(-distanceX, 0, 0).setJointVelocityRel(0.5));
-			pliers.getFrame("Sander").move(linRel(0, largeurOutil/2, 0).setJointVelocityRel(0.5));
-			getLogger().info("1");
-		}
-
 		/*-------------------------------------------------------------------------------------------------------------------*/
+		
 		
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
 		getLogger().info("Ponçage terminé.");
@@ -239,7 +234,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	 * Register the current state as a position.
 	 */
 	private void registerPosition(){
-		getLogger().info(new StringBuilder("Enregistrement de la position ").append(currentPointIndex+1).append("...").toString());
+		getLogger().info("Enregistrement de la position...");
 
 		currentPointIndex++;
 		
@@ -257,12 +252,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		framePoints.set(currentPointIndex - 1, newPointFrame);
 		
-		//currentPointIndex = currentPointIndex == 4 ? 1 : currentPointIndex;
-		
-		if(currentPointIndex == 4 ){
-			currentPointIndex = 1;
-			startingJoints = robot.getCurrentJointPosition().get();
-		}
+		currentPointIndex = currentPointIndex == 4 ? 1 : currentPointIndex;
 
 		getLogger().info("Enregistrement de la position terminé");
 	}
