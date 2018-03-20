@@ -145,6 +145,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		buttonBar.publish();
 		
 		framePoints = new ArrayList<ObjectFrame>(){ { add(null); add(null); add(null); add(null); } };
+		currentPointIndex = 0;
 	}
 
 	/**
@@ -210,7 +211,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	private void registerPosition(){
 		getLogger().info("Enregistrement de la position...");
 
-		currentPointIndex = currentPointIndex == 4 ? 1 : currentPointIndex;
+		currentPointIndex++;
 
 		//parameters
 		String pointNameString = new StringBuilder("NP").append(String.valueOf(currentPointIndex)).toString();//NP1,NP2,NP3,NP4.
@@ -225,6 +226,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		ObjectFrame newPointFrame = new ObjectFrame(pointNameString, parent , owner, transformationProvider);
 
 		framePoints.set(currentPointIndex - 1, newPointFrame);
+		
+		currentPointIndex = currentPointIndex == 4 ? 1 : currentPointIndex;
 
 		getLogger().info("Enregistrement de la position terminé");
 	}
