@@ -112,10 +112,11 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				getLogger().info("penInfos = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 				//grabForceObserver.disable();
 				penCollisionObserver.enable();
-				RelativeLIN descente = linRel(0,0,-currentFrame.getZ());
+				//RelativeLIN descente = linRel(0,0,currentFrame.getZ());
 				//descente.setCartVelocity(0.2);
-				descente.breakWhen(penCollision);
-				penWorldAlign.move(descente);
+				//descente.breakWhen(penCollision);
+				//penWorldAlign.move(descente);
+				penWorldAlign.move(linRel(0,0, -currentFrame.getZ()).breakWhen(penCollision));
 			}
 		}
 	};
@@ -132,7 +133,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			Frame currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
 			getLogger().info("SquareSize = " + squareSize);
 			getLogger().info("FrameInfo = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
-			drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
+			//drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
 		}
 	};
 	
