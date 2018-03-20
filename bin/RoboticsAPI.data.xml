@@ -8,6 +8,37 @@
                 <info key="LastModificationTime" type="java.lang.Long" value="1521539138090"/>
                 <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="true"/>
             </additionalInformation>
+            <frame id="_2448f08f-7ce9-4bf4-aee6-886984287c28" name="P1">
+                <transformation a="0.0" b="0.0" c="0.0" x="300.0" y="300.0" z="300.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1521468680690"/>
+                </additionalInformation>
+            </frame>
+            <frame id="_8499d33a-4761-483d-a310-c02d9290e10c" name="P2">
+                <transformation a="0.0" b="0.0" c="0.0" x="450.0" y="-300.0" z="300.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1521455433324"/>
+                </additionalInformation>
+                <redundancyData>
+                    <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
+                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
+                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="13" valueType="java.lang.Integer"/>
+                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-7.406250139298813E-5" valueType="java.lang.Double"/>
+                    </redundancy>
+                </redundancyData>
+            </frame>
+            <frame id="_cd202ac8-ea56-4d51-b6eb-22e1599a4311" name="P3">
+                <transformation a="0.0" b="0.0" c="0.0" x="450.0" y="-450.0" z="300.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1521455453040"/>
+                </additionalInformation>
+            </frame>
+            <frame id="_52e088e4-8aa1-441d-a143-31aa05e6367c" name="P4">
+                <transformation a="0.0" b="0.0" c="0.0" x="300.0" y="-450.0" z="300.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1521455465201"/>
+                </additionalInformation>
+            </frame>
         </frame>
     </world>
     <objectTemplates>
