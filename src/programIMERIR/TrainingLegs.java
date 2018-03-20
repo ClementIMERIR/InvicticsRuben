@@ -107,7 +107,7 @@ public class TrainingLegs extends RoboticsAPIApplication {
 				tempo = resultat.getInt("tempo");
 				nbcycle = resultat.getInt("nb_cycles");
 				angle = resultat.getDouble("angle");
-				vitesse = resultat.getDouble("vitesse");
+				vitesse = resultat.getDouble("vitesse_ang");
 			}
 		} catch (SQLException sqle) {
 			answer = getApplicationUI().displayModalDialog(
