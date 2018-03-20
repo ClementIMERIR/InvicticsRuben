@@ -113,7 +113,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				//grabForceObserver.disable();
 				penCollisionObserver.enable();
 				RelativeLIN descente = linRel(0,0,-currentFrame.getZ());
-				//descente.setCartVelocity(0.2);
+				descente.setCartVelocity(0.2);
 				descente.breakWhen(penCollision);
 				penWorldAlign.move(descente);
 			}
@@ -164,7 +164,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		grabForceObserver = getObserverManager().createConditionObserver(grabForce, NotificationType.EdgesOnly,grabForceListener);
 		
 		//Condition de force activée pour une force supérieure à 2N lors d'une collision du marqueur sur une surface
-		penCollision = ForceCondition.createSpatialForceCondition(penWorldAlign, 10);
+		penCollision = ForceCondition.createSpatialForceCondition(penWorldAlign, 7);
 		penCollisionObserver = getObserverManager().createConditionObserver(penCollision, NotificationType.EdgesOnly,penCollisionListener);
 	}
 
