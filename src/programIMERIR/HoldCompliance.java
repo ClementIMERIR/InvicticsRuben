@@ -114,7 +114,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				penCollisionObserver.enable();
 				RelativeLIN descente = linRel(0,0,currentFrame.getZ());
 				descente.setCartVelocity(0.2);
-				descente.breakWhen(penCollision);
+				//descente.breakWhen(penCollision);
 				penTCP.move(descente);
 			}
 		}
