@@ -220,7 +220,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		distanceX = maxX - minX;
 		distanceY = maxY - minY;
 		
-		//pliers.getFrame("Sander").move(lin(framePoints.get(0)).setJointVelocityRel(0.5));
+		pliers.getFrame("Sander").move(lin(framePoints.get(0)));
 		for(int i = 0 ; i < maxY ; i += largeurOutil/2) {
 			pliers.getFrame("Sander").move(linRel(distanceX, 0, 0).setJointVelocityRel(1.0));
 			pliers.getFrame("Sander").move(linRel(-distanceX, 0, 0).setJointVelocityRel(0.5));
