@@ -144,10 +144,10 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			Vector force = robot.getExternalForceTorque(penWorldAlign).getForce();
 			if(force.getZ()>1){
 				getLogger().info("Pression trop forte");
-				penWorldAlign.move(linRel(penWorldAlign.getX(), penWorldAlign.getY(), penWorldAlign.getZ()-5));
+				penWorldAlign.move(linRel(penWorldAlign.getX(), penWorldAlign.getY(), penWorldAlign.getZ()-1));
 			}else{
 				getLogger().info("Pression pas assez forte");
-				penWorldAlign.move(linRel(penWorldAlign.getX(), penWorldAlign.getY(), penWorldAlign.getZ()+5));
+				penWorldAlign.move(linRel(penWorldAlign.getX(), penWorldAlign.getY(), penWorldAlign.getZ()+1));
 			}
 		}
 	};
