@@ -89,21 +89,21 @@ public class TrainingLegs extends RoboticsAPIApplication {
 			// interaction avec la base
 			getLogger().info("nom:" + nom);
 			// identifier le patient en utilisant sont nom.
-			sql = "SELECT id_patient FROM infos_patients WHERE nom = \'" + nom
+			sql = "SELECT * FROM infos_patients WHERE nom = \'" + nom
 					+ "\'";
 			stmt = connection.createStatement();
 			resultat = stmt.executeQuery(sql);
 			/* Récupération des données du résultat de la requête de lecture */
 			while (resultat.next()) {
 				current_id = resultat.getInt("id_patient");
+				current_nom = resultat.getString("Prenom");
 			}
 			// récuperer les parametres du patient en utilisant son id.
 			sql = "SELECT * FROM parametres_patients WHERE id_patient = \'" + current_id + "\'";
 			stmt = connection.createStatement();
 			resultat = stmt.executeQuery(sql);
 			/* Récupération des données du résultat de la requête de lecture */
-			while (resultat.next()) {
-				current_nom = resultat.getString("Prenom");
+			while (resultat.next()) {				
 				tempo = resultat.getInt("tempo");
 				nbcycle = resultat.getInt("nb_cycles");
 				angle = resultat.getDouble("angle");
