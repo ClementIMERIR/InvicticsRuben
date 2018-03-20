@@ -180,7 +180,6 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	 * Make the robot polish the area between the 4 points
 	 */
 	private void polish(){
-		robot.move(ptpHome());
 		getLogger().info("Ponçage...");
 		polishKey.setText(UserKeyAlignment.MiddleLeft, "Ponçage...");
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
@@ -189,6 +188,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		ObjectFrame test = framePoints.get(0);
 		ObjectFrame test2 = pliers.getFrame("/Sander");
 
+		robot.move(ptp(test));
 //		test2.move(ptp(test));
 		getLogger().info("1");
 		
