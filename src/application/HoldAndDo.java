@@ -1,6 +1,7 @@
 package application;
 
 
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.positionHold;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
@@ -187,9 +188,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
 		ObjectFrame test = framePoints.get(0);
 		ObjectFrame test2 = pliers.getFrame("/Sander");
-
-		robot.move(ptp(test));
-//		test2.move(ptp(test));
+		
+		test2.move(lin(test));
 		getLogger().info("1");
 		
 		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil) {
