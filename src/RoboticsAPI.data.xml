@@ -143,9 +143,9 @@
                 </additionalInformation>
             </frame>
             <frame id="_42c650d7-1839-4d27-97b1-1d4327f948e1" name="WaitingPoint">
-                <transformation a="-3.141592653589793" b="0.0" c="3.141592653589793" x="635.330043" y="6.994098" z="319.773577"/>
+                <transformation a="-3.141592653589793" b="0.0" c="3.141592653589793" x="450.8" y="21.8" z="600.69"/>
                 <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521457932021"/>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1521556488735"/>
                     <info key="Comment" type="java.lang.String" value="Point où le cobot attend d'être positionné par l'opérateur."/>
                     <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Flange" tool="Flange" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                         <tcpTransformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
