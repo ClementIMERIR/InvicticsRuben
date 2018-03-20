@@ -133,7 +133,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			getLogger().info("SquareSize = " + squareSize);
 			getLogger().info("FrameInfo = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 			drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
-			penWorldAlign.move(ptp(getApplicationData().getFrame("/WorkingTable/WaitingPoint")));
+			penWorldAlign.move(ptp(getApplicationData().getFrame("/WorkingTable/P6")));
 		}
 	};
 	
@@ -158,7 +158,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		
 		//définition du mode d'impédence pour le dessins
 		drawMode = new CartesianImpedanceControlMode();
-		drawMode.parametrize(CartDOF.Z).setStiffness(1000);
+		drawMode.parametrize(CartDOF.Z).setStiffness(500);
 		//drawMode.parametrize(CartDOF.Y).setDamping(0.1);
 		
 		//Condition de force activée lorsqu'une force supérieure à 10N est détectée pour bouger librement le bras
@@ -166,14 +166,14 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		grabForceObserver = getObserverManager().createConditionObserver(grabForce, NotificationType.EdgesOnly,grabForceListener);
 		
 		//Condition de force activée pour une force supérieure à 2N lors d'une collision du marqueur sur une surface
-		penCollision = ForceCondition.createSpatialForceCondition(penWorldAlign, 3);
+		penCollision = ForceCondition.createSpatialForceCondition(penWorldAlign, 4);
 		penCollisionObserver = getObserverManager().createConditionObserver(penCollision, NotificationType.EdgesOnly,penCollisionListener);
 	}
 
 	@Override
 	public void run() {
 		// your application execution starts here
-		penTCP.move(ptp(getApplicationData().getFrame("/WorkingTable/WaitingPoint")));
+		penWorldAlign.move(ptp(getApplicationData().getFrame("/WorkingTable/P6")));
 		grabForceObserver.enable();	
 		while(true){
 			ThreadUtil.milliSleep(1000);
