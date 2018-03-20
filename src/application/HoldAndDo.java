@@ -7,7 +7,6 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptpHome;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -15,6 +14,7 @@ import javax.inject.Named;
 
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.geometricModel.AbstractFrame;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.ITransformationProvider;
@@ -25,6 +25,7 @@ import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.math.ITransformation;
 import com.kuka.roboticsAPI.geometricModel.math.XyzAbcTransformation;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.roboticsAPI.motionModel.controlModeModel.JointImpedanceControlMode;
 import com.kuka.roboticsAPI.uiModel.userKeys.IUserKey;
 import com.kuka.roboticsAPI.uiModel.userKeys.IUserKeyBar;
 import com.kuka.roboticsAPI.uiModel.userKeys.IUserKeyListener;
@@ -145,12 +146,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		//Make the buttons bar visible
 		buttonBar.publish();
 		
-		framePoints = new ArrayList<ObjectFrame>(){ /**
-			 * 
-			 */
-			private static final long serialVersionUID = 9072283436281698039L;
-
-		{ add(null); add(null); add(null); add(null); } };
+		framePoints = new ArrayList<ObjectFrame>(){ { add(null); add(null); add(null); add(null); } };
 		
 		currentPointIndex = 0;
 	}
@@ -196,20 +192,19 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		getLogger().info("Ponçage...");
 		polishKey.setText(UserKeyAlignment.MiddleLeft, "Ponçage...");
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
-
-		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
-
-		double i2 = getApplicationData().getFrame("/Workspace").getAlphaRad();
-		double i1 = getApplicationData().getFrame("/Workspace").getBetaRad();
-		double i11 = getApplicationData().getFrame("/Workspace").getGammaRad();
 		
-		pliers.getFrame("/Sander").move(ptp(framePoints.get(0)).setJointVelocityRel(1.0));
-		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil) {
-			//pliers.getFrame("/Sander").move(linRel(i, 0.0, 0.0).setJointVelocityRel(1.0));
+		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
+		
+		AbstractFrame point0 = framePoints.get(0);
+		robot.move(ptp(point0));
+		
+		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil)
+		{
+			//pliers.getFrame("/Sander").move(linRel);
 		}
-
 		
 		/*-------------------------------------------------------------------------------------------------------------------*/
+		
 		
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
 		getLogger().info("Ponçage terminé.");
