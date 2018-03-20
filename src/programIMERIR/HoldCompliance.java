@@ -234,7 +234,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		//move relatif
 		//définition des parametres du déplacement 
 		RelativeLIN moveSquareSide = linRel(0,0,0);
-		//moveSquareSide.setMode(drawMode);
+		moveSquareSide.setMode(drawMode);
 		moveSquareSide.setCartVelocity(100);
 		
 		displayLogForces(penWorldAlign);
