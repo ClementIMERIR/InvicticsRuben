@@ -224,6 +224,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 			pliers.getFrame("Sander").move(linRel(distanceX, 0, 0).setJointVelocityRel(1.0));
 			pliers.getFrame("Sander").move(linRel(-distanceX, 0, 0).setJointVelocityRel(0.5));
 			pliers.getFrame("Sander").move(linRel(0, largeurOutil/2, 0).setJointVelocityRel(0.5));
+			getLogger().info("1");
 		}
 
 		/*-------------------------------------------------------------------------------------------------------------------*/
