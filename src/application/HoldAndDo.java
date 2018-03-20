@@ -237,7 +237,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	 * Register the current state as a position.
 	 */
 	private void registerPosition(){
-		getLogger().info(new StringBuilder("Enregistrement de la position ").append(currentPointIndex).append("Enregistrement de la position...").toString());
+		getLogger().info(new StringBuilder("Enregistrement de la position ").append(currentPointIndex).append("...").toString());
 
 		currentPointIndex++;
 		
