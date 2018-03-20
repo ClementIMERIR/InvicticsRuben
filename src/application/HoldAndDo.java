@@ -1,7 +1,6 @@
 package application;
 
 
-import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.positionHold;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
@@ -61,6 +60,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	//Variables polishing
 	private ArrayList<ObjectFrame> framePoints;
 	double largeurOutil = 60;
+	private double[] startingJoints;
 	
 	@Override
 	public void initialize() {
@@ -220,7 +220,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		distanceX = maxX - minX;
 		distanceY = maxY - minY;
 		
-		pliers.getFrame("Sander").move(lin(framePoints.get(0)));
+		//pliers.getFrame("Sander").move(lin(framePoints.get(0)));
+		robot.move(ptp(startingJoints));
 		for(int i = 0 ; i < maxY ; i += largeurOutil/2) {
 			pliers.getFrame("Sander").move(linRel(distanceX, 0, 0).setJointVelocityRel(1.0));
 			pliers.getFrame("Sander").move(linRel(-distanceX, 0, 0).setJointVelocityRel(0.5));
@@ -256,7 +257,12 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		framePoints.set(currentPointIndex - 1, newPointFrame);
 		
-		currentPointIndex = currentPointIndex == 4 ? 1 : currentPointIndex;
+		//currentPointIndex = currentPointIndex == 4 ? 1 : currentPointIndex;
+		
+		if(currentPointIndex == 4 ){
+			currentPointIndex = 1;
+			startingJoints = robot.getCurrentJointPosition().get();
+		}
 
 		getLogger().info("Enregistrement de la position terminé");
 	}
