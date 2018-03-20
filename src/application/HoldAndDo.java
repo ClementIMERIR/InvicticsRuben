@@ -187,28 +187,22 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
-//		pliers.getFrame("/Sander").move(ptp(framePoints.get(0)).setJointVelocityRel(1.0));
-//		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil) {
-//			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, -10.0).setJointVelocityRel(1.0));
-//			pliers.getFrame("/Sander").move(linRel(0.0, framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
-//			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, 60.0).setJointVelocityRel(1.0));
-//			pliers.getFrame("/Sander").move(linRel(0.0, -framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
-//			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, -50.0).setJointVelocityRel(1.0));
-//			pliers.getFrame("/Sander").move(linRel(i, 0.0, 0.0).setJointVelocityRel(1.0));
-//		}
-		robot.move(ptp(framePoints.get(0)).setJointVelocityRel(1.0));
+		getLogger().info("1");
+		ObjectFrame test = framePoints.get(0);
+		getLogger().info("1");
+		ObjectFrame test2 = pliers.getFrame("/Sander");
+		getLogger().info("1");
+		test2.move(ptp(test).setJointVelocityRel(1.0));
+		getLogger().info("1");
 		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil) {
-			robot.move(linRel(0.0, 0.0, -10.0).setJointVelocityRel(1.0));
-			robot.move(linRel(0.0, framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
-			robot.move(linRel(0.0, 0.0, 60.0).setJointVelocityRel(1.0));
-			robot.move(linRel(0.0, -framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
-			robot.move(linRel(0.0, 0.0, -50.0).setJointVelocityRel(1.0));
-			robot.move(linRel(i, 0.0, 0.0).setJointVelocityRel(1.0));
+			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, -10.0).setJointVelocityRel(1.0));
+			pliers.getFrame("/Sander").move(linRel(0.0, framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
+			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, 60.0).setJointVelocityRel(1.0));
+			pliers.getFrame("/Sander").move(linRel(0.0, -framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
+			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, -50.0).setJointVelocityRel(1.0));
+			pliers.getFrame("/Sander").move(linRel(i, 0.0, 0.0).setJointVelocityRel(1.0));
 		}
-		robot.move(ptpHome());
-		
 		/*-------------------------------------------------------------------------------------------------------------------*/
-		
 		
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
 		getLogger().info("Ponçage terminé.");
