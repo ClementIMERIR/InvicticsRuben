@@ -110,7 +110,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				getLogger().info("Button startDrawing triggered");
 				Frame currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
 				getLogger().info("penInfos = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
-				grabForceObserver.disable();
+				//grabForceObserver.disable();
 				penCollisionObserver.enable();
 				RelativeLIN descente = linRel(0,0,currentFrame.getZ());
 				//descente.setCartVelocity(0.2);
