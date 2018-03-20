@@ -112,7 +112,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				grabForceObserver.disable();
 				penCollisionObserver.enable();
 				//drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
-				penWorldAlign.move(linRel(0,0,150).breakWhen(penCollision));
+				penWorldAlign.move(linRel(0,200,0).breakWhen(penCollision));
 			}
 		}
 	};
