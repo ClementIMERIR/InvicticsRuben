@@ -146,7 +146,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		//définition du mode d'impédence pour déplacer le robot à la main
 		freeMode = new CartesianImpedanceControlMode();
 		freeMode.parametrize(CartDOF.X,CartDOF.Y,CartDOF.Z).setStiffness(10);
-		freeMode.parametrize(CartDOF.A,CartDOF.B,CartDOF.C).setStiffness(5000);
+		freeMode.parametrize(CartDOF.A,CartDOF.B,CartDOF.C).setStiffness(300);
 		
 		//définition du mode d'impédence pour le dessins
 		drawMode = new CartesianImpedanceControlMode();
