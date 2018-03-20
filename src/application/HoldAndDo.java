@@ -199,12 +199,11 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
 
-		List<ObjectFrame> test1 = getApplicationData().getFrame("/Workspace").getChildren();
-		getApplicationData().getFrame("/Workspace").getChildren().addAll(framePoints);
-		List<ObjectFrame> test2 = getApplicationData().getFrame("/Workspace").getChildren();
+		double i2 = getApplicationData().getFrame("/Workspace").getAlphaRad();
+		double i1 = getApplicationData().getFrame("/Workspace").getBetaRad();
+		double i11 = getApplicationData().getFrame("/Workspace").getGammaRad();
 		
 		pliers.getFrame("/Sander").move(ptp(framePoints.get(0)).setJointVelocityRel(1.0));
-		
 		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil) {
 			//pliers.getFrame("/Sander").move(linRel(i, 0.0, 0.0).setJointVelocityRel(1.0));
 		}
