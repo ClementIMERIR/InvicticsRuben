@@ -92,6 +92,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 				if(event.equals(UserKeyEvent.KeyUp)){
 					polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 
+					moving = false;//Stop being compliant
 					polish();
 
 					polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
