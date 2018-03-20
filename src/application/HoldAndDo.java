@@ -192,7 +192,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		getLogger().info("1");
 		ObjectFrame test2 = pliers.getFrame("/Sander");
 		getLogger().info("1");
-		test2.move(ptp(test).setJointVelocityRel(1.0));
+		test2.move(ptp(test));
 		getLogger().info("1");
 		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil) {
 			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, -10.0).setJointVelocityRel(1.0));
