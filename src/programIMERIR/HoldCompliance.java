@@ -112,7 +112,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				//grabForceObserver.disable();
 				penCollisionObserver.enable();
 				RelativeLIN descente = linRel(0,0,-currentFrame.getZ());
-				descente.setCartVelocity(20);
+				descente.setCartVelocity(30);
 				descente.breakWhen(penCollision);
 				penWorldAlign.move(descente);
 			}
@@ -157,7 +157,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		
 		//définition du mode d'impédence pour le dessins
 		drawMode = new CartesianImpedanceControlMode();
-		drawMode.parametrize(CartDOF.ALL).setStiffness(5);
+		drawMode.parametrize(CartDOF.Z).setStiffness(5);
 		
 		//Condition de force activée lorsqu'une force supérieure à 10N est détectée pour bouger librement le bras
 		grabForce = ForceCondition.createSpatialForceCondition(robot.getFlange(), 15);
@@ -233,7 +233,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		//définition des parametres du déplacement 
 		RelativeLIN moveSquareSide = linRel(0,0,0);
 		moveSquareSide.setMode(drawMode);
-		moveSquareSide.setCartVelocity(50);
+		moveSquareSide.setCartVelocity(100);
 		
 		displayLogForces(penWorldAlign);
 		
