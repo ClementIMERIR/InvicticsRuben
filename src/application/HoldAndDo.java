@@ -16,7 +16,6 @@ import javax.inject.Named;
 
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
-import com.kuka.roboticsAPI.geometricModel.AbstractFrame;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.ITransformationProvider;
@@ -206,12 +205,12 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
 		robot.move(ptpHome());
 
-		pliers.getFrame("Sander").move(ptp((AbstractFrame)framePoints.get(0)));
-		pliers.getFrame("Sander").move(lin((AbstractFrame)framePoints.get(1)));
+		pliers.getFrame("Sander").move(ptp(framePoints.get(0)));
+		pliers.getFrame("Sander").move(lin(framePoints.get(1)));
 		robot.move(circ(getApplicationData().getFrame("/Workspace/P3"),
-				(AbstractFrame)framePoints.get(0)));
+				framePoints.get(0)));
 		
-		pliers.getFrame("Sander").move(ptp((AbstractFrame)framePoints.get(0)).setJointVelocityRel(1.0));
+		pliers.getFrame("Sander").move(ptp(framePoints.get(0)).setJointVelocityRel(1.0));
 		
 		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil) {
 			pliers.getFrame("Sander").move(linRel(0.0, 0.0, -10.0).setJointVelocityRel(1.0));
