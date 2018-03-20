@@ -14,7 +14,6 @@ import javax.inject.Named;
 
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
-import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.ITransformationProvider;
 import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
@@ -23,7 +22,6 @@ import com.kuka.roboticsAPI.geometricModel.StaticTransformationProvider;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.math.ITransformation;
 import com.kuka.roboticsAPI.geometricModel.math.XyzAbcTransformation;
-import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.JointImpedanceControlMode;
 import com.kuka.roboticsAPI.uiModel.userKeys.IUserKey;
 import com.kuka.roboticsAPI.uiModel.userKeys.IUserKeyBar;
@@ -44,8 +42,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	@Named("Pliers")
 	private Tool pliers;
 
-	private CartesianImpedanceControlMode mode;
-//	private JointImpedanceControlMode mode;
+	private JointImpedanceControlMode mode;
 	private double[] jointPosition;
 	
 	private IUserKeyBar buttonBar;
@@ -67,11 +64,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	public void initialize() {
 		pliers.attachTo(robot.getFlange());//"Fixation" de l'outil à la bride du robot.
 		
-		mode = new CartesianImpedanceControlMode();
-		mode.parametrize(CartDOF.ALL).setStiffness(10);
-		
-//		mode = new JointImpedanceControlMode(10, 10, 10, 10, 10, 10, 1);
-//		mode.setStiffness(10, 10, 10, 10, 10, 10, 1);
+		mode = new JointImpedanceControlMode(10, 10, 10, 10, 10, 10, 1);
+		mode.setStiffness(10, 10, 10, 10, 10, 10, 1);
 		
 		//The listener of the allowMovementKey button
 		IUserKeyListener moveButtonListener = new IUserKeyListener() {
@@ -191,15 +185,21 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
-		pliers.getFrame("/Sander").move(ptp(framePoints.get(0)).setJointVelocityRel(1.0));
+		
+		pliers.getFrame("Sander").move(ptp(framePoints.get(0)).setJointVelocityRel(1.0));
+
+		getLogger().info(Double.toString(framePoints.get(2).getX()));
+		framePoints.get(2).attachTo(getApplicationData().getFrame("/Workspace/P3"));
+		getLogger().info(Double.toString(getFrame("/Workspace/P3").getX()));
+		
 		
 		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil) {
-			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, -10.0).setJointVelocityRel(1.0));
-			pliers.getFrame("/Sander").move(linRel(0.0, framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
-			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, 60.0).setJointVelocityRel(1.0));
-			pliers.getFrame("/Sander").move(linRel(0.0, -framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
-			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, -50.0).setJointVelocityRel(1.0));
-			pliers.getFrame("/Sander").move(linRel(i, 0.0, 0.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, 0.0, -10.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, 0.0, 60.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, -framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, 0.0, -50.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(i, 0.0, 0.0).setJointVelocityRel(1.0));
 		}
 		robot.move(ptpHome());
 		

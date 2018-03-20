@@ -129,10 +129,10 @@
                 </redundancyData>
             </frame>
         </frame>
-        <frame id="_b5604481-4ace-4755-ba60-43501c8034b7" name="WorkingTable">
+        <frame id="_b5604481-4ace-4755-ba60-43501c8034b7" name="Workspace">
             <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
             <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1521214024518"/>
+                <info key="LastModificationTime" type="java.lang.Long" value="1521535016049"/>
                 <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="true"/>
             </additionalInformation>
             <frame id="_2448f08f-7ce9-4bf4-aee6-886984287c28" name="P1">
