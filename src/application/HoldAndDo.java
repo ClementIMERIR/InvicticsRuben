@@ -187,18 +187,18 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
 		ObjectFrame test = framePoints.get(0);
-		ObjectFrame test2 = pliers.getFrame("/Sander");
+		ObjectFrame test2 = pliers.getFrame("Sander");
 		
 		test2.move(lin(test));
 		getLogger().info("1");
 		
 		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil) {
-			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, -10.0).setJointVelocityRel(1.0));
-			pliers.getFrame("/Sander").move(linRel(0.0, framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
-			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, 60.0).setJointVelocityRel(1.0));
-			pliers.getFrame("/Sander").move(linRel(0.0, -framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
-			pliers.getFrame("/Sander").move(linRel(0.0, 0.0, -50.0).setJointVelocityRel(1.0));
-			pliers.getFrame("/Sander").move(linRel(i, 0.0, 0.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, 0.0, -10.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, 0.0, 60.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, -framePoints.get(1).getY(), 0.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(0.0, 0.0, -50.0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(i, 0.0, 0.0).setJointVelocityRel(1.0));
 		}
 		/*-------------------------------------------------------------------------------------------------------------------*/
 		
