@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
+import com.kuka.roboticsAPI.deviceModel.JointPosition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
@@ -45,6 +46,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	private CartesianImpedanceControlMode mode;
 //	private JointImpedanceControlMode mode;
 	private double[] jointPosition;
+	private JointPosition jPosition;
 	
 	private IUserKeyBar buttonBar;
 	private IUserKey allowMovementKey;
@@ -198,10 +200,6 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
 
-//		robot.move(linRel(framePoints.get(0).getX(), 0.0, 0.0).setJointVelocityRel(0.5));
-//		robot.move(linRel(framePoints.get(1).getX(), 0.0, 0.0).setJointVelocityRel(0.5));
-//		robot.move(linRel(framePoints.get(0).getX(), 0.0, 0.0).setJointVelocityRel(0.5));
-		
 		double minX = 9999;
 		double minY = 9999;
 		double maxX = 0;
@@ -220,11 +218,10 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		distanceX = maxX - minX;
 		distanceY = maxY - minY;
 		
-		pliers.getFrame("Sander").move(ptp(getApplicationData().getFrame("/Workspace").getChild("NP1")).setJointVelocityRel(0.5));
-//		if(startingJoints.length != 0 && startingJoints[0] != 0.0){ robot.move(ptp(startingJoints)); }
+		robot.move(ptp( jPosition.get(0), jPosition.get(1), jPosition.get(2), jPosition.get(3), jPosition.get(4), jPosition.get(5), jPosition.get(6)).setJointVelocityRel(0.5));
 		
 		for(int i = 0 ; i < maxX ; i += largeurOutil/2) {
-			pliers.getFrame("Sander").move(linRel(distanceX, 0, 0).setJointVelocityRel(1.0));
+			pliers.getFrame("Sander").move(linRel(distanceX, 0, 0).setJointVelocityRel(0.5));
 			pliers.getFrame("Sander").move(linRel(-distanceX, 0, 0).setJointVelocityRel(0.5));
 			pliers.getFrame("Sander").move(linRel(0, largeurOutil/2, 0).setJointVelocityRel(0.5));
 			getLogger().info("1");
@@ -243,6 +240,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		getLogger().info(new StringBuilder("Enregistrement de la position ").append(currentPointIndex+1).append("...").toString());
 
 		currentPointIndex++;
+		
+		jPosition = currentPointIndex == 1 ? robot.getCurrentJointPosition() : jPosition;
 		
 		//parameters
 		String pointNameString = new StringBuilder("NP").append(String.valueOf(currentPointIndex)).toString();//NP1,NP2,NP3,NP4.
