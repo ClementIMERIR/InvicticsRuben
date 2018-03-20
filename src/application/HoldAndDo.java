@@ -186,7 +186,6 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
 		
-		pliers.getFrame("Sander").move(ptp(framePoints.get(0)).setJointVelocityRel(1.0));
 
 		getLogger().info(Double.toString(framePoints.get(2).getX()));
 		framePoints.get(2).attachTo(getApplicationData().getFrame("/Workspace/P3"));
