@@ -192,9 +192,9 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		}while(sumForces >= 10);
 		
 		currFrameState = robot.getCurrentCartesianPosition(penWorldAlign);
-		currFrameState.setAlphaRad(Math.toRadians(-180));
+		currFrameState.setAlphaRad(Math.toRadians(0));
 		currFrameState.setBetaRad(Math.toRadians(0));
-		currFrameState.setGammaRad(Math.toRadians(180));
+		currFrameState.setGammaRad(Math.toRadians(0));
 		penWorldAlign.move(ptp(currFrameState));
 		
 		//pen.getFrame("/Pen/PenTCP").copyWithRedundancy(robot.getFrame("/WorkingTable/StartingPoint"));
