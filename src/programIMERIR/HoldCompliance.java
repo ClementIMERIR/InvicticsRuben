@@ -109,7 +109,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				Frame currentFrame = robot.getCurrentCartesianPosition(penTCP);
 				getLogger().info("penInfos = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 				//penTCP.copyWithRedundancy(robot.getFrame("/WorkingTable/StartingPoint"));
-				penCollisionObserver.enable();
+				//penCollisionObserver.enable();
 				//drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
 				penTCP.move(linRel(0,0,currentFrame.getZ()));
 			}
