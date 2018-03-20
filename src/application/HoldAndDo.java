@@ -186,10 +186,10 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
-		ObjectFrame test = framePoints.get(0);
-		ObjectFrame test2 = pliers.getFrame("Sander");
-		
-		test2.move(lin(test));
+//		ObjectFrame test = framePoints.get(0);
+//		ObjectFrame test2 = pliers.getFrame("Sander");
+//		getLogger().info("1");
+//		test2.move(lin(test));
 		getLogger().info("1");
 		
 		for(double i = framePoints.get(0).getX(); i < framePoints.get(3).getX(); i += largeurOutil) {
