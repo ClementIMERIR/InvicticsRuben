@@ -72,12 +72,14 @@ public class HoldCompliance extends RoboticsAPIApplication {
 	
 	@Inject
 	private CartesianImpedanceControlMode freeMode;
+	private CartesianImpedanceControlMode drawMode;
 	private ForceCondition grabForce;
 	private ForceCondition penCollision;
 	private ConditionObserver grabForceObserver;
 	private ConditionObserver penCollisionObserver;
 	private ForceSensorData data;
 	private ForceSensorData penCollisionForce;
+	private Double squareSize;
 	
 	IUserKeyBar buttonsBar;
 	IUserKey startDrawing;
@@ -103,14 +105,13 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		@Override
 		public void onKeyEvent(IUserKey key, UserKeyEvent event) {
 			if(event == UserKeyEvent.KeyDown){
-				grabForceObserver.disable();
-				penCollisionObserver.enable();
 				getLogger().info("Button startDrawing triggered");
 				Frame currentFrame = robot.getCurrentCartesianPosition(penTCP);
-				getLogger().info("Avant copy penInfos = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
+				getLogger().info("penInfos = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 				//penTCP.copyWithRedundancy(robot.getFrame("/WorkingTable/StartingPoint"));
-				//draw();
-				//penTCP.move(linRel(currentFrame.getX(), currentFrame.getY(), 0));
+				penCollisionObserver.enable();
+				//drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
+				penTCP.move(linRel(0,0,currentFrame.getZ()));
 			}
 		}
 	};
@@ -122,7 +123,10 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		@Override
 		public void onRisingEdge(ConditionObserver conditionObserver, Date time,
 				int missedEvents) {
+			penCollisionObserver.disable();
 			getLogger().info("Pen Collision");
+			Frame currentFrame = robot.getCurrentCartesianPosition(penTCP);
+			drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
 		}
 	};
 	
@@ -132,17 +136,25 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		penTCP = pen.getFrame("PenTCP");
 		pen.attachTo(robot.getFlange());
 		
+		//Ajout d'un bouton pour lancer le dessin
 		buttonsBar = getApplicationUI().createUserKeyBar("Drawing");
 		startDrawing = buttonsBar.addUserKey(0, startDrawingListener, true);
 		startDrawing.setText(UserKeyAlignment.MiddleLeft, "Start Drawing");
 		buttonsBar.publish();
 		
+		//définition du mode d'impédence pour déplacer le robot à la main
 		freeMode = new CartesianImpedanceControlMode();
 		freeMode.parametrize(CartDOF.X,CartDOF.Y,CartDOF.Z).setStiffness(10);
 		freeMode.parametrize(CartDOF.A,CartDOF.B,CartDOF.C).setStiffness(5);
+		
+		//définition du mode d'impédence pour le dessins
+		drawMode = new CartesianImpedanceControlMode();
+		drawMode.parametrize(CartDOF.ALL).setStiffness(5);
+		
 		//Condition de force activée lorsqu'une force supérieure à 10N est détectée pour bouger librement le bras
 		grabForce = ForceCondition.createSpatialForceCondition(robot.getFlange(), 10);
 		grabForceObserver = getObserverManager().createConditionObserver(grabForce, NotificationType.EdgesOnly,grabForceListener);
+		
 		//Condition de force activée pour une force supérieure à 2N lors d'une collision du marqueur sur une surface
 		penCollision = ForceCondition.createSpatialForceCondition(penTCP, 2);
 		penCollisionObserver = getObserverManager().createConditionObserver(penCollision, NotificationType.EdgesOnly,penCollisionListener);
@@ -151,14 +163,16 @@ public class HoldCompliance extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 		// your application execution starts here
-		robot.move(ptp(getApplicationData().getFrame("/WorkingTable/WaitingPoint")));
+		penTCP.move(ptp(getApplicationData().getFrame("/WorkingTable/WaitingPoint")));
 		grabForceObserver.enable();	
-		penCollisionObserver.disable();
 		while(true){
 			ThreadUtil.milliSleep(1000);
 		}
 	}
 	
+	/**
+	 * Méthode permettant le déplacement du robot à la main
+	 */
 	public void freeMovementRobot(){
 		Vector force;
 		double sumForces;
@@ -177,5 +191,51 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		currFrameState.setBetaRad(Math.toRadians(0));
 		currFrameState.setGammaRad(Math.toRadians(180));
 		robot.move(ptp(currFrameState));
+		
+		//pen.getFrame("/Pen/PenTCP").copyWithRedundancy(robot.getFrame("/WorkingTable/StartingPoint"));
+	}
+	
+	/**
+	 * Méthode qui déplace le pen au point "destination" avec correction des z en fonction des forces
+	 * @param destX
+	 * @param destY
+	 */
+	public void movePenTo(double destX, double destY){
+		Frame currentFrame;
+		Vector force;
+		double movedestX, movedestY, moveZ, accuracy = 1000;
+		do{
+			currentFrame = robot.getCurrentCartesianPosition(penTCP);
+			force = robot.getExternalForceTorque(penTCP).getForce();
+			movedestX = (destX - currentFrame.getX())/accuracy;
+			movedestY = (destY - currentFrame.getY())/accuracy;
+			moveZ = force.getZ();
+			penTCP.move(linRel(movedestX,movedestY,moveZ));
+		}while(currentFrame.getX() != destX && currentFrame.getY() != destY);
+	}
+	
+	public void drawSquare(double startingPointX, double startingPointY, double dimension){
+		getLogger().info("Début du dessin du carré");
+		double altitude = 100;
+		Frame p0 = new Frame(startingPointX,startingPointY,altitude);
+		Frame p1 = new Frame(p0.getX() + dimension,p0.getY(),altitude);
+		Frame p2 = new Frame(p0.getX() + dimension, p0.getY() + dimension,altitude);
+		Frame p3 = new Frame(p0.getX(), p0.getY() + dimension, altitude);
+		getLogger().info("p0:("+p0.getX()+","+p0.getY()+") "
+				+"p1:("+p1.getX()+","+p1.getY()+")"
+				+"p2:("+p2.getX()+","+p2.getY()+")"
+				+"p3:("+p3.getX()+","+p3.getY()+")");
+		
+		//avec le move de l'API
+		penTCP.move(lin(p1).setMode(drawMode));
+		penTCP.move(lin(p2).setMode(drawMode));
+		penTCP.move(lin(p3).setMode(drawMode));
+		penTCP.move(lin(p0).setMode(drawMode));
+		
+		//avec le movePenTo perso
+//		movePenTo(p0.getX(), p0.getY());
+//		movePenTo(p1.getX(), p1.getY());
+//		movePenTo(p2.getX(), p2.getY());
+//		movePenTo(p3.getX(), p3.getY());
 	}
 }
