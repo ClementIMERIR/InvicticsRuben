@@ -96,7 +96,7 @@ public class TrainingLegs extends RoboticsAPIApplication {
 			/* Récupération des données du résultat de la requête de lecture */
 			while (resultat.next()) {
 				current_id = resultat.getInt("id_patient");
-				current_nom = resultat.getString("Prenom");
+				current_nom = resultat.getString("prenom");
 			}
 			// récuperer les parametres du patient en utilisant son id.
 			sql = "SELECT * FROM parametres_patients WHERE id_patient = \'" + current_id + "\'";
@@ -120,7 +120,7 @@ public class TrainingLegs extends RoboticsAPIApplication {
 			e.printStackTrace();
 		} finally {
 			try {
-				System.out.println("le mon est : " + current_nom);
+				System.out.println("le nom est : " + current_nom);
 				connection.close();
 				stmt.close();
 			} catch (SQLException e) {
@@ -129,7 +129,7 @@ public class TrainingLegs extends RoboticsAPIApplication {
 		}
 		answer = getApplicationUI().displayModalDialog(
 				ApplicationDialogType.QUESTION,
-				"bonjour mm" + nom + current_nom, "Ok");
+				"bonjour Mm/Mr : " + nom + current_nom, "Ok");
 
 	}
 
