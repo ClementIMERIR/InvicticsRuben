@@ -68,6 +68,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 	@Inject
 	@Named("Pen")
 	private Tool pen;
+	private ObjectFrame penTCP;
 	private ObjectFrame penWorldAlign;
 	
 	@Inject
@@ -108,11 +109,9 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				getLogger().info("Button startDrawing triggered");
 				Frame currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
 				getLogger().info("penInfos = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
-				//penTCP.copyWithRedundancy(robot.getFrame("/WorkingTable/StartingPoint"));
 				grabForceObserver.disable();
 				penCollisionObserver.enable();
-				//drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
-				penWorldAlign.move(linRel(500,0,0));
+				penTCP.move(linRel(0,0,currentFrame.getZ()).breakWhen(penCollision));
 			}
 		}
 	};
@@ -136,6 +135,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 	@Override
 	public void initialize() {
 		// initialize your application here
+		penTCP = pen.getFrame("PenTCP");
 		penWorldAlign = pen.getFrame("PenTCP/PenAlignWorld");
 		pen.attachTo(robot.getFlange());
 		squareSize = getApplicationData().getProcessData("squareSize").getValue();
