@@ -210,9 +210,9 @@
                 </redundancyData>
             </frame>
             <frame id="_3f8f9c2f-b83f-4bea-9e28-f38900ed7cf9" name="P6">
-                <transformation a="-7.615638209426497E-6" b="0.0035659398185134573" c="0.0052168169027125965" x="399.0719213606869" y="60.73280340545196" z="637.5004069997773"/>
+                <transformation a="0.0" b="0.0" c="0.0" x="399.0719213606869" y="60.73280340545196" z="637.5004069997773"/>
                 <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521562599684"/>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1521565226897"/>
                     <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Pen/PenTCP/PenAlignWorld" tool="Pen" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                         <tcpTransformation a="3.141592653589793" b="-1.2246467991473532E-16" c="3.141592653589793" x="-0.7304491249396794" y="-0.35532343486414886" z="129.64248355401455"/>
                     </info>
