@@ -109,6 +109,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				Frame currentFrame = robot.getCurrentCartesianPosition(penTCP);
 				getLogger().info("penInfos = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 				//penTCP.copyWithRedundancy(robot.getFrame("/WorkingTable/StartingPoint"));
+				grabForceObserver.disable();
 				penCollisionObserver.enable();
 				//drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
 				penTCP.move(linRel(0,0,currentFrame.getZ()));
@@ -145,7 +146,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		//définition du mode d'impédence pour déplacer le robot à la main
 		freeMode = new CartesianImpedanceControlMode();
 		freeMode.parametrize(CartDOF.X,CartDOF.Y,CartDOF.Z).setStiffness(10);
-		freeMode.parametrize(CartDOF.A,CartDOF.B,CartDOF.C).setStiffness(5);
+//		freeMode.parametrize(CartDOF.A,CartDOF.B,CartDOF.C).setStiffness(5);
 		
 		//définition du mode d'impédence pour le dessins
 		drawMode = new CartesianImpedanceControlMode();
@@ -186,11 +187,11 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			robot.move(positionHold(freeMode,300, TimeUnit.MILLISECONDS));
 		}while(sumForces >= 10);
 		
-		currFrameState = robot.getCurrentCartesianPosition(robot.getFlange());
+		currFrameState = robot.getCurrentCartesianPosition(penTCP);
 		currFrameState.setAlphaRad(Math.toRadians(-180));
 		currFrameState.setBetaRad(Math.toRadians(0));
 		currFrameState.setGammaRad(Math.toRadians(180));
-		robot.move(ptp(currFrameState));
+		penTCP.move(ptp(currFrameState));
 		
 		//pen.getFrame("/Pen/PenTCP").copyWithRedundancy(robot.getFrame("/WorkingTable/StartingPoint"));
 	}
