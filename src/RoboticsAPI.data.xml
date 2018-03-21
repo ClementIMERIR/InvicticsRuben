@@ -113,9 +113,9 @@
                 <info key="LastModificationTime" type="java.lang.Long" value="1521040834313"/>
             </additionalInformation>
             <frame id="_4cabcb63-ce38-4772-9230-004e97f4500d" name="P1">
-                <transformation a="-0.12217304763960307" b="0.0" c="1.4486232791552935" x="-142.5" y="-826.5" z="380.0"/>
+                <transformation a="-0.20943951023931953" b="0.0" c="1.4486232791552935" x="-142.5" y="-826.5" z="380.0"/>
                 <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521118556658"/>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1521641585535"/>
                     <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="LegLift/Dummy/PNP_parent" tool="LegLift" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                         <tcpTransformation a="0.0" b="0.0" c="0.0" x="-38.826061" y="-4.297067" z="174.296734"/>
                     </info>
@@ -188,7 +188,7 @@
                     <transformation a="0.0" b="0.0" c="0.0" x="-38.826061" y="-4.297067" z="237.296734"/>
                     <frames>
                         <frame id="_788c818d-982f-4d19-a602-60812b248199" name="PNP_parent">
-                            <transformation a="-1.5707963267948966" b="0.0" c="0.0" x="0.0" y="0.0" z="-63.0"/>
+                            <transformation a="-1.5707963267948966" b="0.0" c="0.0" x="10.0" y="0.0" z="-70.0"/>
                             <additionalInformation>
                                 <info key="Radius" type="java.lang.Integer" value="25"/>
                                 <info key="SafetyID" type="java.lang.Integer" value="0"/>
