@@ -226,9 +226,14 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		//deltaY = Y deuxième point - Y premier point
 		//Le ponçage incrémentera de deltaX et deltaY dans le mouvement aller, et le décrémentera dans le retour
 		//Ensuite, test si deltaX ou deltaY est le plus grand (retenir qui est le plus grand) puis faire le plus petit sur le plus grand
+		//deltaPetit/(deltaPetit + deltaGrand) = un pourcentage de 0 à 1/2
 		//cela nous donnera le rapport pour le déplacement de l'outil pour continuer le ponçage
+		//deltaPetit (soit l'incrément X soit l'incrément Y) utilisera le pourcentage obtenu dans le déplacement de l'outil en faisant : largeurOutil x résultat du rapport
+		//deltaGrand (soit l'incrément X soit l'incrément Y) utilisera le pourcentage obtenu dans le déplacement de l'outil en faisant : largeurOutil x (1- résultat du rapport)
 		
-		//si on prend juste 2 points => récupérer leur x et y
+		//ensuite récupérer le point non utilisé qui n'est pas le point de la diagonale
+		//calculer la distance entre notre origine (le point avec le plus petit x) et celui ci pour avoir la longueur a garder dans la boucle for
+		//cela nous donnera la valeur a ne pas dépasser pour le (i = 0 ; i < distance Origine jusqu'au point concerné ; i+= largeurOutil)
 				
 		
 		robot.move(ptp( jPosition.get(0), jPosition.get(1), jPosition.get(2), jPosition.get(3), jPosition.get(4), jPosition.get(5), jPosition.get(6)).setJointVelocityRel(0.5));
