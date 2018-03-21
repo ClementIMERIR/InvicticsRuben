@@ -163,7 +163,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		//définition du mode d'impédence pour le dessins
 		drawMode = new CartesianImpedanceControlMode();
 		drawMode.parametrize(CartDOF.Z).setStiffness(100);
-		drawMode.parametrize(CartDOF.Y).setDamping(0);
+		drawMode.parametrize(CartDOF.Y).setDamping(0.1);
 		
 		//Condition de force activée lorsqu'une force supérieure à 10N est détectée pour bouger librement le bras
 		grabForce = ForceCondition.createSpatialForceCondition(robot.getFlange(), 15);
