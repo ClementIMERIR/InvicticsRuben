@@ -163,7 +163,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		
 		//définition du mode d'impédence pour le dessins
 		drawMode = new CartesianImpedanceControlMode();
-		drawMode.parametrize(CartDOF.Z).setStiffness(10);
+		drawMode.parametrize(CartDOF.Z).setStiffness(50);
 		drawMode.parametrize(CartDOF.Z).setAdditionalControlForce(-1);
 		drawMode.parametrize(CartDOF.Y).setDamping(0.1);
 		
@@ -244,7 +244,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		//définition des parametres du déplacement 
 		RelativeLIN moveSquareSide = linRel(0,0,-3);
 		moveSquareSide.setMode(drawMode);
-		moveSquareSide.setCartVelocity(100);
+		moveSquareSide.setCartVelocity(50);
 		
 		displayLogForces(penWorldAlign);
 
