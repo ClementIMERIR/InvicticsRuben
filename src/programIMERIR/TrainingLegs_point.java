@@ -1,14 +1,10 @@
 package programIMERIR;
 
 
-import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 import com.kuka.roboticsAPI.deviceModel.LBR;
-import com.kuka.roboticsAPI.motionModel.PositionHold;
-import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 
 /**
  * Implementation of a robot application.
@@ -28,22 +24,18 @@ import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceContr
  * @see #run()
  * @see #dispose()
  */
-public class AllSurfacesDrawing extends RoboticsAPIApplication {
+public class TrainingLegs_point extends RoboticsAPIApplication {
 	@Inject
-	private LBR robot;
-	
-	private CartesianImpedanceControlMode freeMoveMode;
+	private LBR lBR_iiwa_14_R820_1;
 
 	@Override
 	public void initialize() {
 		// initialize your application here
-		freeMoveMode = new CartesianImpedanceControlMode();
 	}
 
 	@Override
 	public void run() {
 		// your application execution starts here
-		robot.move(ptp(getApplicationData().getFrame("/WorkingTable/WaitingPoint")));
-		robot.move(positionHold(freeMoveMode, -1, TimeUnit.SECONDS));
+		lBR_iiwa_14_R820_1.move(ptpHome());
 	}
 }
