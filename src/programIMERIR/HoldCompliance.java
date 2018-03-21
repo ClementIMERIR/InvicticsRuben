@@ -161,10 +161,10 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			getLogger().info("Pen Collision");
 			getLogger().info("SommeF : "+getSumForces(penWorldAlign));
 			double sumForce = getSumForces(penWorldAlign);
-			if(sumForce > 4){
+			if(sumForce > 2){
 				getLogger().info("TROP DE PRESSION!!");
 				penWorldAlign.move(linRel(0, 0, 100));
-			}else if((sumForce > 4) && (sumForce > 1)){
+			}else if((sumForce < 2) && (sumForce > 0.3)){
 				getLogger().info("Bonne pression.");
 				penWorldAlign.move(linRel(0, 0, 50));
 			}else{
@@ -176,7 +176,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			
 			//penWorldAlign.move(linRel(200, 0, 0));
 			
-			drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
+			//drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
 			penWorldAlign.move(ptp(getApplicationData().getFrame("/WorkingTable/P6")));
 		}
 	};
@@ -192,7 +192,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			getLogger().info("Before getZ : "+frame.getZ());
 			frame.setZ(frame.getZ()+2);
 			getLogger().info("After getZ : "+frame.getZ());
-			//penWorldAlign.moveAsync(linRel(0, 0, 2).setMode(drawMode));
+			penWorldAlign.moveAsync(linRel(0, 0, 2).setMode(drawMode));
 		}
 	};
 	
@@ -325,10 +325,10 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				+"p3:("+p3.getX()+","+p3.getY()+")");
 		
 		displayLogForces(penWorldAlign);
-		penWorldAlign.move(lin(p1).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZposCond, adjustZpos).triggerWhen(penForceZnegCond, adjustZneg));
+		penWorldAlign.move(lin(p1).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZposCond, adjustZpos));
 		
 		displayLogForces(penWorldAlign);
-		penWorldAlign.move(lin(p2).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZposCond, adjustZpos).triggerWhen(penForceZnegCond, adjustZneg));
+		penWorldAlign.move(lin(p2).setMode(drawMode).setCartVelocity(100));
 		
 		displayLogForces(penWorldAlign);
 		penWorldAlign.move(lin(p3).setMode(drawMode).setCartVelocity(100));
