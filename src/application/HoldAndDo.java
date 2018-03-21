@@ -2,6 +2,7 @@ package application;
 
 
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.positionHold;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 
@@ -284,11 +285,16 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		//Polish
 		getLogger().info("Returning to first point");
 		//pliers.getFrame("Sander").move( lin( startFrames.get(0) ) );
-		pliers.getFrame("Sander").move( lin( getApplicationData().getFrame("Workspace").getChild("Start" + 0) ) );
+		//pliers.getFrame("Sander").move( lin( getApplicationData().getFrame("Workspace").getChild("Start" + 0) ) );
+		//pliers.getFrame("Sander").move( linRel( startFrames.get(0).getX(), startFrames.get(0).getY(), startFrames.get(0).getZ() ) );
 		getLogger().info("Robot on first point. Starting polishement.");
 		for(int i = 0 ; i < startFrames.size() ; i++){
-			pliers.getFrame("Sander").move( lin( getApplicationData().getFrame("Workspace").getChild("End" + i) ) );
-			pliers.getFrame("Sander").move( lin( getApplicationData().getFrame("Workspace").getChild("Start" + i) ) );
+			pliers.getFrame("Sander").move( linRel(deltaXStart, deltaYStart, 0.0) );
+			pliers.getFrame("Sander").move( linRel(-1 * deltaXStart, -1 * deltaYStart, 0.0) );
+			pliers.getFrame("Sander").move( linRel(largeurOutil * ( deltaXStart / ( Math.abs(deltaXStart) +  Math.abs(deltaYStart) ) ), largeurOutil * ( deltaYStart/ ( Math.abs(deltaYStart) +  Math.abs(deltaXStart) ) ), 0.0) );
+			
+//			pliers.getFrame("Sander").move( lin( getApplicationData().getFrame("Workspace").getChild("End" + i) ) );
+//			pliers.getFrame("Sander").move( lin( getApplicationData().getFrame("Workspace").getChild("Start" + i) ) );
 			
 //			pliers.getFrame("Sander").move( lin( endFrames.get(i) ) );
 //			pliers.getFrame("Sander").move( lin( startFrames.get(i) ) );
