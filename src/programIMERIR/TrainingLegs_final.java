@@ -189,7 +189,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 
 		case thomas:
 			legLift.getFrame("/Dummy/PNP_parent").move(
-					ptp(getApplicationData().getFrame("/genoux_thomas/P1")));
+					ptp(getApplicationData().getFrame("/Genoux/P1")));
 			
 			while (answer != 0) {
 				ThreadUtil.milliSleep(5000);// attache la jambe
