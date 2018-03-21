@@ -150,7 +150,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		// PARTIE EN COMMUN POUR TOUS LES PATIENTS------------------------
 		robot.move(ptpHome().setJointVelocityRel(0.5));
 
-		legLift.getFrame("/Dummy/PNP_parent").move(
+		legLift.getFrame("/TCP").move(
 				ptp(getApplicationData().getFrame("/Genoux/P1")));
 		
 		while (answer != 0) {
