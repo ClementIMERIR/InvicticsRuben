@@ -143,11 +143,11 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		
 		@Override
 		public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
-			if(penCollisionForce.getZ() > 1){
+			if(penCollisionForce.getZ() > 2){
 				getLogger().info("Pression trop forte");
 				worldAltitude -= 1;
 				//penWorldAlign.move(linRel(penWorldAlign.getX(), penWorldAlign.getY(), penWorldAlign.getZ()-1));
-			}else if(penCollisionForce.getZ() < 1){
+			}else if(penCollisionForce.getZ() < 2){
 				getLogger().info("Pression pas assez forte");
 				worldAltitude += 1;
 				//penWorldAlign.move(linRel(penWorldAlign.getX(), penWorldAlign.getY(), penWorldAlign.getZ()+1));
