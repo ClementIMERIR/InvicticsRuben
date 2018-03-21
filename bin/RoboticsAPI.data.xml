@@ -277,6 +277,6 @@
         <processData dataType="java.lang.Integer" defaultValue="5" displayName="Nombre de cycles" id="nbCycles" max="10.0" min="5.0" value="5"/>
         <processData dataType="java.lang.Double" defaultValue="20" displayName="Débattement angulaire" id="angle" max="30.0" min="5.0" unit="°" value="20"/>
         <processData dataType="java.lang.Double" defaultValue="5" displayName="Vitesse angulaire" id="angleSpeed" max="30.0" min="5.0" unit="mm/s" value="20"/>
-        <processData dataType="java.lang.Double" defaultValue="50" displayName="Dimension du Carré" id="squareSize" max="3000.0" min="50.0" unit="mm" value="200"/>
+        <processData dataType="java.lang.Double" defaultValue="50" displayName="Dimension du Carré" id="squareSize" max="3000.0" min="50.0" unit="mm" value="100"/>
     </processDataContainer>
 </RoboticsAPIData>
