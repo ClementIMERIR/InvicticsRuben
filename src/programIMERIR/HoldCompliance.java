@@ -143,15 +143,16 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		
 		@Override
 		public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
-			if(penCollisionForce.getZ() > 2){
+			if(penCollisionForce.getZ() > 1){
 				getLogger().info("Pression trop forte");
 				worldAltitude -= 1;
 				//penWorldAlign.move(linRel(penWorldAlign.getX(), penWorldAlign.getY(), penWorldAlign.getZ()-1));
-			}else if(penCollisionForce.getZ() < 2){
+			}else if(penCollisionForce.getZ() < 1){
 				getLogger().info("Pression pas assez forte");
 				worldAltitude += 1;
 				//penWorldAlign.move(linRel(penWorldAlign.getX(), penWorldAlign.getY(), penWorldAlign.getZ()+1));
 			}
+			getLogger().info("WorldAltitude = "+worldAltitude);
 		}
 	};
 	
@@ -184,7 +185,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		grabForceObserver = getObserverManager().createConditionObserver(grabForce, NotificationType.EdgesOnly,grabForceListener);
 		
 		//Condition de force activée pour une force supérieure à 2N lors d'une collision du marqueur sur une surface
-		penCollision = ForceCondition.createSpatialForceCondition(penWorldAlign, 2);
+		penCollision = ForceCondition.createSpatialForceCondition(penWorldAlign, 1);
 		penCollisionObserver = getObserverManager().createConditionObserver(penCollision, NotificationType.EdgesOnly,penCollisionListener);
 	}
 
@@ -195,7 +196,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		grabForceObserver.enable();	
 		while(true){
 			penCollisionForce = robot.getExternalForceTorque(penWorldAlign).getForce();
-			displayLogForces(penWorldAlign);
+			//displayLogForces(penWorldAlign);
 			ThreadUtil.milliSleep(100);
 		}
 	}
