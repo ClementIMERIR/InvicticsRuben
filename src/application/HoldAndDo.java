@@ -7,7 +7,6 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Condition;
 
 import javax.inject.Inject;
 import javax.inject.Named;
