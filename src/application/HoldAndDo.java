@@ -7,6 +7,7 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -207,16 +208,46 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		double distanceX = 0;
 		double distanceY = 0;
 		
+		double deltaX = 0;
+		
+		ObjectFrame refFrame1 = framePoints.get(0);
+		ObjectFrame refFrame2 = framePoints.get(1);
+		ObjectFrame refFrame3 = framePoints.get(2);
+		
 		for(ObjectFrame point : framePoints){
-			minX = point.getX() < minX ? point.getX() : minX;
+			if(point.getX() < minX){
+				refFrame1 = point;
+				minX = point.getX();
+			}
+			
 			minY = point.getY() < minY ? point.getY() : minY;
 			
 			maxX = point.getX() > minX ? point.getX() : minX;
 			maxY = point.getY() > minY ? point.getY() : minY;
+			
+			refFrame3 = refFrame1.distanceTo(point) > refFrame1.distanceTo(refFrame3) ? point : refFrame3;
 		}
 		
 		distanceX = maxX - minX;
 		distanceY = maxY - minY;
+
+		//récupérer les deux points avec les X les plus proches
+		for (ObjectFrame point : framePoints) {
+			
+			if(point.distanceTo(refFrame1) != 0){
+				refFrame2 = Math.abs(point.getX() - refFrame1.getX() ) < Math.abs(refFrame2.getX() - refFrame1.getX() ) ? point : refFrame2;
+				
+				deltaX = refFrame1.getX() - refFrame3.getX() < 0 ? refFrame2.getX() - refFrame1.getX() : refFrame1.getX() - refFrame2.getX();
+			}
+			
+		}
+		
+		//vérifier que ce ne sont pas deux points d'une diagonale (vérifier la distance entre les différents points
+		//si elle est la plus grande entre les 3 autres points il ne faut pas prendre celui ci et prendre un autre point
+		//test si deltaX ou deltaY est le plus grand puis faire le plus petit sur le plus grand
+		
+		//si on prend juste 2 points => récupérer leur x et y
+				
 		
 		robot.move(ptp( jPosition.get(0), jPosition.get(1), jPosition.get(2), jPosition.get(3), jPosition.get(4), jPosition.get(5), jPosition.get(6)).setJointVelocityRel(0.5));
 		
