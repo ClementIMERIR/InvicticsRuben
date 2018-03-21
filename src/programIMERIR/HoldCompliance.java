@@ -225,7 +225,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			movedestX = (destX - currentFrame.getX())/accuracy;
 			movedestY = (destY - currentFrame.getY())/accuracy;
 			moveZ = force.getZ()-0.7;
-			penWorldAlign.move(linRel(movedestX,movedestY,moveZ).setCartVelocity(100));
+			penWorldAlign.move(linRel(1,1,moveZ).setCartVelocity(100));
 		}while(Math.floor(currentFrame.getX()) != Math.floor(destX) && Math.floor(currentFrame.getY()) != Math.floor(destY));
 	}
 
