@@ -222,8 +222,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		//Calculer la distance entre ce point, et les 3 autres points pour éliminer la diagonale
 		//Entre les points restants, récupérer celui avec le second x le plus petit
 		
-		//deltaX = X premier point - Y deuxième point
-		//deltaY = Y premier point - X deuxième point
+		//deltaX = X deuxième point - X premier point
+		//deltaY = Y deuxième point - Y premier point
 		//Le ponçage incrémentera de deltaX et deltaY dans le mouvement aller, et le décrémentera dans le retour
 		//Ensuite, test si deltaX ou deltaY est le plus grand (retenir qui est le plus grand) puis faire le plus petit sur le plus grand
 		//cela nous donnera le rapport pour le déplacement de l'outil pour continuer le ponçage
