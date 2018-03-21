@@ -262,7 +262,7 @@
             </frames>
             <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="170.0" cogY="0.0" cogZ="0.0" inertiaX="0.0060" inertiaY="0.0608" inertiaZ="0.0608" mass="1.7"/>
         </workpieceTemplate>
-        <workpieceTemplate class="" name="leg_halima">
+        <workpieceTemplate class="" name="Leg_halima">
             <frames>
                 <frame id="_560442b4-4585-4453-9645-d9c475e54607" name="Genoux">
                     <transformation a="0.0" b="0.0" c="0.0" x="520.0" y="0.0" z="0.0"/>
@@ -273,7 +273,7 @@
             </frames>
             <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.0"/>
         </workpieceTemplate>
-        <workpieceTemplate class="" name="leg_thomas">
+        <workpieceTemplate class="" name="Leg_thomas">
             <frames>
                 <frame id="_58dce78f-f153-4eee-a01e-86389a636527" name="Genoux">
                     <transformation a="0.0" b="0.0" c="0.0" x="550.0" y="0.0" z="0.0"/>
@@ -284,7 +284,7 @@
             </frames>
             <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.0"/>
         </workpieceTemplate>
-        <workpieceTemplate class="" name="leg_mathis">
+        <workpieceTemplate class="" name="Leg_mathis">
             <frames>
                 <frame id="_aaafb2db-04b2-4a0a-84e2-f339a9e56ffb" name="Genoux">
                     <transformation a="0.0" b="0.0" c="0.0" x="580.0" y="0.0" z="0.0"/>
