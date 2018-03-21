@@ -218,9 +218,9 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		distanceX = maxX - minX;
 		distanceY = maxY - minY;
 
-		//récupérer les deux points avec les X les plus proches
-		//vérifier que ce ne sont pas deux points d'une diagonale (vérifier la distance entre les différents points
-		//si elle est la plus grande entre les 3 autres points il ne faut pas prendre celui ci et prendre un autre point
+		//Prendre le point avec le plus petit X
+		//Calculer la distance entre ce point, et les 3 autres points pour éliminer la diagonale
+		//Entre les points restants, récupérer celui avec le second x le plus petit
 		
 		//deltaX = X premier point - Y deuxième point
 		//deltaY = Y premier point - X deuxième point
