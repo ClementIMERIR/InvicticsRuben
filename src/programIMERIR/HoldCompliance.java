@@ -161,7 +161,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			getLogger().info("Pen Collision");
 			getLogger().info("SommeF : "+getSumForces(penWorldAlign));
 			double sumForce = getSumForces(penWorldAlign);
-			if(sumForce > 2){
+			if(sumForce > 2.5){
 				getLogger().info("TROP DE PRESSION!!");
 				penWorldAlign.move(linRel(0, 0, 100));
 			}else if((sumForce < 2) && (sumForce > 0.3)){
@@ -242,10 +242,10 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		grabForceObserver = getObserverManager().createConditionObserver(grabForce, NotificationType.EdgesOnly,grabForceListener);
 		
 		//Condition de force activée pour une force supérieure à 2N lors d'une collision du marqueur sur une surface
-		penCollision = ForceCondition.createSpatialForceCondition(penWorldAlign, 2);
+		penCollision = ForceCondition.createSpatialForceCondition(penWorldAlign, 2.5);
 		penCollisionObserver = getObserverManager().createConditionObserver(penCollision, NotificationType.EdgesOnly,penCollisionListener);
 		
-		penForceZpos = ForceCondition.createNormalForceCondition(penWorldAlign, CoordinateAxis.Z, 2);
+		penForceZpos = ForceCondition.createNormalForceCondition(penWorldAlign, CoordinateAxis.Z, 2.5);
 		penForceZneg = ForceCondition.createNormalForceCondition(penWorldAlign, CoordinateAxis.Z, 0.3);
 		penForceZposCond = penForceZpos;
 		penForceZnegCond = penForceZneg.invert();
