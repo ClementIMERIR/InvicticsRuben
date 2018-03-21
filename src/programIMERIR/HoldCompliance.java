@@ -115,13 +115,10 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				getLogger().info("penInfos = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 //				//grabForceObserver.disable();
 				penCollisionObserver.enable();
-//				RelativeLIN descente = linRel(0,0,-currentFrame.getZ());
-//				descente.setCartVelocity(30);
-//				descente.breakWhen(penCollision);
-//				penWorldAlign.move(descente);
-				globalMove.setYOffset(300);
-				getLogger().info("globalMove :(" + globalMove.getOffset().getX()+","+globalMove.getOffset().getY()+","+globalMove.getOffset().getZ());
-				penWorldAlign.move(globalMove.breakWhen(penCollision));
+				RelativeLIN descente = linRel(0,0,-currentFrame.getZ());
+				descente.setCartVelocity(30);
+				descente.breakWhen(penCollision);
+				penWorldAlign.move(descente);
 			}
 		}
 	};
@@ -135,16 +132,12 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				int missedEvents) {
 			penCollisionObserver.disable();
 			getLogger().info("Pen Collision");
-//			Frame currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
-//			getLogger().info("SquareSize = " + squareSize);
-//			getLogger().info("FrameInfo = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
-//			drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
-//			penWorldAlign.move(linRel(0,0,10));
-//			penWorldAlign.move(ptp(getApplicationData().getFrame("/WorkingTable/P6")));
-			globalMove.setYOffset(0);
-			globalMove.setZOffset(-300);
-			getLogger().info("globalMove :(" + globalMove.getOffset().getX()+","+globalMove.getOffset().getY()+","+globalMove.getOffset().getZ());
-			penWorldAlign.move(globalMove);
+			Frame currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
+			getLogger().info("SquareSize = " + squareSize);
+			getLogger().info("FrameInfo = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
+			drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
+			penWorldAlign.move(linRel(0,0,10));
+			penWorldAlign.move(ptp(getApplicationData().getFrame("/WorkingTable/P6")));
 			}
 	};
 	
