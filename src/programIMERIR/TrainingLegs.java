@@ -156,8 +156,8 @@ public class TrainingLegs extends RoboticsAPIApplication {
 			legLift.getFrame("/Dummy/PNP_parent").move(
 					ptp(getApplicationData().getFrame("/Genoux/P1")));
 			// message variable
-			// answeranswer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
-			// "La jambe du patient est elle en place ?", "Oui","Non");
+			 answer = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
+			 "La jambe du patient est elle en place ?", "Oui","Non");
 			while (answer != 0) {
 				ThreadUtil.milliSleep(5000);// attache la jambe
 				answer = getApplicationUI().displayModalDialog(
@@ -201,8 +201,8 @@ public class TrainingLegs extends RoboticsAPIApplication {
 			legLift.getFrame("/Dummy/PNP_parent").move(
 					ptp(getApplicationData().getFrame("/Genoux/P1")));
 			// message variable
-			// answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
-			// "La jambe du patient est elle en place ?", "Oui","Non");
+			 answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
+			 "La jambe du patient est elle en place ?", "Oui","Non");
 			while (answer != 0) {
 				ThreadUtil.milliSleep(5000);// attache la jambe
 				answer = getApplicationUI().displayModalDialog(
@@ -248,8 +248,8 @@ public class TrainingLegs extends RoboticsAPIApplication {
 			legLift.getFrame("/Dummy/PNP_parent").move(
 					ptp(getApplicationData().getFrame("/Genoux/P1")));
 			// message variable
-			// answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
-			// "La jambe du patient est elle en place ?", "Oui","Non");
+			answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
+			 "La jambe du patient est elle en place ?", "Oui","Non");
 			while (answer != 0) {
 				ThreadUtil.milliSleep(5000);// attache la jambe
 				answer = getApplicationUI().displayModalDialog(
