@@ -263,7 +263,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		double xEnd = framesSortedByX.get(2).getX();
 		double yEnd = framesSortedByX.get(2).getY();
 		
-		double greatestXDelta = deltaXStart > deltaXEnd ? deltaXStart : deltaXEnd;
+		double greatestXDelta = deltaXStart > deltaXEnd ? deltaYStart : deltaYEnd;
 		getLogger().info("Nombre d'aller-retour à faire : " + String.valueOf(greatestXDelta/largeurOutil) );
 		
 		for(double i = 0 ; i < greatestXDelta/largeurOutil ; i++){
