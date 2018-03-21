@@ -168,13 +168,13 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			}else{
 				getLogger().info("PAS ASSEZ DE PRESSION!!");
 			}
-			//Frame currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
-			//getLogger().info("SquareSize = " + squareSize);
-			//getLogger().info("FrameInfo = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
+			Frame currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
+			getLogger().info("SquareSize = " + squareSize);
+			getLogger().info("FrameInfo = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 			
 			//penWorldAlign.move(linRel(200, 0, 0));
 			
-			drawSquare(penWorldAlign.getX(), penWorldAlign.getY(), squareSize);
+			drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
 			penWorldAlign.move(ptp(getApplicationData().getFrame("/WorkingTable/P6")));
 		}
 	};
