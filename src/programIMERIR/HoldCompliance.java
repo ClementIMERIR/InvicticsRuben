@@ -221,9 +221,10 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		do{
 			currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
 			force = robot.getExternalForceTorque(penWorldAlign).getForce();
+			displayLogForces(penWorldAlign);
 			movedestX = (destX - currentFrame.getX())/accuracy;
 			movedestY = (destY - currentFrame.getY())/accuracy;
-			moveZ = force.getZ()-1;
+			moveZ = force.getZ()-0.7;
 			penWorldAlign.move(linRel(movedestX,movedestY,moveZ).setCartVelocity(100));
 		}while(Math.floor(currentFrame.getX()) != Math.floor(destX) && Math.floor(currentFrame.getY()) != Math.floor(destY));
 	}
@@ -326,10 +327,10 @@ public class HoldCompliance extends RoboticsAPIApplication {
 //		penTCP.move(moveSquareSide);
 		
 		//avec le movePenTo perso
-		movePenTo(p0.getX(), p0.getY());
 		movePenTo(p1.getX(), p1.getY());
 		movePenTo(p2.getX(), p2.getY());
 		movePenTo(p3.getX(), p3.getY());
+		movePenTo(p0.getX(), p0.getY());
 	}
 	
 	/** 
