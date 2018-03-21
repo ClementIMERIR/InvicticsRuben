@@ -259,9 +259,9 @@ public class HoldAndDo extends RoboticsAPIApplication {
 			pliers.getFrame("Sander").move(linRel(deltaX, deltaY, 0.0).setJointVelocityRel(0.5));
 			
 			if(tiniestDelta == deltaX){
-				pliers.getFrame("Sander").move(linRel(-(largeurOutil * divDecalage), -(decalageOutilY * (1 - divDecalage)), 0).setJointVelocityRel(0.5));				
+				pliers.getFrame("Sander").move(linRel(-(largeurOutil * divDecalage), (decalageOutilY * (1 - divDecalage)), 0).setJointVelocityRel(0.5));				
 			}else if(tiniestDelta == deltaY){
-				pliers.getFrame("Sander").move(linRel(-(largeurOutil * (1 - divDecalage)), -(decalageOutilY * divDecalage), 0).setJointVelocityRel(0.5));
+				pliers.getFrame("Sander").move(linRel(-(largeurOutil * (1 - divDecalage)), (decalageOutilY * divDecalage), 0).setJointVelocityRel(0.5));
 			}
 		}
 
