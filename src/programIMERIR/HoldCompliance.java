@@ -182,7 +182,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			//getLogger().info("penCollisionForce Y: " + penCollisionForce.getY());
 			getLogger().info("penCollisionForce Z: " + penCollisionForce.getZ());
 			double somme = penCollisionForce.getX()+penCollisionForce.getY()+penCollisionForce.getZ();
-			getLogger().info("SommeF : "+somme);
+			//getLogger().info("SommeF : "+somme);
 			
 			if(penCollisionForce.getZ() > 2){
 				getLogger().info("Pression trop forte");
@@ -193,7 +193,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				//worldAltitude += 1;
 				//penWorldAlign.move(linRel(penWorldAlign.getX(), penWorldAlign.getY(), penWorldAlign.getZ()+1));
 			}
-			ThreadUtil.milliSleep(200);
+			ThreadUtil.milliSleep(1000);
 		}
 	}
 	
