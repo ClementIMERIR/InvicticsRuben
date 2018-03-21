@@ -148,14 +148,8 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		getLogger().info(angle.toString());
 		getLogger().info(vitesse.toString());
 		// PARTIE EN COMMUN POUR TOUS LES PATIENTS------------------------
-		while (answer != 0) {
-			ThreadUtil.milliSleep(5000);// attache la jambe
-			answer = getApplicationUI().displayModalDialog(
-					ApplicationDialogType.QUESTION,
-					"La jambe de Mme/Mr : " + nom + " est elle en place ?",
-					"Oui", "Non");
-		}
-		answer = -1;
+		
+		
 		robot.move(ptpHome().setJointVelocityRel(0.5));
 		// FIN PARTIE EN COMMUN-------------------------------------------
 		// personnaliser les mouvements pour chaque patient existant
@@ -164,6 +158,16 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		case halima:
 			legLift.getFrame("/Dummy/PNP_parent").move(
 					ptp(getApplicationData().getFrame("/genoux_halima/P1")));
+			
+			while (answer != 0) {
+				ThreadUtil.milliSleep(5000);// attache la jambe
+				answer = getApplicationUI().displayModalDialog(
+						ApplicationDialogType.QUESTION,
+						"La jambe de Mme/Mr : " + nom + " est elle en place ?",
+						"Oui", "Non");
+			}
+			answer = -1;
+			
 			leg_halima.getFrame("/PNP_enfant_halima").attachTo(
 					legLift.getFrame("/Dummy/PNP_parent"));
 			while (answer != 1) {
@@ -186,6 +190,16 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		case thomas:
 			legLift.getFrame("/Dummy/PNP_parent").move(
 					ptp(getApplicationData().getFrame("/genoux_thomas/P1")));
+			
+			while (answer != 0) {
+				ThreadUtil.milliSleep(5000);// attache la jambe
+				answer = getApplicationUI().displayModalDialog(
+						ApplicationDialogType.QUESTION,
+						"La jambe de Mme/Mr : " + nom + " est elle en place ?",
+						"Oui", "Non");
+			}
+			answer = -1;
+			
 			leg_thomas.getFrame("/PNP_enfant").attachTo(
 					legLift.getFrame("/Dummy/PNP_parent"));
 			// robot.setSafetyWorkpiece(leg1k5); //déclare en sécurité
@@ -208,6 +222,16 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		case mathis:
 			legLift.getFrame("/Dummy/PNP_parent").move(
 					ptp(getApplicationData().getFrame("/genoux_mathis/P1")));
+			
+			while (answer != 0) {
+				ThreadUtil.milliSleep(5000);// attache la jambe
+				answer = getApplicationUI().displayModalDialog(
+						ApplicationDialogType.QUESTION,
+						"La jambe de Mme/Mr : " + nom + " est elle en place ?",
+						"Oui", "Non");
+			}
+			answer = -1;
+			
 			leg_mathis.getFrame("/PNP_enfant").attachTo(
 					legLift.getFrame("/Dummy/PNP_parent"));
 			// robot.setSafetyWorkpiece(leg1k5); //déclare en sécurité
