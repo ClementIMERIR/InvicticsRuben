@@ -120,7 +120,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 //				descente.breakWhen(penCollision);
 //				penWorldAlign.move(descente);
 				
-				penWorldAlign.move(globalMove);
+				penWorldAlign.move(globalMove.breakWhen(penCollision));
 			}
 		}
 	};
@@ -142,7 +142,8 @@ public class HoldCompliance extends RoboticsAPIApplication {
 //			penWorldAlign.move(ptp(getApplicationData().getFrame("/WorkingTable/P6")));
 			globalMove.setYOffset(0);
 			globalMove.setZOffset(-300);
-		}
+			penWorldAlign.move(globalMove);
+			}
 	};
 	
 	@Override
