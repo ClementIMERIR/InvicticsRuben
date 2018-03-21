@@ -221,7 +221,12 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		//récupérer les deux points avec les X les plus proches
 		//vérifier que ce ne sont pas deux points d'une diagonale (vérifier la distance entre les différents points
 		//si elle est la plus grande entre les 3 autres points il ne faut pas prendre celui ci et prendre un autre point
-		//test si deltaX ou deltaY est le plus grand puis faire le plus petit sur le plus grand
+		
+		//deltaX = X premier point - Y deuxième point
+		//deltaY = Y premier point - X deuxième point
+		//Le ponçage incrémentera de deltaX et deltaY dans le mouvement aller, et le décrémentera dans le retour
+		//Ensuite, test si deltaX ou deltaY est le plus grand (retenir qui est le plus grand) puis faire le plus petit sur le plus grand
+		//cela nous donnera le rapport pour le déplacement de l'outil pour continuer le ponçage
 		
 		//si on prend juste 2 points => récupérer leur x et y
 				
