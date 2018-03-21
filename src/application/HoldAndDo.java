@@ -263,12 +263,12 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		double decalageY = deltaY < 0 ? largeurOutil * -1: largeurOutil;
 		
 		for(double i = 0 ; i < distanceToDo ; i += largeurOutil) {
-			pliers.getFrame("Sander").move(linRel(deltaX, deltaY, 0).setJointVelocityRel(0.5));
-			pliers.getFrame("Sander").move(linRel(-deltaX, -deltaY, 0).setJointVelocityRel(0.5));
+			pliers.getFrame("Sander").move(linRel(deltaX, deltaY, 0.0).setJointVelocityRel(0.5));
+			pliers.getFrame("Sander").move(linRel(-deltaX, -deltaY, 0.0).setJointVelocityRel(0.5));
 			
 			if(tiniestDelta == deltaX){
 				pliers.getFrame("Sander").move(linRel(largeurOutil * divDecalage, decalageY * (1 - divDecalage), 0).setJointVelocityRel(0.5));				
-			}else {
+			}else if(tiniestDelta == deltaY){
 				pliers.getFrame("Sander").move(linRel(largeurOutil * (1 - divDecalage), decalageY * divDecalage, 0).setJointVelocityRel(0.5));
 			}
 		}
