@@ -195,6 +195,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		grabForceObserver.enable();	
 		while(true){
 			penCollisionForce = robot.getExternalForceTorque(penWorldAlign).getForce();
+			displayLogForces(penWorldAlign);
 			ThreadUtil.milliSleep(100);
 		}
 	}
