@@ -200,8 +200,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 			}
 			answer = -1;
 			
-			leg_thomas.getFrame("/PNP_enfant").attachTo(
-					legLift.getFrame("/Dummy/PNP_parent"));
+			leg_thomas.getFrame("/PNP_enfant_thomas").attachTo(legLift.getFrame("/Dummy/PNP_parent"));
 			// robot.setSafetyWorkpiece(leg1k5); //déclare en sécurité
 			while (answer != 1) {
 				for (int i = 0; i < nbcycle; i++) {
