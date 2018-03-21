@@ -263,6 +263,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		//Polish
 		getLogger().info("Returning to first point");
 		//pliers.getFrame("Sander").move( lin( startFrames.get(0) ) );
+		pliers.getFrame("Sander").move( lin( getApplicationData().getFrame("Workspace").getChild("Start" + 0) ) );
 		getLogger().info("Robot on first point. Starting polishement.");
 		for(int i = 0 ; i < startFrames.size() ; i++){
 			pliers.getFrame("Sander").move( lin( getApplicationData().getFrame("Workspace").getChild("End" + i) ) );
