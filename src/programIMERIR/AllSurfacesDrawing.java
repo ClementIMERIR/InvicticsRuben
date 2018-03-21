@@ -8,6 +8,7 @@ import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.motionModel.PositionHold;
+import com.kuka.roboticsAPI.motionModel.RelativeLIN;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 
 /**
@@ -31,6 +32,7 @@ import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceContr
 public class AllSurfacesDrawing extends RoboticsAPIApplication {
 	@Inject
 	private LBR robot;
+	private RelativeLIN mouvement;
 	
 	private CartesianImpedanceControlMode freeMoveMode;
 
