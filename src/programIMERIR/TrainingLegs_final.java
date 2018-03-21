@@ -208,7 +208,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 			while (answer != 1) {
 				for (int j = 0; j < nbcycle; j++) {
 					leg_mathis.getFrame("Genoux").move(
-							linRel(0, 0, 0, Math.toRadians(-angle), 0, 0)
+							linRel(0, 0, 10, Math.toRadians(-angle), 0, 0)
 									.setCartVelocity(vitesse));
 					leg_mathis.getFrame("Genoux").move(
 							linRel(0, 0, 0, Math.toRadians(angle), 0, 0)
