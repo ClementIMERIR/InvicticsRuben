@@ -62,6 +62,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	
 	//Variables polishing
 	private ArrayList<ObjectFrame> framePoints;
+	private ArrayList<JointPosition> jointPositions = null;
 	double largeurOutil = 60;
 	
 	@Override
@@ -154,6 +155,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		{ add(null); add(null); add(null); add(null); } };
 		
+		jointPositions = new ArrayList<JointPosition>();
+		
 		currentPointIndex = 0;
 	}
 
@@ -209,15 +212,22 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		double distanceY = 0;
 		
 		double deltaX = 0;
+		double deltaY = 0;
+		int startingPointIndex = 0;//The one that has the tiniest X
 		
-		ObjectFrame refFrame1 = framePoints.get(0);
-		ObjectFrame refFrame2 = framePoints.get(1);
-		ObjectFrame refFrame3 = framePoints.get(2);
-		
-		for(ObjectFrame point : framePoints){
+		ObjectFrame refFrame1 = framePoints.get(0);//Plus petit X, point de reference.
+		ObjectFrame refFrame2 = framePoints.get(1);//Deuxieme plus petit X.
+		ObjectFrame refFrame3 = framePoints.get(2);//Plus grande distance (diagonale).
+		ObjectFrame refFrame4 = framePoints.get(3);//Le point non utilisé
+
+		for(int i = 0; i < framePoints.size() ; i++){
+			ObjectFrame point = framePoints.get(i);
+			
+			//Prendre le point avec le plus petit X
 			if(point.getX() < minX){
 				refFrame1 = point;
 				minX = point.getX();
+				startingPointIndex = i;
 			}
 			
 			minY = point.getY() < minY ? point.getY() : minY;
@@ -231,30 +241,34 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		distanceX = maxX - minX;
 		distanceY = maxY - minY;
 
-		//récupérer les deux points avec les X les plus proches
+		//Recherche du deuxième plus petit X
 		for (ObjectFrame point : framePoints) {
-			
 			if(point.distanceTo(refFrame1) != 0){
-				refFrame2 = Math.abs(point.getX() - refFrame1.getX() ) < Math.abs(refFrame2.getX() - refFrame1.getX() ) ? point : refFrame2;
-				
-				deltaX = refFrame1.getX() - refFrame3.getX() < 0 ? refFrame2.getX() - refFrame1.getX() : refFrame1.getX() - refFrame2.getX();
+				refFrame2 = Math.abs( point.getX() - refFrame1.getX() ) < Math.abs(refFrame2.getX() - refFrame1.getX() ) ? point : refFrame2;
 			}
 			
+			//On enregistre le point qui n'a pas été utilisé
+			refFrame4 = point.getX() != refFrame1.getX() && point.getX() != refFrame2.getX() && point.getX() != refFrame3.getX() ? point : refFrame4;
 		}
+		deltaX = refFrame2.getX() - refFrame1.getX();
+		deltaY = refFrame2.getY() - refFrame1.getY();
+		double tiniestDelta = Math.abs(deltaX) > Math.abs(deltaY) ? deltaY : deltaX;
+		double greatestDelta = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : deltaY;
+		double divDecalage = tiniestDelta / ( tiniestDelta + greatestDelta );
+		double distanceToDo = refFrame1.distanceTo(refFrame4);
 		
-		//vérifier que ce ne sont pas deux points d'une diagonale (vérifier la distance entre les différents points
-		//si elle est la plus grande entre les 3 autres points il ne faut pas prendre celui ci et prendre un autre point
-		//test si deltaX ou deltaY est le plus grand puis faire le plus petit sur le plus grand
-		
-		//si on prend juste 2 points => récupérer leur x et y
-				
-		
+		jPosition = jointPositions.get(startingPointIndex);
 		robot.move(ptp( jPosition.get(0), jPosition.get(1), jPosition.get(2), jPosition.get(3), jPosition.get(4), jPosition.get(5), jPosition.get(6)).setJointVelocityRel(0.5));
 		
-		for(double i = minX ; i < maxX ; i += largeurOutil/2) {
-			pliers.getFrame("Sander").move(linRel(distanceX, 0, 0).setJointVelocityRel(0.5));
-			pliers.getFrame("Sander").move(linRel(-distanceX, 0, 0).setJointVelocityRel(0.5));
-			pliers.getFrame("Sander").move(linRel(0, largeurOutil/2, 0).setJointVelocityRel(0.5));
+		for(double i = 0 ; i < distanceToDo ; i += largeurOutil) {
+			pliers.getFrame("Sander").move(linRel(deltaX, deltaY, 0).setJointVelocityRel(0.5));
+			pliers.getFrame("Sander").move(linRel(-deltaX, -deltaY, 0).setJointVelocityRel(0.5));
+			
+			if(tiniestDelta == deltaX){
+				pliers.getFrame("Sander").move(linRel(largeurOutil * divDecalage, largeurOutil * (1 - divDecalage), 0).setJointVelocityRel(0.5));				
+			}else {
+				pliers.getFrame("Sander").move(linRel(largeurOutil * (1 - divDecalage), largeurOutil * divDecalage, 0).setJointVelocityRel(0.5));
+			}
 		}
 
 		/*-------------------------------------------------------------------------------------------------------------------*/
@@ -271,7 +285,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		currentPointIndex++;
 		
-		jPosition = currentPointIndex == 1 ? robot.getCurrentJointPosition() : jPosition;
+		jointPositions.add(robot.getCurrentJointPosition());
 		
 		//parameters
 		String pointNameString = new StringBuilder("NP").append(String.valueOf(currentPointIndex)).toString();//NP1,NP2,NP3,NP4.
@@ -292,3 +306,22 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		getLogger().info("Enregistrement de la position terminé");
 	}
 }
+
+/**
+ * Saves
+ * //Calculer la distance entre ce point, et les 3 autres points pour éliminer la diagonale
+	//Entre les points restants, récupérer celui avec le second x le plus petit
+	
+	//deltaX = X deuxième point - X premier point
+	//deltaY = Y deuxième point - Y premier point
+	//Le ponçage incrémentera de deltaX et deltaY dans le mouvement aller, et le décrémentera dans le retour
+	//Ensuite, test si deltaX ou deltaY est le plus grand (retenir qui est le plus grand) puis faire le plus petit sur le plus grand
+	//deltaPetit/(deltaPetit + deltaGrand) = un pourcentage de 0 à 1/2
+	//cela nous donnera le rapport pour le déplacement de l'outil pour continuer le ponçage
+	//deltaPetit (soit l'incrément X soit l'incrément Y) utilisera le pourcentage obtenu dans le déplacement de l'outil en faisant : largeurOutil x résultat du rapport
+	//deltaGrand (soit l'incrément X soit l'incrément Y) utilisera le pourcentage obtenu dans le déplacement de l'outil en faisant : largeurOutil x (1- résultat du rapport)
+	
+	//ensuite récupérer le point non utilisé qui n'est pas le point de la diagonale
+	//calculer la distance entre notre origine (le point avec le plus petit x) et celui ci pour avoir la longueur a garder dans la boucle for
+	//cela nous donnera la valeur a ne pas dépasser pour le (i = 0 ; i < distance Origine jusqu'au point concerné ; i+= largeurOutil)
+ */
