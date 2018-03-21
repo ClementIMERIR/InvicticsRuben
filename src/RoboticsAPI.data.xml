@@ -182,9 +182,7 @@
         <toolTemplate class="" name="LegLift">
             <frames>
                 <frame id="_9ae17709-e023-4f4f-a076-7f864e49d0a4" name="TCP">
-                    <transformation a="-0.2648909550439505" b="-0.9716926483625626" c="0.0" x="-38.8260612841462" y="-4.297067247751202" z="237.29673441185474"/>
-                    <measurementTranslation calculationError="1.357576345185995" method="XYZ4Point" timestamp="1520956751832"/>
-                    <measurementRotation method="ABCWorld5D" timestamp="1521013204115"/>
+                    <transformation a="-0.7853981633974483" b="0.0" c="0.0" x="0.0" y="0.0" z="111.0"/>
                 </frame>
                 <frame id="_746f53c7-4d93-49eb-918f-58e6a757aa84" name="Dummy">
                     <transformation a="0.0" b="0.0" c="0.0" x="-38.826061" y="-4.297067" z="237.296734"/>
