@@ -217,6 +217,14 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		
 		distanceX = maxX - minX;
 		distanceY = maxY - minY;
+
+		//récupérer les deux points avec les X les plus proches
+		//vérifier que ce ne sont pas deux points d'une diagonale (vérifier la distance entre les différents points
+		//si elle est la plus grande entre les 3 autres points il ne faut pas prendre celui ci et prendre un autre point
+		//test si deltaX ou deltaY est le plus grand puis faire le plus petit sur le plus grand
+		
+		//si on prend juste 2 points => récupérer leur x et y
+				
 		
 		robot.move(ptp( jPosition.get(0), jPosition.get(1), jPosition.get(2), jPosition.get(3), jPosition.get(4), jPosition.get(5), jPosition.get(6)).setJointVelocityRel(0.5));
 		
