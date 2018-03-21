@@ -89,8 +89,7 @@ public class TrainingLegs extends RoboticsAPIApplication {
 			// interaction avec la base
 			getLogger().info("nom:" + nom);
 			// identifier le patient en utilisant sont nom.
-			sql = "SELECT * FROM infos_patients WHERE nom = \'" + nom
-					+ "\'";
+			sql = "SELECT * FROM infos_patients WHERE nom = \'" + nom + "\'";
 			stmt = connection.createStatement();
 			resultat = stmt.executeQuery(sql);
 			/* Récupération des données du résultat de la requête de lecture */
@@ -99,11 +98,12 @@ public class TrainingLegs extends RoboticsAPIApplication {
 				current_nom = resultat.getString("prenom");
 			}
 			// récuperer les parametres du patient en utilisant son id.
-			sql = "SELECT * FROM parametres_patients WHERE id_patient = \'" + current_id + "\'";
+			sql = "SELECT * FROM parametres_patients WHERE id_patient = \'"
+					+ current_id + "\'";
 			stmt = connection.createStatement();
 			resultat = stmt.executeQuery(sql);
 			/* Récupération des données du résultat de la requête de lecture */
-			while (resultat.next()) {				
+			while (resultat.next()) {
 				tempo = resultat.getInt("tempo");
 				nbcycle = resultat.getInt("nb_cycles");
 				angle = resultat.getDouble("angle");
@@ -129,52 +129,32 @@ public class TrainingLegs extends RoboticsAPIApplication {
 		}
 		answer = getApplicationUI().displayModalDialog(
 				ApplicationDialogType.QUESTION,
-				"bonjour Mm/Mr : " + nom + current_nom, "Ok");
-
+				"Bonjour Mm/Mr : " + nom +" "+ current_nom, "Ok");
 	}
-
 	@Override
-	public void run() {
-		// choix nom
-		/*
-		 * tempo = getApplicationData().getProcessData("tempo").getValue();
-		 * nbcycle = getApplicationData().getProcessData("nbcycle").getValue();
-		 * angle = getApplicationData().getProcessData("angle").getValue();
-		 * vitesse = getApplicationData().getProcessData("vitesse").getValue();
-		 */// debug des variables
+	public void run() {		
+		/// debug des variables
 		getLogger().info(tempo.toString());
 		getLogger().info(nbcycle.toString());
 		getLogger().info(angle.toString());
 		getLogger().info(vitesse.toString());
-		//PARTIE EN COMMUN
+		// PARTIE EN COMMUN POUR TOUS LES PATIENTS------------------------
 		while (answer != 0) {
 			ThreadUtil.milliSleep(5000);// attache la jambe
-			answer = getApplicationUI().displayModalDialog(
-					ApplicationDialogType.QUESTION,
-					"La jambe de " + nom + " est elle en place ?", "Oui",
-					"Non");
+			answer = getApplicationUI()
+					.displayModalDialog(ApplicationDialogType.QUESTION,
+							"La jambe de Mme/Mr : " + nom + " est elle en place ?",
+							"Oui", "Non");
 		}
 		answer = -1;
-		//FIN PARTIE EN COMMUN
-		Personne personne = Personne.valueOf(current_nom); // surround with try/catch
-		
+		// FIN PARTIE EN COMMUN-------------------------------------------
+		//personnaliser les mouvements pour chaque patient existant
+		Personne personne = Personne.valueOf(current_nom); 
 		switch (personne) {
 		case halima:
-			// your application execution starts here
 			robot.move(ptpHome().setJointVelocityRel(0.5));
 			legLift.getFrame("/Dummy/PNP_parent").move(
 					ptp(getApplicationData().getFrame("/Genoux/P1")));
-			// message variable
-			/* answer = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
-			 "La jambe du patient est elle en place ?", "Oui","Non");
-			while (answer != 0) {
-				ThreadUtil.milliSleep(5000);// attache la jambe
-				answer = getApplicationUI().displayModalDialog(
-						ApplicationDialogType.QUESTION,
-						"La jambe de " + nom + " est elle en place ?", "Oui",
-						"Non");
-			}
-			answer = -1;*/
 			leg.getFrame("/PNP_enfant").attachTo(
 					legLift.getFrame("/Dummy/PNP_parent"));
 			while (answer != 1) {
@@ -209,17 +189,6 @@ public class TrainingLegs extends RoboticsAPIApplication {
 			robot.move(ptpHome().setJointVelocityRel(0.5));
 			legLift.getFrame("/Dummy/PNP_parent").move(
 					ptp(getApplicationData().getFrame("/Genoux/P1")));
-			// message variable
-			/* answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
-			 "La jambe du patient est elle en place ?", "Oui","Non");
-			while (answer != 0) {
-				ThreadUtil.milliSleep(5000);// attache la jambe
-				answer = getApplicationUI().displayModalDialog(
-						ApplicationDialogType.QUESTION,
-						"La jambe de " + nom + " est elle en place ?", "Oui",
-						"Non");
-			}
-			answer = -1;*/
 			leg1k5.getFrame("/PNP_enfant").attachTo(
 					legLift.getFrame("/Dummy/PNP_parent"));
 			// robot.setSafetyWorkpiece(leg1k5); //déclare en sécurité
@@ -256,17 +225,6 @@ public class TrainingLegs extends RoboticsAPIApplication {
 			robot.move(ptpHome().setJointVelocityRel(0.5));
 			legLift.getFrame("/Dummy/PNP_parent").move(
 					ptp(getApplicationData().getFrame("/Genoux/P1")));
-			// message variable
-			/*answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
-			 "La jambe du patient est elle en place ?", "Oui","Non");
-			while (answer != 0) {
-				ThreadUtil.milliSleep(5000);// attache la jambe
-				answer = getApplicationUI().displayModalDialog(
-						ApplicationDialogType.QUESTION,
-						"La jambe de " + nom + " est elle en place ?", "Oui",
-						"Non");
-			}
-			answer = -1;*/
 			leg1k5.getFrame("/PNP_enfant").attachTo(
 					legLift.getFrame("/Dummy/PNP_parent"));
 			// robot.setSafetyWorkpiece(leg1k5); //déclare en sécurité
