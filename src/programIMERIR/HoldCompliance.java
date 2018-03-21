@@ -163,7 +163,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		
 		//définition du mode d'impédence pour le dessins
 		drawMode = new CartesianImpedanceControlMode();
-		drawMode.parametrize(CartDOF.Z).setStiffness(50);
+		drawMode.parametrize(CartDOF.Z).setStiffness(100);
 		drawMode.parametrize(CartDOF.Z).setAdditionalControlForce(0);
 		drawMode.parametrize(CartDOF.Y).setDamping(0.1);
 		
