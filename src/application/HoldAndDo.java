@@ -259,15 +259,17 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		
 		jPosition = jointPositions.get(startingPointIndex);
 		robot.move(ptp( jPosition.get(0), jPosition.get(1), jPosition.get(2), jPosition.get(3), jPosition.get(4), jPosition.get(5), jPosition.get(6)).setJointVelocityRel(0.5));
+
+		double decalageY = deltaY < 0 ? largeurOutil * -1: largeurOutil;
 		
 		for(double i = 0 ; i < distanceToDo ; i += largeurOutil) {
 			pliers.getFrame("Sander").move(linRel(deltaX, deltaY, 0).setJointVelocityRel(0.5));
 			pliers.getFrame("Sander").move(linRel(-deltaX, -deltaY, 0).setJointVelocityRel(0.5));
 			
 			if(tiniestDelta == deltaX){
-				pliers.getFrame("Sander").move(linRel(largeurOutil * divDecalage, largeurOutil * (1 - divDecalage), 0).setJointVelocityRel(0.5));				
+				pliers.getFrame("Sander").move(linRel(largeurOutil * divDecalage, decalageY * (1 - divDecalage), 0).setJointVelocityRel(0.5));				
 			}else {
-				pliers.getFrame("Sander").move(linRel(largeurOutil * (1 - divDecalage), largeurOutil * divDecalage, 0).setJointVelocityRel(0.5));
+				pliers.getFrame("Sander").move(linRel(largeurOutil * (1 - divDecalage), decalageY * divDecalage, 0).setJointVelocityRel(0.5));
 			}
 		}
 
