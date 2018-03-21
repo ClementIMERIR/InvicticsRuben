@@ -62,7 +62,6 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	//Variables polishing
 	private ArrayList<ObjectFrame> framePoints;
 	double largeurOutil = 60;
-	private double[] startingJoints;
 	
 	@Override
 	public void initialize() {
@@ -225,7 +224,6 @@ public class HoldAndDo extends RoboticsAPIApplication {
 			pliers.getFrame("Sander").move(linRel(distanceX, 0, 0).setJointVelocityRel(0.5));
 			pliers.getFrame("Sander").move(linRel(-distanceX, 0, 0).setJointVelocityRel(0.5));
 			pliers.getFrame("Sander").move(linRel(0, largeurOutil/2, 0).setJointVelocityRel(0.5));
-			getLogger().info("1");
 		}
 
 		/*-------------------------------------------------------------------------------------------------------------------*/
@@ -260,8 +258,6 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		
 		currentPointIndex = currentPointIndex == 4 ? 1 : currentPointIndex;
 		
-		if(currentPointIndex == 1 ){ startingJoints = robot.getCurrentJointPosition().get(); }
-
 		getLogger().info("Enregistrement de la position terminé");
 	}
 }
