@@ -2,235 +2,25 @@
 <RoboticsAPIData version="3">
     <world>
         <gravitation x="0.0" y="0.0" z="9.81"/>
-        <frame id="_2ffb18c4-5a12-4922-970b-511e3dffd20b" name="Foam">
-            <transformation a="0.5664274093243586" b="0.1806197483029666" c="-0.021533475343363005" x="211.04959995634" y="-611.6103444143314" z="677.1718197062298"/>
+        <frame id="_b5604481-4ace-4755-ba60-43501c8034b7" name="Workspace">
+            <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
             <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1521020669380"/>
-                <info key="Comment" type="java.lang.String" value="Repère base sur le polystirène."/>
+                <info key="LastModificationTime" type="java.lang.Long" value="1521539138090"/>
                 <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="true"/>
-                <info measurementMethod="Base3Point" timestamp="1521020669380" type="com.kuka.roboticsAPI.deviceModel.MeasurementInformation"/>
             </additionalInformation>
-            <frame id="_75ede14d-5c1f-4929-b534-c4ba1a0766b8" name="P1">
-                <transformation a="-2.205196446408436" b="1.1285660036831788" c="-0.49710981198022497" x="420.96654452042833" y="105.19257637898068" z="2.026281683727575"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521017618279"/>
-                    <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="LegLift/TCP" tool="LegLift" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                        <tcpTransformation a="-0.26489095504395055" b="-0.9716926483625626" c="0.0" x="-38.8260612841462" y="-4.297067247751202" z="237.29673441185474"/>
-                    </info>
-                </additionalInformation>
-                <redundancyData>
-                    <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="28" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.0044005857902694" valueType="java.lang.Double"/>
-                    </redundancy>
-                </redundancyData>
-            </frame>
-            <frame id="_60d556f4-1e5e-4cbc-b90d-c3ac9d015f05" name="P2">
-                <transformation a="-2.204938204724696" b="1.1286433415893233" c="-0.4967237266044964" x="426.515682312824" y="240.17124578905634" z="-0.4766401794191779"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521017922506"/>
-                    <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="LegLift/TCP" tool="LegLift" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                        <tcpTransformation a="-0.26489095504395055" b="-0.9716926483625626" c="0.0" x="-38.8260612841462" y="-4.297067247751202" z="237.29673441185474"/>
-                    </info>
-                </additionalInformation>
-                <redundancyData>
-                    <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="28" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.004361696909292" valueType="java.lang.Double"/>
-                    </redundancy>
-                </redundancyData>
-            </frame>
-            <frame id="_8d8d1a57-dc59-4706-bd05-1c24ecc76064" name="P3">
-                <transformation a="-2.2049929256709326" b="1.1285037280043393" c="-0.49671693375264636" x="511.77916917963637" y="281.08362927996836" z="-0.46074843454289294"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521018145446"/>
-                    <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="LegLift/TCP" tool="LegLift" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                        <tcpTransformation a="-0.26489095504395055" b="-0.9716926483625626" c="0.0" x="-38.8260612841462" y="-4.297067247751202" z="237.29673441185474"/>
-                    </info>
-                </additionalInformation>
-                <redundancyData>
-                    <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="28" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.004387463095956" valueType="java.lang.Double"/>
-                    </redundancy>
-                </redundancyData>
-            </frame>
-            <frame id="_81113c16-410d-4973-adf3-a63a88f87cc5" name="P4">
-                <transformation a="-1.9533118263965783" b="1.128525291156037" c="-0.49681679265118467" x="750.5530431954687" y="272.2334561242336" z="8.0184543157917"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521018327434"/>
-                    <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="LegLift/TCP" tool="LegLift" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                        <tcpTransformation a="-0.26489095504395055" b="-0.9716926483625626" c="0.0" x="-38.8260612841462" y="-4.297067247751202" z="237.29673441185474"/>
-                    </info>
-                </additionalInformation>
-                <redundancyData>
-                    <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="28" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.0044079560975343" valueType="java.lang.Double"/>
-                    </redundancy>
-                </redundancyData>
-            </frame>
-            <frame id="_7e705e21-ac54-4738-98bc-32119bd41055" name="P5">
-                <transformation a="-1.9526641323564615" b="1.128312370812669" c="-0.4964194044153204" x="775.242188039467" y="242.84980059330923" z="10.947251130470818"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521018426790"/>
-                    <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="LegLift/TCP" tool="LegLift" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                        <tcpTransformation a="-0.26489095504395055" b="-0.9716926483625626" c="0.0" x="-38.8260612841462" y="-4.297067247751202" z="237.29673441185474"/>
-                    </info>
-                </additionalInformation>
-                <redundancyData>
-                    <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="28" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.0044298272547234" valueType="java.lang.Double"/>
-                    </redundancy>
-                </redundancyData>
-            </frame>
-            <frame id="_2fb73b58-bbd9-48c2-8cef-147f58016b54" name="P6">
-                <transformation a="-1.6661404883717907" b="1.0491685723743291" c="-0.46808370796195" x="762.6669855641086" y="-7.3523666971074135" z="12.82179800741119"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521018689543"/>
-                    <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="LegLift/TCP" tool="LegLift" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                        <tcpTransformation a="-0.26489095504395055" b="-0.9716926483625626" c="0.0" x="-38.8260612841462" y="-4.297067247751202" z="237.29673441185474"/>
-                    </info>
-                </additionalInformation>
-                <redundancyData>
-                    <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="29" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.0043476753704137" valueType="java.lang.Double"/>
-                    </redundancy>
-                </redundancyData>
-            </frame>
-        </frame>
-        <frame id="_4db3c434-38c9-4d37-9432-8f006f8efbb7" name="Genoux">
-            <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1521040834313"/>
-            </additionalInformation>
-            <frame id="_4cabcb63-ce38-4772-9230-004e97f4500d" name="P1">
-                <transformation a="-0.12217304763960307" b="0.0" c="1.4486232791552935" x="-142.5" y="-826.5" z="380.0"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521118556658"/>
-                    <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="LegLift/Dummy/PNP_parent" tool="LegLift" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                        <tcpTransformation a="0.0" b="0.0" c="0.0" x="-38.826061" y="-4.297067" z="174.296734"/>
-                    </info>
-                </additionalInformation>
-                <redundancyData>
-                    <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="1" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="22" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.3901656575213084E-5" valueType="java.lang.Double"/>
-                    </redundancy>
-                </redundancyData>
-            </frame>
-            <frame id="_b70329fe-b6e8-4fdc-bf88-684a495e26d4" name="point_haut">
-                <transformation a="-0.12234538518881916" b="-2.700630121326753E-5" c="1.44911969863508" x="-107.82059670502255" y="-800.4096474825755" z="548.6252666427017"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521454824787"/>
-                    <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="LegLift/Dummy/PNP_parent" tool="LegLift" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                        <tcpTransformation a="-1.5707963267948966" b="0.0" c="0.0" x="-38.826061" y="-4.297067" z="174.296734"/>
-                    </info>
-                </additionalInformation>
-                <redundancyData>
-                    <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="1" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="22" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-3.09792669736646E-5" valueType="java.lang.Double"/>
-                    </redundancy>
-                </redundancyData>
-            </frame>
-            <frame id="_2eaa6556-8b6c-448d-943c-ba9bd7bb6c7a" name="point_centre_gauche">
-                <transformation a="-0.12215879978831222" b="-4.405520251020751E-5" c="1.4489185712778307" x="-107.6760776924564" y="-890.9114775738758" z="464.2243171658386"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521454801805"/>
-                    <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="LegLift/Dummy/PNP_parent" tool="LegLift" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                        <tcpTransformation a="-1.5707963267948966" b="0.0" c="0.0" x="-38.826061" y="-4.297067" z="174.296734"/>
-                    </info>
-                </additionalInformation>
-                <redundancyData>
-                    <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="1" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="22" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-2.9601002279980333E-5" valueType="java.lang.Double"/>
-                    </redundancy>
-                </redundancyData>
-            </frame>
-            <frame id="_f22f9665-2f51-4c07-bead-93edb99fbe87" name="point_centre_droite">
-                <transformation a="-0.12222796683705699" b="-3.3526557594507226E-5" c="1.449089366177192" x="-107.77496341502783" y="-728.8260944715422" z="464.2113194023525"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521454784901"/>
-                    <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="LegLift/Dummy/PNP_parent" tool="LegLift" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                        <tcpTransformation a="-1.5707963267948966" b="0.0" c="0.0" x="-38.826061" y="-4.297067" z="174.296734"/>
-                    </info>
-                </additionalInformation>
-                <redundancyData>
-                    <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="1" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="22" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-2.894192232119597E-5" valueType="java.lang.Double"/>
-                    </redundancy>
-                </redundancyData>
-            </frame>
-        </frame>
-        <frame id="_bb0d8a95-2fc1-4cb5-81f7-1a56ee2189eb" name="genoux_mathis">
-            <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1521626578854"/>
-            </additionalInformation>
-            <frame id="_c685fc8b-ba20-486e-b5a6-f46365d2eca6" name="P1">
-                <transformation a="-0.12217304763960307" b="0.0" c="1.4486232791552935" x="-142.5" y="-826.5" z="380.0"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521626754056"/>
-                </additionalInformation>
-            </frame>
-        </frame>
-        <frame id="_2f6bc26d-8621-4f04-a2a3-4ea4a92d12be" name="genoux_halima">
-            <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1521626277602"/>
-            </additionalInformation>
-            <frame id="_975f9e43-df06-4352-b0e6-81870bd293ec" name="P1">
-                <transformation a="-0.12217304763960307" b="0.0" c="1.4486232791552935" x="-142.5" y="-826.5" z="380.0"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521626746767"/>
-                </additionalInformation>
-            </frame>
-        </frame>
-        <frame id="_7d83bd84-c115-41ae-bc08-ecc3adc2c5aa" name="genoux_thomas">
-            <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1521626334198"/>
-            </additionalInformation>
-            <frame id="_c45bac36-9cdd-4977-ae4e-db3fb7deba97" name="P1">
-                <transformation a="-0.12217304763960307" b="0.0" c="1.4486232791552935" x="-142.5" y="-826.5" z="380.0"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521626763683"/>
-                </additionalInformation>
-            </frame>
         </frame>
     </world>
     <objectTemplates>
         <toolTemplate class="" name="LegLift">
             <frames>
                 <frame id="_9ae17709-e023-4f4f-a076-7f864e49d0a4" name="TCP">
-                    <transformation a="-0.2648909550439505" b="-0.9716926483625626" c="0.0" x="-38.8260612841462" y="-4.297067247751202" z="237.29673441185474"/>
-                    <measurementTranslation calculationError="1.357576345185995" method="XYZ4Point" timestamp="1520956751832"/>
-                    <measurementRotation method="ABCWorld5D" timestamp="1521013204115"/>
+                    <transformation a="-0.2648909550439505" b="-0.9716926483625626" c="0.0" x="-38.8260612841462" y="-4.297067" z="237.29673441185474"/>
                 </frame>
-                <frame id="_746f53c7-4d93-49eb-918f-58e6a757aa84" name="Dummy">
+                <frame id="_07194ca3-2f55-4014-ac20-7cda23e00de8" name="dummy">
                     <transformation a="0.0" b="0.0" c="0.0" x="-38.826061" y="-4.297067" z="237.296734"/>
                     <frames>
-                        <frame id="_788c818d-982f-4d19-a602-60812b248199" name="PNP_parent">
+                        <frame id="_b4d711c0-78ec-4677-8495-fe4a0748dd3e" name="pnpParent">
                             <transformation a="-1.5707963267948966" b="0.0" c="0.0" x="0.0" y="0.0" z="-63.0"/>
-                            <additionalInformation>
-                                <info key="Radius" type="java.lang.Integer" value="25"/>
-                                <info key="SafetyID" type="java.lang.Integer" value="0"/>
-                            </additionalInformation>
                         </frame>
                     </frames>
                 </frame>
@@ -238,69 +28,28 @@
             <additionalInformation>
                 <info key="SafetyID" type="java.lang.Integer" value="0"/>
             </additionalInformation>
-            <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.2"/>
+            <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.15"/>
         </toolTemplate>
-        <workpieceTemplate class="" name="Leg">
+        <toolTemplate class="" name="Pliers">
             <frames>
-                <frame id="_b3368310-69e2-4ed7-b6b0-bf177d42ef59" name="PNP_enfant">
-                    <transformation a="0.0" b="0.0" c="0.0" x="125.0" y="0.0" z="0.0"/>
+                <frame id="_7afa787a-39d5-4933-b917-b30d7fddb756" name="Sander">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="50.0"/>
                 </frame>
-                <frame id="_d3ee7af7-1103-4e5b-a614-39674c074927" name="Genoux">
-                    <transformation a="0.0" b="0.0" c="0.0" x="340.0" y="0.0" z="0.0"/>
+                <frame id="_b5409303-9f42-440b-9174-08c80e0c90a9" name="Brush">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="70.0"/>
                 </frame>
-            </frames>
-            <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="170.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.01"/>
-        </workpieceTemplate>
-        <workpieceTemplate class="" name="Leg1k5">
-            <frames>
-                <frame id="_c423c22b-6348-4b19-b743-4a869ac01581" name="PNP_enfant">
-                    <transformation a="0.0" b="0.0" c="0.0" x="125.0" y="0.0" z="0.0"/>
-                </frame>
-                <frame id="_d4408ad5-6850-4303-b6e9-2fe51c772bbe" name="Genoux">
-                    <transformation a="0.0" b="0.0" c="0.0" x="340.0" y="0.0" z="0.0"/>
-                </frame>
-            </frames>
-            <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="170.0" cogY="0.0" cogZ="0.0" inertiaX="0.0060" inertiaY="0.0608" inertiaZ="0.0608" mass="1.7"/>
-        </workpieceTemplate>
-        <workpieceTemplate class="" name="Leg_halima">
-            <frames>
-                <frame id="_560442b4-4585-4453-9645-d9c475e54607" name="Genoux">
-                    <transformation a="0.0" b="0.0" c="0.0" x="520.0" y="0.0" z="0.0"/>
-                </frame>
-                <frame id="_f4b2a4fc-b5fc-4c55-806a-37d69258b8ff" name="PNP_enfant_halima">
-                    <transformation a="0.0" b="0.0" c="0.0" x="200.0" y="0.0" z="0.0"/>
+                <frame id="_604b10ab-614f-40dd-8349-8db78969f712" name="Calibrator">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="70.0"/>
                 </frame>
             </frames>
             <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.0"/>
-        </workpieceTemplate>
-        <workpieceTemplate class="" name="Leg_thomas">
-            <frames>
-                <frame id="_58dce78f-f153-4eee-a01e-86389a636527" name="Genoux">
-                    <transformation a="0.0" b="0.0" c="0.0" x="550.0" y="0.0" z="0.0"/>
-                </frame>
-                <frame id="_21981892-3b2c-4a3d-9594-0a86382dec77" name="PNP_enfant_thomas">
-                    <transformation a="0.0" b="0.0" c="0.0" x="200.0" y="0.0" z="0.0"/>
-                </frame>
-            </frames>
-            <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.129" inertiaY="2.103" inertiaZ="2.103" mass="4.5"/>
-        </workpieceTemplate>
-        <workpieceTemplate class="" name="Leg_mathis">
-            <frames>
-                <frame id="_aaafb2db-04b2-4a0a-84e2-f339a9e56ffb" name="Genoux">
-                    <transformation a="0.0" b="0.0" c="0.0" x="580.0" y="0.0" z="0.0"/>
-                </frame>
-                <frame id="_cf614e0d-d4ef-4ff1-8e77-18dcb03e1b59" name="PNP_enfant_mathis">
-                    <transformation a="0.0" b="0.0" c="0.0" x="200.0" y="0.0" z="0.0"/>
-                </frame>
-            </frames>
-            <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.0"/>
-        </workpieceTemplate>
+        </toolTemplate>
     </objectTemplates>
     <processDataContainer>
-        <processData comment="Temporisation pour attendre la jambe du patient" dataType="java.lang.Integer" defaultValue="10000" displayName="Temporisation" id="tempo" max="100000.0" min="100.0" unit="milliseconde" value="10000"/>
-        <processData comment="Nombre de cycle" dataType="java.lang.Integer" defaultValue="5" displayName="Nombre_cycle" id="nbcycle" max="10.0" min="2.0" unit="cycle" value="5"/>
-        <processData comment="Angle de deplacement de la jambe pendant la scéance" dataType="java.lang.Double" defaultValue="20" displayName="Debatement_angulaire" id="angle" max="40.0" min="5.0" unit="°" value="30"/>
-        <processData comment="Vitesse de deplacement de la jambe pendant la scéance" dataType="java.lang.Double" defaultValue="20" displayName="Vitesse_angulaire" id="vitesse" max="40.0" min="5.0" unit="mm/s" value="30"/>
-        <processData dataType="java.lang.String" defaultValue="chenus" displayName="Nom" id="name" value="chenus"/>
+        <processData dataType="java.lang.Integer" defaultValue="1000" displayName="Temporisation" id="tempo" max="10000.0" min="1000.0" unit="ms" value="1000"/>
+        <processData dataType="java.lang.Integer" defaultValue="5" displayName="Nombre de cycles" id="nbCycles" max="10.0" min="5.0" value="5"/>
+        <processData dataType="java.lang.Double" defaultValue="20" displayName="Débattement angulaire" id="angle" max="30.0" min="5.0" unit="°" value="20"/>
+        <processData dataType="java.lang.Double" defaultValue="5" displayName="Vitesse angulaire" id="angleSpeed" max="30.0" min="5.0" unit="mm/s" value="20"/>
+        <processData dataType="java.lang.Double" defaultValue="5" displayName="Dimension du Carré" id="squareSize" max="300.0" min="5.0" unit="cm" value="10"/>
     </processDataContainer>
 </RoboticsAPIData>
