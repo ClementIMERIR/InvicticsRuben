@@ -217,7 +217,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 	public void movePenTo(double destX, double destY){
 		Frame currentFrame;
 		Vector force;
-		double movedestX, movedestY, moveZ, accuracy = 1000;
+		double movedestX, movedestY, moveZ, accuracy = 100;
 		do{
 			currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
 			force = robot.getExternalForceTorque(penWorldAlign).getForce();
