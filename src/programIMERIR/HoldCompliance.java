@@ -131,7 +131,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
 				altitude = currentFrame.getZ();
 				getLogger().info("Altitude = "+altitude);
-				penCollisionObserver.disable();
+				//penCollisionObserver.disable();
 				penWorldAlign.move(linRel(200, 200, 0).setJointVelocityRel(40).setMode(drawMode));
 				//drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
 				penWorldAlign.move(ptp(getApplicationData().getFrame("/WorkingTable/P6")));
