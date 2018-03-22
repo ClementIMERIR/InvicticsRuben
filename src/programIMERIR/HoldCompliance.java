@@ -235,7 +235,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			penCollisionForce = robot.getExternalForceTorque(penWorldAlign).getForce();
 			getLogger().info("penCollisionForce Z: " + penCollisionForce.getZ());
 			//penWorldAlign.moveAsync(linRel(0, 0, -2));
-			//penWorldAlign.moveAsync(lin(frame));
+			penWorldAlign.moveAsync(lin(frame));
 			penCollisionObserver.enable();
 		}
 	};
