@@ -86,6 +86,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 	private ConditionObserver penCollisionObserver;
 	private Vector penCollisionForce;
 	private Double squareSize;
+	private Double altitude;
 	
 	//Definition de la bar de boutons, et des boutons
 	IUserKeyBar buttonsBar;
@@ -180,6 +181,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 
 			Frame currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
 			getLogger().info("FrameInfo = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
+			altitude = currentFrame.getZ();
 		}
 	};
 	
@@ -292,11 +294,11 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			//getLogger().info("ZForce : "+getZForce(penWorldAlign));
 			double zForce = getSumForces(penWorldAlign);
 			if(zForce > 2.5){
-				getLogger().info("TROP DE PRESSION!!");
+				//getLogger().info("TROP DE PRESSION!!");
 			}else if((zForce < 2) && (zForce > 0.3)){
-				getLogger().info("Bonne pression.");
+				//getLogger().info("Bonne pression.");
 			}else{
-				getLogger().info("PAS ASSEZ DE PRESSION!!");
+				//getLogger().info("PAS ASSEZ DE PRESSION!!");
 			}
 			
 			ThreadUtil.milliSleep(500);
@@ -365,10 +367,10 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		//worldAltitude = penWorldAlign.getZ();
 		//getLogger().info("WorldAltitude = "+worldAltitude);
 		
-		Frame p0 = new Frame(startingPointX,startingPointY,0);
-		Frame p1 = new Frame(p0.getX() + dimension,p0.getY(),0);
-		Frame p2 = new Frame(p0.getX() + dimension, p0.getY() + dimension,0);
-		Frame p3 = new Frame(p0.getX(), p0.getY() + dimension, 0);
+		Frame p0 = new Frame(startingPointX,startingPointY,altitude);
+		Frame p1 = new Frame(p0.getX() + dimension,p0.getY(),altitude);
+		Frame p2 = new Frame(p0.getX() + dimension, p0.getY() + dimension,altitude);
+		Frame p3 = new Frame(p0.getX(), p0.getY() + dimension, altitude);
 		getLogger().info("p0:("+p0.getX()+","+p0.getY()+")\n"
 				+"p1:("+p1.getX()+","+p1.getY()+")\n"
 				+"p2:("+p2.getX()+","+p2.getY()+")\n"
