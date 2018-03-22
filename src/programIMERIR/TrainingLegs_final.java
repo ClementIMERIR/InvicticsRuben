@@ -101,6 +101,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		gripperBar = getApplicationUI().createUserKeyBar("Gripper");
 		openKey = gripperBar.addUserKey(0, myfunction, false);
 		stop = gripperBar.addUserKey(1, myfunction, false);
+		gripperBar.publish();
 		mode = new CartesianImpedanceControlMode();
 		mode.parametrize(CartDOF.ALL).setStiffness(10.0);
 		// mode.parametrize(CartDOF.ALL).setDamping(0.7);
