@@ -4,10 +4,14 @@ package programIMERIR;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.kuka.common.ThreadUtil;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
+
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.Tool;
+import com.kuka.roboticsAPI.geometricModel.Workpiece;
+import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
 
 /**
  * Implementation of a robot application.
@@ -27,12 +31,22 @@ import com.kuka.roboticsAPI.geometricModel.Tool;
  * @see #run()
  * @see #dispose()
  */
-public class RobotApplicationIMERIRDebut extends RoboticsAPIApplication {
+public class TrainingLegs_point extends RoboticsAPIApplication {
 	@Inject
 	private LBR robot;
 	@Inject
 	@Named("LegLift")
 	private Tool legLift;//Création d'un objet outil
+	@Inject
+	@Named("Leg_thomas")
+	private Workpiece leg_thomas;
+	
+	//variable accessible via process data
+	private Integer tempo, 
+					nbcycle;
+	private Double angle;
+	private Double vitesse;
+	private String name;
 
 	@Override
 	public void initialize() {
@@ -40,23 +54,20 @@ public class RobotApplicationIMERIRDebut extends RoboticsAPIApplication {
 		legLift.attachTo(robot.getFlange());//"Fixation" de l'outil à la bride du robot.
 	}
 
-	
 	@Override
 	public void run() {
-		for (int i= 0;i<5;i++){
-			// your application execution starts here
-			robot.move(ptpHome());
-			legLift.getFrame("TCP").move(ptp(getApplicationData().getFrame("/Foam/P1")));
-			legLift.getFrame("TCP").move(lin(getApplicationData().getFrame("/Foam/P5")));
-			legLift.getFrame("TCP").move(lin(getApplicationData().getFrame("/Foam/P2")));
-			legLift.getFrame("TCP").move(lin(getApplicationData().getFrame("/Foam/P6")));
-			legLift.getFrame("TCP").move(lin(getApplicationData().getFrame("/Foam/P3")));
-			legLift.getFrame("TCP").move(lin(getApplicationData().getFrame("/Foam/P4")));
-			legLift.getFrame("TCP").move(lin(getApplicationData().getFrame("/Foam/P5")));
-			legLift.getFrame("TCP").move(lin(getApplicationData().getFrame("/Foam/P3")));
-			legLift.getFrame("TCP").move(lin(getApplicationData().getFrame("/Foam/P6")));
-			legLift.getFrame("TCP").move(lin(getApplicationData().getFrame("/Foam/P1")));
-			robot.move(ptpHome());
-		}
+		// your application execution starts here
+		robot.move(ptpHome().setJointVelocityRel(0.5));
+		legLift.getFrame("/Dummy/PNP_parent").move(ptp(getApplicationData().getFrame("/Genoux/P1")));
+		//message variable answeranswer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe du patient est elle en place ?", "Oui","Non");
+		leg_thomas.getFrame("/PNP_enfant").attachTo(legLift.getFrame("/Dummy/PNP_parent"));
+
+				leg_thomas.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(-angle),0,0).setCartVelocity(vitesse));
+				leg_thomas.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(angle),0,0).setCartVelocity(vitesse));
+			
+	
+		ThreadUtil.milliSleep(tempo);//10 sec pour détacher sa jambe
+		leg_thomas.detach();//detache la jambe de l'outil en logiciel 
+		robot.move(ptpHome().setJointVelocityRel(0.5));
 	}
 }
