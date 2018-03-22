@@ -128,7 +128,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				penWorldAlign.move(descente);
 				//DESSIN
 				penCollisionObserver.disable();
-				//penWorldAlign.move(linRel(200, 0, 0).setMode(drawMode));
+				penWorldAlign.move(linRel(200, 200, 0).setMode(drawMode));
 				//drawSquare(currentFrame.getX(), currentFrame.getY(), squareSize);
 				penWorldAlign.move(ptp(getApplicationData().getFrame("/WorkingTable/P6")));
 				penCollisionObserver.enable();
@@ -177,18 +177,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			getLogger().info("=============");
 			getLogger().info("Pen Collision");
 			getLogger().info("=============");
-			/*
-			getLogger().info("SommeF : "+getSumForces(penWorldAlign));
-			double sumForce = getSumForces(penWorldAlign);
-			if(sumForce > 2.5){
-				getLogger().info("TROP DE PRESSION!!");
-				//penWorldAlign.move(linRel(0, 0, 100));
-			}else if((sumForce < 2) && (sumForce > 0.3)){
-				getLogger().info("Bonne pression.");
-				//penWorldAlign.move(linRel(0, 0, 50));
-			}else{
-				getLogger().info("PAS ASSEZ DE PRESSION!!");
-			}*/
+
 			Frame currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
 			getLogger().info("FrameInfo = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 		}
