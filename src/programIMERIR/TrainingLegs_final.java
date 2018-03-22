@@ -169,7 +169,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 			// quand le boutton est clicker bouger le robot en cartesien.
 			if (event == UserKeyEvent.KeyDown) {
 				getLogger().info("FirstKeyDown appuyé");
-				run = false;
+				
 				var = true;
 				while(var == true){
 				robot.move(positionHold(mode, 1, TimeUnit.SECONDS));
@@ -180,6 +180,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 			} 
 			if(event == UserKeyEvent.SecondKeyDown){
 				var = false;
+				run = false;
 			}
 		}
 	};
