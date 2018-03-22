@@ -229,7 +229,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			
 			Frame frame = robot.getCurrentCartesianPosition(penWorldAlign);
 			getLogger().info("Before getZ : "+frame.getZ());
-			frame.setZ(frame.getZ() - deltaZ);
+			frame.setZ(frame.getZ() + deltaZ);
 			getLogger().info("After getZ : "+frame.getZ());
 			
 			penCollisionForce = robot.getExternalForceTorque(penWorldAlign).getForce();
