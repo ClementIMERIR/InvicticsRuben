@@ -272,7 +272,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			sumForces = Math.abs(force.getX()) + Math.abs(force.getY()) + Math.abs(force.getZ());
 			displayLogForces(penWorldAlign);
 			if(force.getZ() <= 0){
-				moveZ = -0.5;
+				moveZ = -0.1;
 			}else{
 //				moveZ = Math.log(force.getZ());
 				moveZ = (sumForces-1)/10;
