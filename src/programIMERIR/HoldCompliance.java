@@ -174,7 +174,9 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		public void onRisingEdge(ConditionObserver conditionObserver, Date time,
 				int missedEvents) {
 			//penCollisionObserver.disable();
+			getLogger().info("=============");
 			getLogger().info("Pen Collision");
+			getLogger().info("=============");
 			/*
 			getLogger().info("SommeF : "+getSumForces(penWorldAlign));
 			double sumForce = getSumForces(penWorldAlign);
