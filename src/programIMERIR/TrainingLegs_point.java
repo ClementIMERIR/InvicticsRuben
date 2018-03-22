@@ -61,7 +61,7 @@ public class TrainingLegs_point extends RoboticsAPIApplication {
 		legLift.getFrame("/Dummy/PNP_parent").move(ptp(getApplicationData().getFrame("/Genoux/P1")));
 		//message variable answeranswer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe du patient est elle en place ?", "Oui","Non");
 		ThreadUtil.milliSleep(tempo);//10 sec pour détacher sa jambe
-		leg_thomas.getFrame("PNP_enfant").attachTo(legLift.getRootFrame());
+		//leg_thomas.getFrame("PNP_enfant").attachTo(legLift.getRootFrame());
 
 				leg_thomas.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(-angle),0,0).setCartVelocity(vitesse));
 				leg_thomas.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(angle),0,0).setCartVelocity(vitesse));
