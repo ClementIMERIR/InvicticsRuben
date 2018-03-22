@@ -365,7 +365,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		getLogger().info("Début du dessin du carré");
 		//double altitude = 100;
 		//worldAltitude = penWorldAlign.getZ();
-		//getLogger().info("WorldAltitude = "+worldAltitude);
+		getLogger().info("Altitude = "+altitude);
 		
 		Frame p0 = new Frame(startingPointX,startingPointY,altitude);
 		Frame p1 = new Frame(p0.getX() + dimension,p0.getY(),altitude);
@@ -377,7 +377,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				+"p3:("+p3.getX()+","+p3.getY()+")");
 		
 		displayLogForces(penWorldAlign);
-		penWorldAlign.move(lin(p1).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZposCond, adjustZpos));
+		penWorldAlign.move(lin(p1).setMode(drawMode).setCartVelocity(100));
 		
 		displayLogForces(penWorldAlign);
 		penWorldAlign.move(lin(p2).setMode(drawMode).setCartVelocity(100));
