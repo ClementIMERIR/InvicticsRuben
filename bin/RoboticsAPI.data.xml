@@ -177,10 +177,20 @@
                 </redundancyData>
             </frame>
             <frame id="_5a021e32-2fbc-47d9-ba9a-03a2fdb4cdfe" name="P2">
-                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <transformation a="-0.022171613664116515" b="0.006112343798488401" c="1.4753465950311675" x="284.87654968015437" y="-902.0489678898813" z="323.621025909984"/>
                 <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1521708021014"/>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1521714921380"/>
+                    <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="LegLift/Dummy/PNP_parent" tool="LegLift" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
+                        <tcpTransformation a="-1.5707963267948966" b="0.0" c="0.0" x="-38.826061" y="-4.297067" z="174.296734"/>
+                    </info>
                 </additionalInformation>
+                <redundancyData>
+                    <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
+                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="1" valueType="java.lang.Integer"/>
+                        <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="70" valueType="java.lang.Integer"/>
+                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-9.377654070965533E-5" valueType="java.lang.Double"/>
+                    </redundancy>
+                </redundancyData>
             </frame>
         </frame>
     </world>
