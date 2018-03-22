@@ -206,11 +206,15 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		ObjectFrame refThirdPoint = framePoints.get(2);
 		int index = 0;
 		
+		getLogger().info("Recherche du plus petit X");
+		
 		//Recherche du plus petit X et attribution de son index
 		for(int i = 0; i < framePoints.size(); i++){
 			refFirstPoint = refFirstPoint.getX() < framePoints.get(i).getX() ? refFirstPoint : framePoints.get(i);
 			index = refFirstPoint != framePoints.get(i) ? index : i;
 		}
+		
+		getLogger().info("Recherche du second X");
 		
 		//Recherche du second X
 		for (int j = 0; j < framePoints.size(); j++) {
@@ -220,6 +224,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 			}
 		}
 		
+		getLogger().info("Recherche du troisième X");
+		
 		//Recherche du troisième X
 		for (int k = 0; k < framePoints.size(); k++) {
 			if(framePoints.get(k).distanceTo(refFirstPoint) != 0 && framePoints.get(k).distanceTo(refSecondPoint) != 0 )
@@ -227,6 +233,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 				refThirdPoint = refThirdPoint.getX() < framePoints.get(k).getX() ? refThirdPoint: framePoints.get(k);
 			}
 		}
+
+		getLogger().info("Calcul des deltas");
 		
 		//Calcul des deltas entre les différents points
 		double deltaX = refSecondPoint.getX() - refFirstPoint.getX();
@@ -234,15 +242,20 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		double deltaX2 = refThirdPoint.getX() - refFirstPoint.getX();
 		double deltaY2 = refThirdPoint.getY() - refFirstPoint.getY();
 		
+		getLogger().info("Paramètres");
+		
 		//Attribution des paramètres pour le passage
 		double varX = refFirstPoint.getX();
 		//Attribution du décalage à effectuer
 		double decalage = largeurOutil;
 		
+		getLogger().info("Déplacement du robot");
+		
 		//On replace au point avec le plus petit X
 		JointPosition JPosition = alJPositions.get(index);
 		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
 
+		getLogger().info("Do While");
 		//Tant que le point en diagonale n'est pas atteint
 		//Aller-retour puis décalage 
 		do{
