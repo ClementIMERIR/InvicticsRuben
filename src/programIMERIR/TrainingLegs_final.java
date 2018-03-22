@@ -195,6 +195,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		run = true;
 		while(run == true){
 			ThreadUtil.milliSleep(1000);
+			getLogger().info("sfdghjk");
 		}
 		
 		robot.move(ptpHome().setJointVelocityRel(0.5));
