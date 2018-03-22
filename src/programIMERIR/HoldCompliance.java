@@ -372,18 +372,22 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		LIN moveTop1 = lin(p1);
 		moveTop1.setMode(drawMode);
 		moveTop1.setCartVelocity(100);
+		moveTop1.breakWhen(grabForce);
 		
 		LIN moveTop2 = lin(p2);
 		moveTop2.setMode(drawMode);
 		moveTop2.setCartVelocity(100);
+		moveTop2.breakWhen(grabForce);
 		
 		LIN moveTop3 = lin(p3);
 		moveTop3.setMode(drawMode);
 		moveTop3.setCartVelocity(100);
+		moveTop3.breakWhen(grabForce);
 		
 		LIN moveTop0 = lin(p0);
 		moveTop0.setMode(drawMode);
 		moveTop0.setCartVelocity(100);
+		moveTop0.breakWhen(grabForce);
 		
 		penWorldAlign.move(moveTop1);
 		penWorldAlign.move(moveTop2);
