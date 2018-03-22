@@ -182,7 +182,7 @@
         <toolTemplate class="" name="LegLift">
             <frames>
                 <frame id="_9ae17709-e023-4f4f-a076-7f864e49d0a4" name="TCP">
-                    <transformation a="-1.3089969389957472" b="0.0" c="0.0" x="0.0" y="0.0" z="111.0"/>
+                    <transformation a="-1.3962634015954636" b="0.0" c="0.0" x="0.0" y="0.0" z="111.0"/>
                 </frame>
                 <frame id="_746f53c7-4d93-49eb-918f-58e6a757aa84" name="Dummy">
                     <transformation a="0.0" b="0.0" c="0.0" x="-38.826061" y="-4.297067" z="237.296734"/>
