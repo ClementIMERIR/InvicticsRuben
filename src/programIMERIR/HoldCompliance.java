@@ -378,7 +378,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				+"p3:("+p3.getX()+","+p3.getY()+")");
 		
 		displayLogForces(penWorldAlign);
-		penWorldAlign.move(lin(p1).setMode(drawMode).setCartVelocity(100));
+		penWorldAlign.move(lin(p1).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg));
 		
 		displayLogForces(penWorldAlign);
 		penWorldAlign.move(lin(p2).setMode(drawMode).setCartVelocity(100));
