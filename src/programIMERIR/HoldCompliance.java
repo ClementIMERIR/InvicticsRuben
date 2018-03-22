@@ -208,7 +208,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			penCollisionForce = robot.getExternalForceTorque(penWorldAlign).getForce();
 			getLogger().info("penCollisionForce Z: " + penCollisionForce.getZ());
 			//penWorldAlign.moveAsync(linRel(0, 0, 2).setMode(drawMode));
-			//penWorldAlign.moveAsync(lin(frame));
+			penWorldAlign.moveAsync(lin(frame));
 			penCollisionObserver.enable();
 		}
 	};
@@ -378,16 +378,16 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				+"p3:("+p3.getX()+","+p3.getY()+")");
 		
 		displayLogForces(penWorldAlign);
-		penWorldAlign.move(lin(p1).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg));
+		penWorldAlign.move(lin(p1).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg).triggerWhen(penForceZposCond, adjustZpos));
 		
 		displayLogForces(penWorldAlign);
-		penWorldAlign.move(lin(p2).setMode(drawMode).setCartVelocity(100));
+		penWorldAlign.move(lin(p2).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg).triggerWhen(penForceZposCond, adjustZpos));
 		
 		displayLogForces(penWorldAlign);
-		penWorldAlign.move(lin(p3).setMode(drawMode).setCartVelocity(100));
+		penWorldAlign.move(lin(p3).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg).triggerWhen(penForceZposCond, adjustZpos));
 		
 		displayLogForces(penWorldAlign);
-		penWorldAlign.move(lin(p0).setMode(drawMode).setCartVelocity(100));
+		penWorldAlign.move(lin(p0).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg).triggerWhen(penForceZposCond, adjustZpos));
 		
 		/**
 		//move relatif
