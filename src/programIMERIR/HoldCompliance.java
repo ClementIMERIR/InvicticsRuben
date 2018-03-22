@@ -269,13 +269,13 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			force = robot.getExternalForceTorque(penWorldAlign).getForce();
 			sumForces = force.getX() + force.getY() + force.getZ();
 			displayLogForces(penWorldAlign);
-			if(force.getZ() <= 0){
-				moveZ = -2;
-			}else{
-				moveZ = Math.log(force.getZ());
-//				moveZ = (sumForces-1)/3;
-			}
-//			moveZ = (force.getZ()-1)/3;
+//			if(force.getZ() <= 0){
+//				moveZ = -2;
+//			}else{
+//				moveZ = Math.log(force.getZ());
+////				moveZ = (sumForces-1)/3;
+//			}
+			moveZ = (force.getZ()-1)/3;
 			penWorldAlign.move(linRel(movedestX,movedestY,moveZ).breakWhen(grabForce));
 			step--;
 		}while(step > 0);
