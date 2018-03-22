@@ -38,8 +38,8 @@ public class TrainingLegs_point extends RoboticsAPIApplication {
 	@Named("LegLift")
 	private Tool legLift;//Création d'un objet outil
 	@Inject
-	@Named("Leg")
-	private Workpiece leg;
+	@Named("Leg_thomas")
+	private Tool leg;
 	@Inject
 	@Named("Leg1k5")
 	private Workpiece leg1k5;
@@ -125,184 +125,17 @@ public class TrainingLegs_point extends RoboticsAPIApplication {
 		angle = getApplicationData().getProcessData("angle").getValue();
 		vitesse = getApplicationData().getProcessData("vitesse").getValue();
 
-		Personne personne = Personne.valueOf(nom); // surround with try/catch
-		
-		switch (personne) {
-	    case PIERRE:
 	    	// your application execution starts here
 			robot.move(ptpHome().setJointVelocityRel(0.5));
 			legLift.getFrame("/Dummy/PNP_parent").move(ptp(getApplicationData().getFrame("/Genoux/P1")));
 			//message variable answeranswer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe du patient est elle en place ?", "Oui","Non");
-			while(answer != 0){
-				ThreadUtil.milliSleep(5000);//attache la jambe
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe de "+nom+" est elle en place ?", "Oui","Non");
-			}
-			answer = -1;
+	
 			leg.getFrame("/PNP_enfant").attachTo(legLift.getFrame("/Dummy/PNP_parent"));
 			while(answer !=1){
 				for(int i=0;i<nbcycle;i++){
 					leg.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(-angle),0,0).setCartVelocity(vitesse));
 					leg.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(angle),0,0).setCartVelocity(vitesse));
 				}
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "Voulez vous refaire un cycle ?", "Oui","Non");
 			}
-			answer = -1;
-			ThreadUtil.milliSleep(tempo);//10 sec pour détacher sa jambe
-			while(answer != 0){
-				ThreadUtil.milliSleep(5000);//détache la jambe
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe de "+nom+" est elle enlevée ?", "Oui","Non");
-			}
-			answer = -1;
-			leg.detach();//detache la jambe de l'outil en logiciel 
-			robot.move(ptpHome().setJointVelocityRel(0.5));
-	        break;
-	        
-	    case PAUL:
-			// your application execution starts here
-			robot.move(ptpHome().setJointVelocityRel(0.5));
-			legLift.getFrame("/Dummy/PNP_parent").move(ptp(getApplicationData().getFrame("/Genoux/P1")));
-			//message variable answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe du patient est elle en place ?", "Oui","Non");
-			while(answer != 0){
-				ThreadUtil.milliSleep(5000);//attache la jambe
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe de "+nom+" est elle en place ?", "Oui","Non");
-			}
-			answer = -1;
-			leg1k5.getFrame("/PNP_enfant").attachTo(legLift.getFrame("/Dummy/PNP_parent"));
-			//robot.setSafetyWorkpiece(leg1k5); //déclare en sécurité
-			while(answer !=1){
-				for(int i=0;i<nbcycle;i++){
-					leg1k5.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(-angle),0,0).setCartVelocity(vitesse));
-					leg1k5.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(angle),0,0).setCartVelocity(vitesse));
-				}
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "Voulez vous refaire un cycle ?", "Oui","Non");
-			}
-			answer = -1;
-			ThreadUtil.milliSleep(tempo);//10 sec pour détacher sa jambe
-			while(answer != 0){
-				ThreadUtil.milliSleep(5000);//détache la jambe
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe de "+nom+" est elle enlevée ?", "Oui","Non");
-			}
-			answer = -1;
-			leg1k5.detach();//detache la jambe de l'outil en logiciel
-			//robot.setSafetyWorkpiece(null);
-			robot.move(ptpHome().setJointVelocityRel(0.5));
-	        break;
-	        
-	    case JACK:
-	    	// your application execution starts here
-			robot.move(ptpHome().setJointVelocityRel(0.5));
-			
-			
-			legLift.getFrame("/Dummy/PNP_parent").move(ptp(getApplicationData().getFrame("/Genoux/P1")));
-			//message variable answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe du patient est elle en place ?", "Oui","Non");
-			while(answer != 0){
-				ThreadUtil.milliSleep(5000);//attache la jambe
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe de "+nom+" est elle en place ?", "Oui","Non");
-			}
-			answer = -1;
-			leg1k5.getFrame("/PNP_enfant").attachTo(legLift.getFrame("/Dummy/PNP_parent"));
-			//robot.setSafetyWorkpiece(leg1k5); //déclare en sécurité
-			while(answer !=1){
-				leg1k5.getFrame("Genoux").move(ptp(getApplicationData().getFrame("/Genoux/point_centre_droite")));
-				leg1k5.getFrame("Genoux").move(ptp(getApplicationData().getFrame("/Genoux/point_haut")));
-				leg1k5.getFrame("Genoux").move(ptp(getApplicationData().getFrame("/Genoux/point_centre_gauche")));
-				leg1k5.getFrame("Genoux").move(ptp(getApplicationData().getFrame("/Genoux/P1")));
-				for(int j=0;j<nbcycle;j++){
-					leg1k5.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(-angle),0,0).setCartVelocity(vitesse));
-					leg1k5.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(angle),0,0).setCartVelocity(vitesse));
-				}
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "Voulez vous refaire un cycle ?", "Oui","Non");
-			}
-			answer = -1;
-			ThreadUtil.milliSleep(tempo);//10 sec pour détacher sa jambe
-			while(answer != 0){
-				ThreadUtil.milliSleep(5000);//détache la jambe
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe de "+nom+" est elle enlevée ?", "Oui","Non");
-			}
-			answer = -1;
-			leg1k5.detach();//detache la jambe de l'outil en logiciel
-			//robot.setSafetyWorkpiece(null);
-			robot.move(ptpHome().setJointVelocityRel(0.5));
-	        break;
-	        
-	    default :
-	    	getApplicationUI().displayModalDialog(ApplicationDialogType.ERROR, "Le nom séléctionné n'existe pas, pensez à écrire le nom en majuscule");
-	    	break;
-		}
-		/*
-		if (nom.equals("Pierre")){
-			tempo = getApplicationData().getProcessData("tempo").getValue();
-			nbcycle = getApplicationData().getProcessData("nbcycle").getValue();
-			angle = getApplicationData().getProcessData("angle").getValue();
-			vitesse = getApplicationData().getProcessData("vitesse").getValue();
-			
-			// your application execution starts here
-			robot.move(ptpHome().setJointVelocityRel(0.5));
-			legLift.getFrame("/Dummy/PNP_parent").move(ptp(getApplicationData().getFrame("/Genoux/P1")));
-			//message variable answeranswer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe du patient est elle en place ?", "Oui","Non");
-			while(answer != 0){
-				ThreadUtil.milliSleep(5000);//attache la jambe
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe de "+nom+" est elle en place ?", "Oui","Non");
-			}
-			answer = -1;
-			leg.getFrame("/PNP_enfant").attachTo(legLift.getFrame("/Dummy/PNP_parent"));
-			while(answer !=1){
-				for(int i=0;i<nbcycle;i++){
-					leg.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(-angle),0,0).setCartVelocity(vitesse));
-					leg.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(angle),0,0).setCartVelocity(vitesse));
-				}
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "Voulez vous refaire un cycle ?", "Oui","Non");
-			}
-			answer = -1;
-			ThreadUtil.milliSleep(tempo);//10 sec pour détacher sa jambe
-			while(answer != 0){
-				ThreadUtil.milliSleep(5000);//détache la jambe
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe de "+nom+" est elle enlevé ?", "Oui","Non");
-			}
-			answer = -1;
-			leg.detach();//detache la jambe de l'outil en logiciel 
-			robot.move(ptpHome().setJointVelocityRel(0.5));
-		}
-		
-		else if (nom.equals("Paul")){
-			tempo = getApplicationData().getProcessData("tempo").getValue();
-			nbcycle = getApplicationData().getProcessData("nbcycle").getValue();
-			angle = getApplicationData().getProcessData("angle").getValue();
-			vitesse = getApplicationData().getProcessData("vitesse").getValue();
-			
-			// your application execution starts here
-			robot.move(ptpHome().setJointVelocityRel(0.5));
-			legLift.getFrame("/Dummy/PNP_parent").move(ptp(getApplicationData().getFrame("/Genoux/P1")));
-			//message variable answeranswer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe du patient est elle en place ?", "Oui","Non");
-			while(answer != 0){
-				ThreadUtil.milliSleep(5000);//attache la jambe
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe de "+nom+" est elle en place ?", "Oui","Non");
-			}
-			answer = -1;
-			leg1k5.getFrame("/PNP_enfant").attachTo(legLift.getFrame("/Dummy/PNP_parent"));
-			while(answer !=1){
-				for(int i=0;i<nbcycle;i++){
-					leg1k5.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(-angle),0,0).setCartVelocity(vitesse));
-					leg1k5.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(angle),0,0).setCartVelocity(vitesse));
-				}
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "Voulez vous refaire un cycle ?", "Oui","Non");
-			}
-			answer = -1;
-			ThreadUtil.milliSleep(tempo);//10 sec pour détacher sa jambe
-			while(answer != 0){
-				ThreadUtil.milliSleep(5000);//détache la jambe
-				answer=getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "La jambe de "+nom+" est elle enlevé ?", "Oui","Non");
-			}
-			answer = -1;
-			leg1k5.detach();//detache la jambe de l'outil en logiciel 
-			robot.move(ptpHome().setJointVelocityRel(0.5));
-		}
-		else if (nom.equals("Jack")){
-			tempo = getApplicationData().getProcessData("tempo").getValue();
-			nbcycle = getApplicationData().getProcessData("nbcycle").getValue();
-			angle = getApplicationData().getProcessData("angle").getValue();
-			vitesse = getApplicationData().getProcessData("vitesse").getValue();
-		}
-		*/
 	}
 }
