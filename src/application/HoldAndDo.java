@@ -242,7 +242,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		//Ponçage
 		robot.move(ptp(jointPositions.get(index)));
 		getLogger().info("En place sur le 1er point");
-		for(int i = 0 ; i < deltaYStart ; i += largeurOutil/2){
+		for(int i = 0 ; i < deltaYStart ; i += largeurOutil/10){
 			pliers.getFrame("Sander").move(linRel(deltaXPolish, deltaYPolish, 0.0).setJointVelocityRel(0.5));
 			pliers.getFrame("Sander").move(linRel(-deltaXPolish, -deltaYPolish, 0.0).setJointVelocityRel(0.5));
 			
