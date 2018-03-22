@@ -267,15 +267,15 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
 			getLogger().info("currentFrame:("+currentFrame.getX()+","+currentFrame.getY()+")");
 			force = robot.getExternalForceTorque(penWorldAlign).getForce();
-			sumForces = force.getX() + force.getY() + force.getZ();
+			sumForces = Math.abs(force.getX()) + Math.abs(force.getY()) + Math.abs(force.getZ());
 			displayLogForces(penWorldAlign);
-//			if(force.getZ() <= 0){
-//				moveZ = -2;
-//			}else{
+			if(force.getZ() <= 0){
+				moveZ = -2;
+			}else{
 //				moveZ = Math.log(force.getZ());
-////				moveZ = (sumForces-1)/3;
-//			}
-			moveZ = (force.getZ()-1)/3;
+				moveZ = sumForces/3;
+			}
+//			moveZ = (force.getZ()-1)/3;
 			penWorldAlign.move(linRel(movedestX,movedestY,moveZ).breakWhen(grabForce));
 			step--;
 		}while(step > 0);
