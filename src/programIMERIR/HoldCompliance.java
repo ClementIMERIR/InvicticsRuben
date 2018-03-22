@@ -185,7 +185,6 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		buttonsBar = getApplicationUI().createUserKeyBar("Drawing");
 		startDrawingCompliant = buttonsBar.addUserKey(0, startDrawingCompliantListener, true);
 		startDrawingCompliant.setText(UserKeyAlignment.MiddleLeft, "Start Drawing Compliant");
-		buttonsBar.publish();
 		
 		//Ajout d'un bouton pour lancer le dessin avec recalcul des z manuel
 		startDrawingZCalc = buttonsBar.addUserKey(0, startDrawingZCalcListener, true);
