@@ -254,7 +254,7 @@
         <workpieceTemplate class="" name="Leg_thomas">
             <frames>
                 <frame id="_58dce78f-f153-4eee-a01e-86389a636527" name="Genoux">
-                    <transformation a="1.9198621771937625" b="0.0" c="0.0" x="620.0" y="270.0" z="0.0"/>
+                    <transformation a="1.9198621771937625" b="0.0" c="0.0" x="620.0" y="300.0" z="0.0"/>
                 </frame>
                 <frame id="_21981892-3b2c-4a3d-9594-0a86382dec77" name="PNP_enfant_thomas">
                     <transformation a="0.0" b="0.0" c="0.0" x="260.0" y="0.0" z="0.0"/>
