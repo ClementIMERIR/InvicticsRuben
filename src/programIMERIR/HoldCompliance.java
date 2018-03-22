@@ -203,8 +203,8 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		
 		//définition du mode d'impédence pour le dessins
 		drawMode = new CartesianImpedanceControlMode();
-		drawMode.parametrize(CartDOF.Z).setStiffness(150);
-		drawMode.parametrize(CartDOF.Z).setAdditionalControlForce(-0.5);
+		drawMode.parametrize(CartDOF.Z).setStiffness(100);
+//		drawMode.parametrize(CartDOF.Z).setAdditionalControlForce(-0.5);
 		drawMode.parametrize(CartDOF.Z).setDamping(0.1);
 		
 		//Condition de force activée lorsqu'une force supérieure à 10N est détectée pour bouger librement le bras
@@ -382,8 +382,8 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		moveTop3.setCartVelocity(100);
 		
 		LIN moveTop0 = lin(p0);
-		moveTop1.setMode(drawMode);
-		moveTop1.setCartVelocity(100);
+		moveTop0.setMode(drawMode);
+		moveTop0.setCartVelocity(100);
 		
 		penWorldAlign.move(moveTop1);
 		penWorldAlign.move(moveTop2);
