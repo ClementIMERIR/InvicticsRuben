@@ -32,6 +32,7 @@ import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceContr
 import com.kuka.roboticsAPI.motionModel.controlModeModel.HandGuidingControlMode;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.JointImpedanceControlMode;
 import com.kuka.roboticsAPI.requestModel.GetCurrentConfigurationRequest;
+import com.kuka.roboticsAPI.requestModel.SetManualOverrideRequest;
 import com.kuka.roboticsAPI.sensorModel.CartesianPositionInformation;
 import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
 import com.kuka.roboticsAPI.uiModel.userKeys.IUserKey;
@@ -406,7 +407,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 	
 	public void drawCircleCompliance(double startingPointX, double startingPointY, double rayon){
 		getLogger().info("Début du dessin du carré");
-		double altitude = 500;
+		double altitude = 530;
 		Frame p0 = new Frame(startingPointX,startingPointY,altitude);
 		Frame p1 = new Frame(p0.getX() + rayon,p0.getY() - rayon,altitude);
 		Frame p2 = new Frame(p0.getX() + rayon*2, p0.getY(),altitude);
@@ -417,7 +418,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				+"p3:("+p3.getX()+","+p3.getY()+")");
 
 //		//avec le move de l'API
-		penWorldAlign.move(circ(p1,p2));
-		penWorldAlign.move(circ(p3,p0));
+		penWorldAlign.move(circ(p1,p2).setMode(drawMode));
+		penWorldAlign.move(circ(p3,p0).setMode(drawMode));
 	}
 }
