@@ -168,7 +168,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			getLogger().info("FrameInfo = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 			if(drawingMethode == 0){
 //				drawSquareWithCompliance(currentFrame.getX(), currentFrame.getY(), squareSize);
-				drawCircleCompliance(currentFrame.getX(), currentFrame.getY(), squareSize);
+				drawCircleCompliance(currentFrame.getX(), currentFrame.getY(), squareSize/2);
 			}else{
 				drawSquareZCalc(currentFrame.getX(), currentFrame.getY(), squareSize);
 			}
