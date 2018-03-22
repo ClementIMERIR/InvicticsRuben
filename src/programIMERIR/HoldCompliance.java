@@ -505,11 +505,11 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		getLogger().info("Début du dessin du coeur");
 		double altitude = 530;
 		Frame p0 = new Frame(startingPointX, startingPointY, altitude);
-		Frame p1 = new Frame(p0.getX()+size, p0.getY()+(size*2), altitude);
+		Frame p1 = new Frame(p0.getX()+(size*2), p0.getY()+size, altitude);
 		Frame p2 = new Frame(p0.getX()+((size*5)/2), p0.getY()+(size/2), altitude);
 		Frame p3 = new Frame(p0.getX()+(size*2), p0.getY(), altitude);
 		Frame p4 = new Frame(p0.getX()+((size*5)/2), p0.getY()-(size/2), altitude);
-		Frame p5 = new Frame(p0.getX()+size, p0.getY()-(size*2), altitude);
+		Frame p5 = new Frame(p0.getX()+(size*2), p0.getY()-size, altitude);
 
 		//avec le move de l'API
 		penWorldAlign.move(lin(p1).setMode(drawMode).setCartVelocity(50).breakWhen(grabForce));
