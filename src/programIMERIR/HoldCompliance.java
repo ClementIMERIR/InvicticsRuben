@@ -305,7 +305,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 	
 	public void drawSquareWithCompliance(double startingPointX, double startingPointY, double dimension){
 		getLogger().info("Début du dessin du carré");
-		double altitude = 100;
+		double altitude = 530;
 		Frame p0 = new Frame(startingPointX,startingPointY,altitude);
 		Frame p1 = new Frame(p0.getX() + dimension,p0.getY(),altitude);
 		Frame p2 = new Frame(p0.getX() + dimension, p0.getY() + dimension,altitude);
