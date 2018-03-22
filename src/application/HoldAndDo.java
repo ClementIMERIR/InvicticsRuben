@@ -249,6 +249,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		tiniestDelta = Math.abs(deltaX) > Math.abs(deltaY) ? deltaY : deltaX;
 		greatestDelta = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : deltaY;
 		divDecalage = tiniestDelta / ( Math.abs(tiniestDelta) + Math.abs(greatestDelta) );
+		
 		distanceToDo = refFrame1.distanceTo(refFrame4);
 		distanceToDo = Math.abs(distanceToDo);
 		
