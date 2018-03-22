@@ -227,7 +227,7 @@
         <toolTemplate class="" name="Leg_thomas">
             <frames>
                 <frame id="_f4abe073-e310-49f1-ace9-df9d6db6d5ac" name="Genoux">
-                    <transformation a="1.9198621771937625" b="0.0" c="0.0" x="570.0" y="330.0" z="0.0"/>
+                    <transformation a="1.9198621771937625" b="0.0" c="0.0" x="571.0" y="330.0" z="0.0"/>
                 </frame>
                 <frame id="_27d6e356-ef13-4c12-9918-0dd91a3a53ef" name="PNP_enfant">
                     <transformation a="0.0" b="0.0" c="0.0" x="260.0" y="0.0" z="0.0"/>

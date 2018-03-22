@@ -40,9 +40,6 @@ public class TrainingLegs_point extends RoboticsAPIApplication {
 	@Inject
 	@Named("Leg_thomas")
 	private Workpiece leg_thomas;
-	@Inject
-	@Named("Leg1k5")
-	private Workpiece leg1k5;
 	
 	//variable accessible via process data
 	private Integer tempo, 
