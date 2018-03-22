@@ -182,6 +182,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			Frame currentFrame = robot.getCurrentCartesianPosition(penWorldAlign);
 			getLogger().info("FrameInfo = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 			altitude = currentFrame.getZ();
+			getLogger().info("Altitude = "+altitude);
 		}
 	};
 	
