@@ -275,7 +275,8 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				moveZ = Math.log(force.getZ());
 //				moveZ = (sumForces-1)/3;
 			}
-			penWorldAlign.moveAsync(linRel(movedestX,movedestY,moveZ).breakWhen(grabForce));
+//			moveZ = (force.getZ()-1)/3;
+			penWorldAlign.move(linRel(movedestX,movedestY,moveZ).breakWhen(grabForce));
 			step--;
 		}while(step > 0);
 	}
@@ -364,27 +365,27 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		displayLogForces(penWorldAlign);
 		
 //		//avec le move de l'API
-		getLogger().info("début dessin avec lin");
-		LIN moveTop1 = lin(p1);
-		moveTop1.setMode(drawMode);
-		moveTop1.setCartVelocity(100);
-		
-		LIN moveTop2 = lin(p2);
-		moveTop2.setMode(drawMode);
-		moveTop2.setCartVelocity(100);
-		
-		LIN moveTop3 = lin(p3);
-		moveTop3.setMode(drawMode);
-		moveTop3.setCartVelocity(100);
-		
-		LIN moveTop0 = lin(p0);
-		moveTop1.setMode(drawMode);
-		moveTop1.setCartVelocity(100);
-		
-		penTCP.move(moveTop1);
-		penTCP.move(moveTop2);
-		penTCP.move(moveTop3);
-		penTCP.move(moveTop0);
+//		getLogger().info("début dessin avec lin");
+//		LIN moveTop1 = lin(p1);
+//		moveTop1.setMode(drawMode);
+//		moveTop1.setCartVelocity(100);
+//		
+//		LIN moveTop2 = lin(p2);
+//		moveTop2.setMode(drawMode);
+//		moveTop2.setCartVelocity(100);
+//		
+//		LIN moveTop3 = lin(p3);
+//		moveTop3.setMode(drawMode);
+//		moveTop3.setCartVelocity(100);
+//		
+//		LIN moveTop0 = lin(p0);
+//		moveTop1.setMode(drawMode);
+//		moveTop1.setCartVelocity(100);
+//		
+//		penTCP.move(moveTop1);
+//		penTCP.move(moveTop2);
+//		penTCP.move(moveTop3);
+//		penTCP.move(moveTop0);
 	}
 	
 	/** 
