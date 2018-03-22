@@ -293,7 +293,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 			squareSize = getApplicationData().getProcessData("squareSize").getValue();
 			
 			//getLogger().info("ZForce : "+getZForce(penWorldAlign));
-			double zForce = getSumForces(penWorldAlign);
+			double zForce = getZForce(penWorldAlign);
 			if(zForce > 2.5){
 				//getLogger().info("TROP DE PRESSION!!");
 			}else if((zForce < 2) && (zForce > 0.3)){
@@ -378,16 +378,16 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				+"p3:("+p3.getX()+","+p3.getY()+")");
 		
 		displayLogForces(penWorldAlign);
-		penWorldAlign.move(lin(p1).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg).triggerWhen(penForceZposCond, adjustZpos));
+		penWorldAlign.move(lin(p1).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg).triggerWhen(penForceZposCond, adjustZpos));
 		
 		displayLogForces(penWorldAlign);
-		penWorldAlign.move(lin(p2).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg).triggerWhen(penForceZposCond, adjustZpos));
+		penWorldAlign.move(lin(p2).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg).triggerWhen(penForceZposCond, adjustZpos));
 		
 		displayLogForces(penWorldAlign);
-		penWorldAlign.move(lin(p3).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg).triggerWhen(penForceZposCond, adjustZpos));
+		penWorldAlign.move(lin(p3).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg).triggerWhen(penForceZposCond, adjustZpos));
 		
 		displayLogForces(penWorldAlign);
-		penWorldAlign.move(lin(p0).setMode(drawMode).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg).triggerWhen(penForceZposCond, adjustZpos));
+		penWorldAlign.move(lin(p0).setCartVelocity(100).triggerWhen(penForceZnegCond, adjustZneg).triggerWhen(penForceZposCond, adjustZpos));
 		
 		/**
 		//move relatif
