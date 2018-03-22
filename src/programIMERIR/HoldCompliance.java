@@ -298,11 +298,11 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		while(true){
 			squareSize = getApplicationData().getProcessData("squareSize").getValue();
 			
-			getLogger().info("SommeF : "+getSumForces(penWorldAlign));
-			double sumForce = getSumForces(penWorldAlign);
-			if(sumForce > 2.5){
+			//getLogger().info("ZForce : "+getZForce(penWorldAlign));
+			double zForce = getSumForces(penWorldAlign);
+			if(zForce > 2.5){
 				getLogger().info("TROP DE PRESSION!!");
-			}else if((sumForce < 2) && (sumForce > 0.3)){
+			}else if((zForce < 2) && (zForce > 0.3)){
 				getLogger().info("Bonne pression.");
 			}else{
 				getLogger().info("PAS ASSEZ DE PRESSION!!");
@@ -320,6 +320,15 @@ public class HoldCompliance extends RoboticsAPIApplication {
 		double somme = penCollisionForce.getX()+penCollisionForce.getY()+penCollisionForce.getZ();
 		getLogger().info("SommeF : "+somme);
 		return somme;
+	}
+	
+	public double getZForce(ObjectFrame frame){
+		penCollisionForce = robot.getExternalForceTorque(penWorldAlign).getForce();
+		//getLogger().info("penCollisionForce X: " + penCollisionForce.getX());
+		//getLogger().info("penCollisionForce Y: " + penCollisionForce.getY());
+		getLogger().info("penCollisionForce Z: " + penCollisionForce.getZ());
+		double ZForce = penCollisionForce.getZ();
+		return ZForce;
 	}
 	
 	/**
