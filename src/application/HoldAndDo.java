@@ -1,11 +1,14 @@
 package application;
 
 
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.positionHold;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -14,7 +17,6 @@ import javax.inject.Named;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.JointPosition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
-import com.kuka.roboticsAPI.geometricModel.AbstractFrame;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.ITransformationProvider;
@@ -25,7 +27,6 @@ import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.math.ITransformation;
 import com.kuka.roboticsAPI.geometricModel.math.XyzAbcTransformation;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
-import com.kuka.roboticsAPI.persistenceModel.templateModel.TemplateElement;
 import com.kuka.roboticsAPI.uiModel.userKeys.IUserKey;
 import com.kuka.roboticsAPI.uiModel.userKeys.IUserKeyBar;
 import com.kuka.roboticsAPI.uiModel.userKeys.IUserKeyListener;
@@ -33,7 +34,6 @@ import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyAlignment;
 import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyEvent;
 import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyLED;
 import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyLEDSize;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 
 /**
  * 
@@ -45,10 +45,11 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	@Inject
 	@Named("Pliers")
 	private Tool pliers;
-	private ArrayList<JointPosition> alJPositions;
+
 	private CartesianImpedanceControlMode mode;
 //	private JointImpedanceControlMode mode;
 	private double[] jointPosition;
+	private JointPosition jPosition;
 	
 	private IUserKeyBar buttonBar;
 	private IUserKey allowMovementKey;
@@ -57,12 +58,14 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	private IUserKey stopApplicationKey;
 
 	private boolean moving = false;
+	private boolean polishing = false;
 	private boolean finished = false;
 	
 	private int currentPointIndex;//the index of the point being registered
 	
 	//Variables polishing
 	private ArrayList<ObjectFrame> framePoints;
+	private ArrayList<JointPosition> jointPositions = null;
 	double largeurOutil = 60;
 	
 	@Override
@@ -93,8 +96,9 @@ public class HoldAndDo extends RoboticsAPIApplication {
 				if(event.equals(UserKeyEvent.KeyUp)){
 					polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 
-					polish();
-
+					moving = false;//Stop compliant mode
+					polishing = true;
+					
 					polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
 				}
 			}
@@ -154,6 +158,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		{ add(null); add(null); add(null); add(null); } };
 		
+		jointPositions = new ArrayList<JointPosition>();
+		
 		currentPointIndex = 0;
 	}
 
@@ -167,6 +173,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 			//If the user has pressed the allowMovementKey
 			if(moving){
 				allowMovement();
+			}else if (polishing) {
+				polish();
 			}
 		}
 	}
@@ -200,75 +208,105 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
-				
-		ObjectFrame refFirstPoint = framePoints.get(0);
-		ObjectFrame refSecondPoint = framePoints.get(1);
-		ObjectFrame refThirdPoint = framePoints.get(2);
-		int index = 0;
+		ArrayList<ObjectFrame> framesSortedByY = framePoints;
+		ArrayList<ObjectFrame> framesSortedByX = framePoints;
+		ArrayList<ObjectFrame> startFrames = new ArrayList<ObjectFrame>();
+		ArrayList<ObjectFrame> endFrames = new ArrayList<ObjectFrame>();
+
+		//Sort the list by Y
+//		for(int i = 0 ; i < framePoints.size() ; i++){
+//			ObjectFrame point = framePoints.get(i);
+//			for (int j = i; j < framePoints.size(); j++) {
+//				if( point.getY() < framesSortedByY.get(j).getY() ){
+//					framesSortedByY.set(j, point);
+//				}
+//			}
+//		}
+		for (int i = 0; i < framesSortedByY.size(); i++) {
+		      for (int j = framesSortedByY.size() - 1; j > i; j--) {
+		          if (framesSortedByY.get(i).getX() > framesSortedByY.get(j).getX()) {
+		              ObjectFrame tmp = framesSortedByY.get(i);
+		              framesSortedByY.set(i,framesSortedByY.get(j)) ;
+		              framesSortedByY.set(j,tmp);
+		          }
+		      }
+		  }
 		
-		getLogger().info("Recherche du plus petit X");
+		//Sort the list by X
+//		for(int i = 0 ; i < framePoints.size() ; i++){
+//			ObjectFrame point = framePoints.get(i);
+//			
+//			for (int j = i; j < framePoints.size(); j++) {
+//				if( point.getX() < framesSortedByX.get(j).getX() ){
+//					framesSortedByX.set(j, point);
+//				}
+//			}
+//		}
+		  for (int i = 0; i < framesSortedByX.size(); i++) {
+		      for (int j = framesSortedByX.size() - 1; j > i; j--) {
+		          if (framesSortedByX.get(i).getX() > framesSortedByX.get(j).getX()) {
+		              ObjectFrame tmp = framesSortedByX.get(i);
+		              framesSortedByX.set(i,framesSortedByX.get(j)) ;
+		              framesSortedByX.set(j,tmp);
+		          }
+		      }
+		  }
 		
-		//Recherche du plus petit X et attribution de son index
-		for(int i = 0; i < framePoints.size(); i++){
-			refFirstPoint = refFirstPoint.getX() < framePoints.get(i).getX() ? refFirstPoint : framePoints.get(i);
-			index = refFirstPoint != framePoints.get(i) ? index : i;
+		//Create all the sub points
+		double deltaXStart = framesSortedByX.get(1).getX() - framesSortedByX.get(0).getX();
+		double deltaYStart = framesSortedByX.get(1).getY() - framesSortedByX.get(0).getY();
+		
+		double deltaXEnd = framesSortedByX.get(3).getX() - framesSortedByX.get(2).getX();
+		double deltaYEnd = framesSortedByX.get(3).getY() - framesSortedByX.get(2).getY();
+		
+		startFrames.add( framesSortedByY.get(2) );
+		endFrames.add( framesSortedByY.get(3) );
+		
+		double xStart = framesSortedByX.get(0).getX();
+		double yStart = framesSortedByX.get(0).getY();
+		double xEnd = framesSortedByX.get(2).getX();
+		double yEnd = framesSortedByX.get(2).getY();
+		
+		double greatestXDelta = deltaXStart > deltaXEnd ? deltaYStart : deltaYEnd;
+		getLogger().info("Nombre d'aller-retour à faire : " + String.valueOf(greatestXDelta/largeurOutil) );
+		
+		for(double i = 0 ; i < greatestXDelta/largeurOutil ; i++){
+			
+			xStart += largeurOutil * ( deltaXStart / ( Math.abs(deltaXStart) +  Math.abs(deltaYStart) ) ) ;
+			yStart += largeurOutil * ( deltaYStart/ ( Math.abs(deltaYStart) +  Math.abs(deltaXStart) ) );
+			ITransformationProvider transformationProvider = new StaticTransformationProvider( XyzAbcTransformation.ofTranslation(xStart, yStart, framesSortedByY.get(3).getZ()) );
+			ObjectFrame startFrame = new ObjectFrame("Start" + String.valueOf(i), getApplicationData().getFrame("/Workspace") , pliers, transformationProvider);
+			startFrames.add(startFrame);
+			
+			xEnd += largeurOutil * ( deltaXEnd / ( Math.abs(deltaXEnd) +  Math.abs(deltaYEnd) ) );
+			yEnd += largeurOutil * ( deltaYEnd / ( Math.abs(deltaYEnd) +  Math.abs(deltaXEnd) ) );
+			ITransformationProvider transformationProvider2 = new StaticTransformationProvider( XyzAbcTransformation.ofTranslation(xEnd, yEnd, framesSortedByY.get(3).getZ()) );
+			ObjectFrame endFrame = new ObjectFrame("End" + String.valueOf(i), getApplicationData().getFrame("/Workspace") , pliers, transformationProvider2);
+			endFrames.add(endFrame);
 		}
 		
-		getLogger().info("Recherche du second X");
-		
-		//Recherche du second X
-		for (int j = 0; j < framePoints.size(); j++) {
-			if(framePoints.get(j).distanceTo(refFirstPoint) != 0)
-			{
-				refSecondPoint = refSecondPoint.getX() < framePoints.get(j).getX() ? refSecondPoint : framePoints.get(j);
-			}
+		//Polish
+		getLogger().info("Returning to first point");
+		pliers.getFrame("Sander").move( lin( startFrames.get(0) ) );
+		//pliers.getFrame("Sander").move( lin( getApplicationData().getFrame("Workspace").getChild("Start" + 0) ) );
+		//pliers.getFrame("Sander").move( linRel( startFrames.get(0).getX(), startFrames.get(0).getY(), startFrames.get(0).getZ() ) );
+		getLogger().info("Robot on first point. Starting polishement.");
+		for(int i = 0 ; i < startFrames.size() ; i++){
+//			pliers.getFrame("Sander").move( linRel(deltaXStart, deltaYStart, 0.0) );
+//			pliers.getFrame("Sander").move( linRel(-1 * deltaXStart, -1 * deltaYStart, 0.0) );
+//			pliers.getFrame("Sander").move( linRel(largeurOutil * ( deltaXStart / ( Math.abs(deltaXStart) +  Math.abs(deltaYStart) ) ), largeurOutil * ( deltaYStart/ ( Math.abs(deltaYStart) +  Math.abs(deltaXStart) ) ), 0.0) );
+			
+//			pliers.getFrame("Sander").move( lin( getApplicationData().getFrame("Workspace").getChild("End" + i) ) );
+//			pliers.getFrame("Sander").move( lin( getApplicationData().getFrame("Workspace").getChild("Start" + i) ) );
+			
+			pliers.getFrame("Sander").move( lin( endFrames.get(i) ) );
+			pliers.getFrame("Sander").move( lin( startFrames.get(i) ) );
+			pliers.getFrame("Sander").move( lin( startFrames.get(i+1) ) );
 		}
 		
-		getLogger().info("Recherche du troisième X");
-		
-		//Recherche du troisième X
-		for (int k = 0; k < framePoints.size(); k++) {
-			if(framePoints.get(k).distanceTo(refFirstPoint) != 0 && framePoints.get(k).distanceTo(refSecondPoint) != 0 )
-			{
-				refThirdPoint = refThirdPoint.getX() < framePoints.get(k).getX() ? refThirdPoint: framePoints.get(k);
-			}
-		}
-
-		getLogger().info("Calcul des deltas");
-		
-		//Calcul des deltas entre les différents points
-		double deltaX = refSecondPoint.getX() - refFirstPoint.getX();
-		double deltaY = refSecondPoint.getY() - refFirstPoint.getY();
-		double deltaX2 = refThirdPoint.getX() - refFirstPoint.getX();
-		double deltaY2 = refThirdPoint.getY() - refFirstPoint.getY();
-		
-		getLogger().info("Paramètres");
-		
-		//Attribution des paramètres pour le passage
-		double varX = refFirstPoint.getX();
-		//Attribution du décalage à effectuer
-		double decalage = largeurOutil;
-		
-		getLogger().info("Déplacement du robot");
-		
-		//On replace au point avec le plus petit X
-		JointPosition JPosition = alJPositions.get(index);
-		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
-
-		getLogger().info("Do While");
-		//Tant que le point en diagonale n'est pas atteint
-		//Aller-retour puis décalage 
-		do{
-			pliers.getFrame("Sander").move(linRel(deltaX, deltaY, 0).setJointVelocityRel(0.5));
-			pliers.getFrame("Sander").move(linRel(-deltaX, -deltaY, 0).setJointVelocityRel(0.5));
-			pliers.getFrame("Sander").move(linRel(deltaX2 / decalage, deltaY2 / decalage, 0).setJointVelocityRel(0.5));
-			//Incrémentation de la variable d'arrêt
-			varX += deltaX2 / decalage;
-		}while(varX < refThirdPoint.getX());
-		
-
 		/*-------------------------------------------------------------------------------------------------------------------*/
 		
+		polishing = false;
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
 		getLogger().info("Ponçage terminé.");
 	}
@@ -280,7 +318,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		getLogger().info(new StringBuilder("Enregistrement de la position ").append(currentPointIndex+1).append("...").toString());
 
 		currentPointIndex++;
-		alJPositions.add(robot.getCurrentJointPosition());
+		
+		jointPositions.add(robot.getCurrentJointPosition());
 		
 		//parameters
 		String pointNameString = new StringBuilder("NP").append(String.valueOf(currentPointIndex)).toString();//NP1,NP2,NP3,NP4.
@@ -297,7 +336,26 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		framePoints.set(currentPointIndex - 1, newPointFrame);
 		
 		currentPointIndex = currentPointIndex == 4 ? 1 : currentPointIndex;
-
+		
 		getLogger().info("Enregistrement de la position terminé");
 	}
 }
+
+/**
+ * Saves
+ * //Calculer la distance entre ce point, et les 3 autres points pour éliminer la diagonale
+	//Entre les points restants, récupérer celui avec le second x le plus petit
+	
+	//deltaX = X deuxième point - X premier point
+	//deltaY = Y deuxième point - Y premier point
+	//Le ponçage incrémentera de deltaX et deltaY dans le mouvement aller, et le décrémentera dans le retour
+	//Ensuite, test si deltaX ou deltaY est le plus grand (retenir qui est le plus grand) puis faire le plus petit sur le plus grand
+	//deltaPetit/(deltaPetit + deltaGrand) = un pourcentage de 0 à 1/2
+	//cela nous donnera le rapport pour le déplacement de l'outil pour continuer le ponçage
+	//deltaPetit (soit l'incrément X soit l'incrément Y) utilisera le pourcentage obtenu dans le déplacement de l'outil en faisant : largeurOutil x résultat du rapport
+	//deltaGrand (soit l'incrément X soit l'incrément Y) utilisera le pourcentage obtenu dans le déplacement de l'outil en faisant : largeurOutil x (1- résultat du rapport)
+	
+	//ensuite récupérer le point non utilisé qui n'est pas le point de la diagonale
+	//calculer la distance entre notre origine (le point avec le plus petit x) et celui ci pour avoir la longueur a garder dans la boucle for
+	//cela nous donnera la valeur a ne pas dépasser pour le (i = 0 ; i < distance Origine jusqu'au point concerné ; i+= largeurOutil)
+ */
