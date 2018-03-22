@@ -270,10 +270,11 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		JointPosition JPosition2 = alJPositions.get(index2);
 		JointPosition JPosition3 = alJPositions.get(index3);
 		JointPosition JPosition4 = alJPositions.get(index4);
-		robot.move(ptp(JPosition4.get(0),JPosition4.get(1),JPosition4.get(2),JPosition4.get(3),JPosition4.get(4),JPosition4.get(5),JPosition4.get(6)).setJointVelocityRel(0.5));
+		
 		robot.move(ptp(JPosition3.get(0),JPosition3.get(1),JPosition3.get(2),JPosition3.get(3),JPosition3.get(4),JPosition3.get(5),JPosition3.get(6)).setJointVelocityRel(0.5));
 		robot.move(ptp(JPosition2.get(0),JPosition2.get(1),JPosition2.get(2),JPosition2.get(3),JPosition2.get(4),JPosition2.get(5),JPosition2.get(6)).setJointVelocityRel(0.5));
 		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition4.get(0),JPosition4.get(1),JPosition4.get(2),JPosition4.get(3),JPosition4.get(4),JPosition4.get(5),JPosition4.get(6)).setJointVelocityRel(0.5));
 		
 		getLogger().info("Do While");
 		//Tant que le point en diagonale n'est pas atteint
