@@ -295,8 +295,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		//Tant que le point en diagonale n'est pas atteint
 		//Aller-retour puis décalage 
 		do{
-			pliers.getFrame("Sander").move(linRel(-deltaY, deltaX, 0).setJointVelocityRel(0.5));
-			pliers.getFrame("Sander").move(linRel(deltaY, -deltaX, 0).setJointVelocityRel(0.5));
+			pliers.getFrame("Sander").move(linRel(-deltaY, -deltaX, 0).setJointVelocityRel(0.5));
+			pliers.getFrame("Sander").move(linRel(deltaY, deltaX, 0).setJointVelocityRel(0.5));
 			pliers.getFrame("Sander").move(linRel(-deltaY2 / decalage, -deltaX2 / decalage, 0).setJointVelocityRel(0.5));
 			//Incrémentation de la variable d'arrêt
 			varX += deltaX2 / decalage;
