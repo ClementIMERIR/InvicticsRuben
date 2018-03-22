@@ -314,81 +314,81 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				+"p1:("+p1.getX()+","+p1.getY()+")\n"
 				+"p2:("+p2.getX()+","+p2.getY()+")\n"
 				+"p3:("+p3.getX()+","+p3.getY()+")");
-		
-		//move relatif
-		//définition des parametres du déplacement
-		getLogger().info("début dessin avec linRel");
-		RelativeLIN moveSquareSide = linRel(0,0,-3).breakWhen(grabForce);
-		moveSquareSide.setMode(drawMode);
-		moveSquareSide.setCartVelocity(50);
-		
-		displayLogForces(penWorldAlign);
-
-		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
-				+moveSquareSide.getOffset().getY()+","
-				+moveSquareSide.getOffset().getZ()+")");
-		//définition du déplacement de p0 a p1
-		moveSquareSide.setXOffset(squareSize);
-		moveSquareSide.setYOffset(0);
-		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
-				+moveSquareSide.getOffset().getY()+","
-				+moveSquareSide.getOffset().getZ()+")");
-		penWorldAlign.move(moveSquareSide);
-		
-		displayLogForces(penWorldAlign);
-		
-		//défintion du déplacement de p1 a p2
-		moveSquareSide.setXOffset(0);
-		moveSquareSide.setYOffset(squareSize);
-		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
-				+moveSquareSide.getOffset().getY()+","
-				+moveSquareSide.getOffset().getZ()+")");
-		penWorldAlign.move(moveSquareSide);
-		
-		displayLogForces(penWorldAlign);
-		
-		//défintion du déplacement de p2 a p3		
-		moveSquareSide.setXOffset(-squareSize);
-		moveSquareSide.setYOffset(0);
-		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
-				+moveSquareSide.getOffset().getY()+","
-				+moveSquareSide.getOffset().getZ()+")");
-		penWorldAlign.move(moveSquareSide);
-		
-		displayLogForces(penWorldAlign);
-		
-		//défintion du déplacement de p3 a p0
-		moveSquareSide.setXOffset(0);
-		moveSquareSide.setYOffset(-squareSize);
-		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
-				+moveSquareSide.getOffset().getY()+","
-				+moveSquareSide.getOffset().getZ()+")");
-		penWorldAlign.move(moveSquareSide);
-		
-		displayLogForces(penWorldAlign);
-		
+//		
+//		//move relatif
+//		//définition des parametres du déplacement
+//		getLogger().info("début dessin avec linRel");
+//		RelativeLIN moveSquareSide = linRel(0,0,-3).breakWhen(grabForce);
+//		moveSquareSide.setMode(drawMode);
+//		moveSquareSide.setCartVelocity(50);
+//		
+//		displayLogForces(penWorldAlign);
+//
+//		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
+//				+moveSquareSide.getOffset().getY()+","
+//				+moveSquareSide.getOffset().getZ()+")");
+//		//définition du déplacement de p0 a p1
+//		moveSquareSide.setXOffset(squareSize);
+//		moveSquareSide.setYOffset(0);
+//		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
+//				+moveSquareSide.getOffset().getY()+","
+//				+moveSquareSide.getOffset().getZ()+")");
+//		penWorldAlign.move(moveSquareSide);
+//		
+//		displayLogForces(penWorldAlign);
+//		
+//		//défintion du déplacement de p1 a p2
+//		moveSquareSide.setXOffset(0);
+//		moveSquareSide.setYOffset(squareSize);
+//		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
+//				+moveSquareSide.getOffset().getY()+","
+//				+moveSquareSide.getOffset().getZ()+")");
+//		penWorldAlign.move(moveSquareSide);
+//		
+//		displayLogForces(penWorldAlign);
+//		
+//		//défintion du déplacement de p2 a p3		
+//		moveSquareSide.setXOffset(-squareSize);
+//		moveSquareSide.setYOffset(0);
+//		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
+//				+moveSquareSide.getOffset().getY()+","
+//				+moveSquareSide.getOffset().getZ()+")");
+//		penWorldAlign.move(moveSquareSide);
+//		
+//		displayLogForces(penWorldAlign);
+//		
+//		//défintion du déplacement de p3 a p0
+//		moveSquareSide.setXOffset(0);
+//		moveSquareSide.setYOffset(-squareSize);
+//		getLogger().info("moveSquare : (" + moveSquareSide.getOffset().getX()+","
+//				+moveSquareSide.getOffset().getY()+","
+//				+moveSquareSide.getOffset().getZ()+")");
+//		penWorldAlign.move(moveSquareSide);
+//		
+//		displayLogForces(penWorldAlign);
+//		
 //		//avec le move de l'API
-//		getLogger().info("début dessin avec lin");
-//		LIN moveTop1 = lin(p1);
-//		moveTop1.setMode(drawMode);
-//		moveTop1.setCartVelocity(100);
-//		
-//		LIN moveTop2 = lin(p2);
-//		moveTop2.setMode(drawMode);
-//		moveTop2.setCartVelocity(100);
-//		
-//		LIN moveTop3 = lin(p3);
-//		moveTop3.setMode(drawMode);
-//		moveTop3.setCartVelocity(100);
-//		
-//		LIN moveTop0 = lin(p0);
-//		moveTop1.setMode(drawMode);
-//		moveTop1.setCartVelocity(100);
-//		
-//		penWorldAlign.move(moveTop1);
-//		penWorldAlign.move(moveTop2);
-//		penWorldAlign.move(moveTop3);
-//		penWorldAlign.move(moveTop0);
+		getLogger().info("début dessin avec lin");
+		LIN moveTop1 = lin(p1);
+		moveTop1.setMode(drawMode);
+		moveTop1.setCartVelocity(100);
+		
+		LIN moveTop2 = lin(p2);
+		moveTop2.setMode(drawMode);
+		moveTop2.setCartVelocity(100);
+		
+		LIN moveTop3 = lin(p3);
+		moveTop3.setMode(drawMode);
+		moveTop3.setCartVelocity(100);
+		
+		LIN moveTop0 = lin(p0);
+		moveTop1.setMode(drawMode);
+		moveTop1.setCartVelocity(100);
+		
+		penWorldAlign.move(moveTop1);
+		penWorldAlign.move(moveTop2);
+		penWorldAlign.move(moveTop3);
+		penWorldAlign.move(moveTop0);
 	}
 	
 	/** 
