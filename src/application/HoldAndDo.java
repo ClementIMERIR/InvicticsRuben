@@ -250,13 +250,15 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		greatestDelta = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : deltaY;
 		divDecalage = tiniestDelta / ( Math.abs(tiniestDelta) + Math.abs(greatestDelta) );
 		distanceToDo = refFrame1.distanceTo(refFrame4);
+		distanceToDo = Math.abs(distanceToDo);
 		
 		jPosition = jointPositions.get(startingPointIndex);
 		robot.move(ptp( jPosition.get(0), jPosition.get(1), jPosition.get(2), jPosition.get(3), jPosition.get(4), jPosition.get(5), jPosition.get(6)).setJointVelocityRel(0.5));
 
 		decalageOutilY = deltaY < 0 ? largeurOutil * -1: largeurOutil;
 		
-		for(double i = 0 ; i < distanceToDo ; i += largeurOutil) {
+		for(double i = 0 ; i < distanceToDo ; i += largeurOutil) 
+		{
 			pliers.getFrame("Sander").move(linRel(-deltaX, -deltaY, 0.0).setJointVelocityRel(0.5));
 			pliers.getFrame("Sander").move(linRel(deltaX, deltaY, 0.0).setJointVelocityRel(0.5));
 			
