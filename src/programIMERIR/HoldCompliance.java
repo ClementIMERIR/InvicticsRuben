@@ -104,6 +104,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				int missedEvents) {
 			// Méthode appeler lorsque une force plus fote a 10 N est appliquée
 			getLogger().info("FreeMovement triggered");
+			step = -1;
 			freeMovementRobot();
 		}
 	};
@@ -121,7 +122,6 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				getLogger().info("penInfos = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 //				//grabForceObserver.disable();
 				penCollisionObserver.enable();
-				step = -1;
 				RelativeLIN descente = linRel(0,0,-currentFrame.getZ());
 				descente.setCartVelocity(30);
 				descente.breakWhen(penCollision);
@@ -275,7 +275,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				moveZ = -0.1;
 			}else{
 //				moveZ = Math.log(force.getZ());
-				moveZ = (sumForces-1)/10;
+				moveZ = (sumForces-2)/10;
 			}
 //			moveZ = (force.getZ()-1)/3;
 			getLogger().info("moveZ= "+moveZ);
