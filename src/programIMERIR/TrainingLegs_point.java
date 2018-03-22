@@ -39,7 +39,7 @@ public class TrainingLegs_point extends RoboticsAPIApplication {
 	private Tool legLift;//Création d'un objet outil
 	@Inject
 	@Named("Leg_thomas")
-	private Workpiece leg_thomas;
+	private Tool leg_thomas;
 	
 	//variable accessible via process data
 	private Integer tempo, 
