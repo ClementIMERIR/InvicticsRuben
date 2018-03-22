@@ -121,7 +121,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				getLogger().info("penInfos = " + currentFrame.getX() + " , " + currentFrame.getY() + " , "  + currentFrame.getZ());
 //				//grabForceObserver.disable();
 				penCollisionObserver.enable();
-				step = 0;
+				step = -1;
 				RelativeLIN descente = linRel(0,0,-currentFrame.getZ());
 				descente.setCartVelocity(30);
 				descente.breakWhen(penCollision);
@@ -275,7 +275,7 @@ public class HoldCompliance extends RoboticsAPIApplication {
 				moveZ = -0.5;
 			}else{
 //				moveZ = Math.log(force.getZ());
-				moveZ = (sumForces-1)/5;
+				moveZ = (sumForces-1)/10;
 			}
 //			moveZ = (force.getZ()-1)/3;
 			getLogger().info("moveZ= "+moveZ);
