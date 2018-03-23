@@ -52,8 +52,10 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	private JointPosition jPosition;
 	
 	private IUserKeyBar buttonBar;
+	private IUserKeyBar buttonBar2;
 	private IUserKey allowMovementKey;
 	private IUserKey polishKey;
+	private IUserKey brushKey;
 	private IUserKey registerPositionKey;
 	private IUserKey stopApplicationKey;
 
@@ -96,9 +98,24 @@ public class HoldAndDo extends RoboticsAPIApplication {
 					polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 
 					moving = false;//Stop compliant mode
-					polish();
+					polish(0.0);
 
 					polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
+				}
+			}
+		};
+		
+		//The listener of the polishKey button
+		IUserKeyListener brushButtonListener = new IUserKeyListener() {
+			@Override
+			public void onKeyEvent(IUserKey key, UserKeyEvent event) {
+				if(event.equals(UserKeyEvent.KeyUp)){
+					brushKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
+
+					moving = false;//Stop compliant mode
+					polish(20);
+
+					brushKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
 				}
 			}
 		};
@@ -130,25 +147,30 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		
 		//The container of the button we're going to create
 		buttonBar = getApplicationUI().createUserKeyBar("Mouvement");
+		buttonBar2 = getApplicationUI().createUserKeyBar("Extinction");
 		
 		//Button allowing the user to move the robot
 		allowMovementKey = buttonBar.addUserKey(0, moveButtonListener, true);
 		allowMovementKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
 		
 		//Button starting the polishing
-		polishKey = buttonBar.addUserKey(1, polishButtonListener, true);
+		polishKey = buttonBar.addUserKey(2, polishButtonListener, true);
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
 
+		brushKey = buttonBar.addUserKey(3, brushButtonListener, true);
+		brushKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
+		
 		//Button to register a position
-		registerPositionKey = buttonBar.addUserKey(2, registerButtonListener, true);
+		registerPositionKey = buttonBar.addUserKey(1, registerButtonListener, true);
 		registerPositionKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
 		
 		//Button allowing the user to stop the application
-		stopApplicationKey = buttonBar.addUserKey(3, stopApplicationButtonListener, true);
+		stopApplicationKey = buttonBar2.addUserKey(0, stopApplicationButtonListener, true);
 		stopApplicationKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
 		
 		//Make the buttons bar visible
 		buttonBar.publish();
+		buttonBar2.publish();
 		
 		framePoints = new ArrayList<ObjectFrame>(){ /**
 			 * 
@@ -199,7 +221,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	/**
 	 * Make the robot polish the area between the 4 points
 	 */
-	private void polish(){
+	private void polish(double yOffset){
 		getLogger().info("Ponçage...");
 		polishKey.setText(UserKeyAlignment.MiddleLeft, "Ponçage...");
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
@@ -265,7 +287,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		World.Current.getRootFrame();
 		
-		robot.move(linRel(0.0, 0.0, 0.0).setJointVelocityRel(0.5));
+		robot.move(linRel(0.0, 0.0, yOffset).setJointVelocityRel(0.5));
 		
 		if(deltaY >= 0){
 			for(double i = 0 ; i < distanceToDo ; i += largeurOutil) 
