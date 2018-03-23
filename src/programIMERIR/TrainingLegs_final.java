@@ -224,10 +224,10 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		while (answer2 != 2) {
 			if (answer2 == 0) {
 				legLift.getFrame("/TCP").move(
-						ptp(getApplicationData().getFrame("/Genoux/P1")));
+						ptp(getApplicationData().getFrame("/Genoux/P1")).setJointAccelerationRel(0.5));
 			} else {
 				legLift.getFrame("/TCP").move(
-						ptp(getApplicationData().getFrame("/Genoux/P2")));
+						ptp(getApplicationData().getFrame("/Genoux/P2")).setJointAccelerationRel(0.5));
 			}
 			answer2 = -1;
 
