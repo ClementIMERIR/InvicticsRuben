@@ -49,12 +49,6 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 	@Named("LegLift")
 	private Tool legLift;// Création d'un objet outil
 	@Inject
-	@Named("Leg")
-	private Workpiece leg;
-	@Inject
-	@Named("Leg1k5")
-	private Workpiece leg1k5;
-	@Inject
 	@Named("Leg_halima")
 	private Workpiece leg_halima;
 	@Inject
@@ -67,8 +61,8 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 	private CartesianImpedanceControlMode mode;
 	private IUserKeyBar gripperBar;
 	private IUserKey openKey;
-	private IUserKey stop;
 	private Frame firedCurrPos;
+	private boolean var;
 	// variable accessible via process data
 	private Integer tempo, nbcycle;
 	private Double angle;
@@ -77,6 +71,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 	// ---------------------
 	private int answer;
 	private int answer2;
+	private int answer3;
 	private String nom;
 	private String URL;
 	private String login;
@@ -87,7 +82,6 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 	private ResultSet resultat;
 	private String current_nom;
 	private int current_id;
-	private boolean var;
 	private boolean run;
 
 	private enum Personne {
@@ -105,9 +99,6 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		openKey = gripperBar.addUserKey(0, myfunction, false);
 		openKey.setText(UserKeyAlignment.BottomLeft, "start certesien");
 		
-		stop = gripperBar.addUserKey(1, myfunction_2, false);
-		stop.setText(UserKeyAlignment.BottomLeft, "stop certesien");
-		
 		gripperBar.publish();
 
 		mode = new CartesianImpedanceControlMode();
@@ -116,6 +107,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		answer = -1; // initialize a une valeur nom utilisable par la boite de
 						// dialogue
 		answer2 = -1;
+		answer3 = -1;
 		URL = "jdbc:mysql://172.31.1.66/imerir";
 		login = "imerir";
 		password = "";
@@ -184,14 +176,14 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 				getLogger().info("START appuyé mode cartesien actif");
 				var = true;
 				int cmp = 0;
-				while (cmp <= 20) {
+				while (cmp <= 5) {
 					robot.move(positionHold(mode, 1, TimeUnit.SECONDS));
 					getLogger().info("toujours en mode cartesien pendant 2 secondes");
 					ThreadUtil.milliSleep(1000);
 					cmp ++;
 				}
 				var = false;			
-				run = false;
+				answer = -1;
 				firedCurrPos = robot.getCurrentCartesianPosition(legLift
 						.getDefaultMotionFrame());
 				getLogger().info("infos position: " + firedCurrPos.toString());
@@ -199,19 +191,6 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		}
 	};
 	
-	IUserKeyListener myfunction_2 = new IUserKeyListener() {
-		@Override
-		public void onKeyEvent(IUserKey key, UserKeyEvent event) {
-			if (event == UserKeyEvent.KeyDown) {
-			getLogger().info("btn 1 appuyé quitter le mode cartesien");
-			var = false;			
-			run = false;
-			firedCurrPos = robot.getCurrentCartesianPosition(legLift
-							.getDefaultMotionFrame());
-					getLogger().info("infos position: " + firedCurrPos.toString());
-			}	
-		}
-	};
 
 	@Override
 	public void run() {
@@ -222,11 +201,16 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		getLogger().info("vitesse : " + vitesse.toString());
 		// PARTIE EN COMMUN POUR TOUS LES PATIENTS------------------------
 		run = true;
-		while (run == true) {
-			ThreadUtil.milliSleep(1000);
-			getLogger().info("tjrs dans le while de run");
+		var = true;
+		
+		while(answer3 !=1){
+			answer3 = getApplicationUI().displayModalDialog(
+			ApplicationDialogType.QUESTION,
+			"Quel mode voulez utiliser ?", "Developpeur", "Utilisateur");
+			getLogger().info("Dans le mode developpeur");
+			ThreadUtil.milliSleep(10000);
 		}
-		getLogger().info("sortie du while de run, suite...");
+		
 		robot.move(ptpHome().setJointVelocityRel(0.5));
 
 		answer2 = getApplicationUI().displayModalDialog(
@@ -273,6 +257,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 							"Voulez vous refaire un cycle sur cette jambe?",
 							"Oui", "Non");
 				}
+				leg_halima.detach();// detache la jambe de l'outil en logiciel
 				answer = -1;
 				ThreadUtil.milliSleep(tempo);// 10 sec pour détacher sa jambe
 				break;
@@ -296,6 +281,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 							"Voulez vous refaire un cycle sur cette jambe?",
 							"Oui", "Non");
 				}
+				leg_thomas.detach();// detache la jambe de l'outil en logiciel
 				answer = -1;
 				ThreadUtil.milliSleep(tempo);// 10 sec pour détacher sa jambe
 				break;
@@ -316,6 +302,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 							"Voulez vous refaire un cycle sur cette jambe ?",
 							"Oui", "Non");
 				}
+				leg_mathis.detach();// detache la jambe de l'outil en logiciel
 				answer = -1;
 				ThreadUtil.milliSleep(tempo);// 10 sec pour détacher sa jambe
 				break;
@@ -342,9 +329,8 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 					"Oui", "Non");
 		}
 		answer = -1;
-
-		leg.detach();// detache la jambe de l'outil en logiciel
 		robot.move(ptpHome().setJointVelocityRel(0.5));
+		
 		/*
 		 * if (nom.equals("Pierre")){ tempo =
 		 * getApplicationData().getProcessData("tempo").getValue(); nbcycle =
