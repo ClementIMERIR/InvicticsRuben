@@ -184,10 +184,10 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 				getLogger().info("START appuyé mode cartesien actif");
 				var = true;
 				int cmp = 0;
-				while (cmp <= 30) {
+				while (cmp <= 20) {
 					robot.move(positionHold(mode, 1, TimeUnit.SECONDS));
 					getLogger().info("toujours en mode cartesien pendant 2 secondes");
-					ThreadUtil.milliSleep(2000);
+					ThreadUtil.milliSleep(1000);
 					cmp ++;
 				}
 				var = false;			
