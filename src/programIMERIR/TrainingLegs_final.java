@@ -224,10 +224,10 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		while (answer2 != 2) {
 			if (answer2 == 0) {
 				legLift.getFrame("/TCP").move(
-						ptp(getApplicationData().getFrame("/Genoux/P1")).setJointVelocityRel(0.1));
+						ptp(getApplicationData().getFrame("/Genoux/P1")).setJointVelocityRel(0.3));
 			} else {
 				legLift.getFrame("/TCP").move(
-						ptp(getApplicationData().getFrame("/Genoux/P2")).setJointVelocityRel(0.1));
+						ptp(getApplicationData().getFrame("/Genoux/P2")).setJointVelocityRel(0.3));
 			}
 			answer2 = -1;
 
@@ -250,10 +250,10 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 					for (int i = 0; i < nbcycle; i++) {
 						leg_halima.getFrame("Genoux").move(
 								linRel(0, 0, 0, Math.toRadians(-angle), 0, 0)
-										.setCartVelocity(vitesse).setJointVelocityRel(0.5));
+										.setCartVelocity(vitesse).setJointVelocityRel(0.4));
 						leg_halima.getFrame("Genoux").move(
 								linRel(0, 0, 0, Math.toRadians(angle), 0, 0)
-										.setCartVelocity(vitesse).setJointVelocityRel(0.5));
+										.setCartVelocity(vitesse).setJointVelocityRel(0.4));
 					}
 					answer = getApplicationUI().displayModalDialog(
 							ApplicationDialogType.QUESTION,
@@ -274,10 +274,10 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 					for (int i = 0; i < nbcycle; i++) {
 						leg_thomas.getFrame("Genoux").move(
 								linRel(0, 0, 0, Math.toRadians(-angle), 0, 0)
-										.setCartVelocity(vitesse).setJointVelocityRel(0.5));
+										.setCartVelocity(vitesse).setJointVelocityRel(0.4));
 						leg_thomas.getFrame("Genoux").move(
 								linRel(0, 0, 0, Math.toRadians(angle), 0, 0)
-										.setCartVelocity(vitesse).setJointVelocityRel(0.5));
+										.setCartVelocity(vitesse).setJointVelocityRel(0.4));
 					}
 					answer = getApplicationUI().displayModalDialog(
 							ApplicationDialogType.QUESTION,
@@ -296,10 +296,10 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 					for (int j = 0; j < nbcycle; j++) {
 						leg_mathis.getFrame("Genoux").move(
 								linRel(0, 0, 0, Math.toRadians(-angle), 0, 0)
-										.setCartVelocity(vitesse).setJointVelocityRel(0.5));
+										.setCartVelocity(vitesse).setJointVelocityRel(0.4));
 						leg_mathis.getFrame("Genoux").move(
 								linRel(0, 0, 0, Math.toRadians(angle), 0, 0)
-										.setCartVelocity(vitesse).setJointVelocityRel(0.5));
+										.setCartVelocity(vitesse).setJointVelocityRel(0.4));
 					}
 					answer = getApplicationUI().displayModalDialog(
 							ApplicationDialogType.QUESTION,
