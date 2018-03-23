@@ -192,7 +192,8 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 					getLogger().info("STOP appuyé");
 					var = false;
 				}
-			} else {//si le btn 1 continuer l'appli
+			} 
+			if (key.getSlot() == 1){//si le btn 1 continuer l'appli
 				getLogger().info("btn 1 appuyé quitter le mode cartesien");
 				run = false;
 			}
