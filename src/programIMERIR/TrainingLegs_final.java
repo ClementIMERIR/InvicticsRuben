@@ -99,14 +99,14 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		legLift.attachTo(robot.getFlange());// "Fixation" de l'outil à la bride
 											// du robot.
 		nom = getApplicationData().getProcessData("name").getValue();
-		
+
 		gripperBar = getApplicationUI().createUserKeyBar("Gripper");
 		openKey = gripperBar.addUserKey(0, myfunction, false);
 		openKey.setText(UserKeyAlignment.BottomLeft, "start certesien");
-		stop = gripperBar.addUserKey(1, myfunction, false);
+		stop = gripperBar.addUserKey(1, myfunction_2, false);
 		stop.setText(UserKeyAlignment.BottomLeft, "stop certesien");
 		gripperBar.publish();
-		
+
 		mode = new CartesianImpedanceControlMode();
 		mode.parametrize(CartDOF.ALL).setStiffness(10.0);
 		// mode.parametrize(CartDOF.ALL).setDamping(0.7);
@@ -176,41 +176,46 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		@Override
 		public void onKeyEvent(IUserKey key, UserKeyEvent event) {
 			// quand le boutton est clicker bouger le robot en cartesien.
-			if (key.getSlot() == 0) {//si btn 0 on active le mode cartesien
+			if (key.getSlot() == 0) {// si btn 0 on active le mode cartesien
 				if (event == UserKeyEvent.KeyDown) {
 					getLogger().info("START appuyé mode cartesien actif");
 					var = true;
-					while (var == true){
+					while (var == true) {
 						robot.move(positionHold(mode, 1, TimeUnit.SECONDS));
 						getLogger().info("toujours en mode cartesien");
 					}
 					firedCurrPos = robot.getCurrentCartesianPosition(legLift
 							.getDefaultMotionFrame());
-					getLogger().info("infos position: "+firedCurrPos.toString());
+					getLogger().info(
+							"infos position: " + firedCurrPos.toString());
 				}
 				if (event == UserKeyEvent.SecondKeyDown) {
 					getLogger().info("STOP appuyé");
 					var = false;
 				}
-			} 
-			if (key.getSlot() == 1){//si le btn 1 continuer l'appli
-				getLogger().info("btn 1 appuyé quitter le mode cartesien");
-				run = false;
 			}
+		}
+	};
+	IUserKeyListener myfunction_2 = new IUserKeyListener() {
+		@Override
+		public void onKeyEvent(IUserKey key, UserKeyEvent event) {
+			getLogger().info("btn 1 appuyé quitter le mode cartesien");
+			run = false;
+
 		}
 	};
 
 	@Override
 	public void run() {
 		// / debug des variables
-		getLogger().info("tempo : "+tempo.toString());
-		getLogger().info("nombre de cycles : " +nbcycle.toString());
-		getLogger().info("angle : " +angle.toString());
-		getLogger().info("vitesse : "+vitesse.toString());
+		getLogger().info("tempo : " + tempo.toString());
+		getLogger().info("nombre de cycles : " + nbcycle.toString());
+		getLogger().info("angle : " + angle.toString());
+		getLogger().info("vitesse : " + vitesse.toString());
 		// PARTIE EN COMMUN POUR TOUS LES PATIENTS------------------------
 		run = true;
 		while (run == true) {
-			ThreadUtil.milliSleep(2000);
+			ThreadUtil.milliSleep(1000);
 			getLogger().info("tjrs dans le while de run");
 		}
 		getLogger().info("sortie du while de run, suite...");
