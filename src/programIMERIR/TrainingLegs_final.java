@@ -176,25 +176,26 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		@Override
 		public void onKeyEvent(IUserKey key, UserKeyEvent event) {
 			// quand le boutton est clicker bouger le robot en cartesien.
-			if (key.getSlot() == 0) {// si btn 0 on active le mode cartesien
-				if (event == UserKeyEvent.KeyDown) {
+			//if (key.getSlot() == 0) {// si btn 0 on active le mode cartesien
+				if (event == UserKeyEvent.FirstKeyDown) {
 					getLogger().info("START appuyé mode cartesien actif");
 					var = true;
 					while (var == true) {
 						robot.move(positionHold(mode, 1, TimeUnit.SECONDS));
 						getLogger().info("toujours en mode cartesien");
-						if (event == UserKeyEvent.SecondKeyDown) {
-							getLogger().info("STOP appuyé");
-							var = false;
-						}
+						
 					}
 					firedCurrPos = robot.getCurrentCartesianPosition(legLift
 							.getDefaultMotionFrame());
 					getLogger().info(
 							"infos position: " + firedCurrPos.toString());
 				}
+				else if (event == UserKeyEvent.SecondKeyDown) {
+					getLogger().info("STOP appuyé");
+					var = false;
+				}
 				
-			}
+			//}
 		}
 	};
 	IUserKeyListener myfunction_2 = new IUserKeyListener() {
