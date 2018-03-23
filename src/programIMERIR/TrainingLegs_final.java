@@ -101,9 +101,9 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		nom = getApplicationData().getProcessData("name").getValue();
 
 		gripperBar = getApplicationUI().createUserKeyBar("Gripper");
-		openKey = gripperBar.addUserKey(0, myfunction, false);
+		openKey = gripperBar.addDoubleUserKey(0, myfunction, false);
 		openKey.setText(UserKeyAlignment.BottomLeft, "start certesien");
-		stop = gripperBar.addUserKey(1, myfunction_2, false);
+		stop = gripperBar.addUserKey(2, myfunction_2, false);
 		stop.setText(UserKeyAlignment.BottomLeft, "stop certesien");
 		gripperBar.publish();
 
@@ -177,14 +177,22 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		public void onKeyEvent(IUserKey key, UserKeyEvent event) {
 			// quand le boutton est clicker bouger le robot en cartesien.
 			//if (key.getSlot() == 0) {// si btn 0 on active le mode cartesien
-				if (event == UserKeyEvent.KeyDown) {
+				if (event == UserKeyEvent.FirstKeyDown) {
 					getLogger().info("START appuyé mode cartesien actif");
 					var = true;
 					while (var == true) {
 						robot.move(positionHold(mode, 1, TimeUnit.SECONDS));
 						getLogger().info("toujours en mode cartesien");					
 					}
-				}								
+				}
+				if (event == UserKeyEvent.SecondKeyDown) {
+					getLogger().info("btn 1 appuyé quitter le mode cartesien");
+					var = false;			
+					run = false;
+					firedCurrPos = robot.getCurrentCartesianPosition(legLift
+									.getDefaultMotionFrame());
+							getLogger().info("infos position: " + firedCurrPos.toString());
+					}	
 		}
 	};
 	IUserKeyListener myfunction_2 = new IUserKeyListener() {
