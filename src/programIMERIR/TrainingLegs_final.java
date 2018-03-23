@@ -103,7 +103,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		gripperBar = getApplicationUI().createUserKeyBar("Gripper");
 		openKey = gripperBar.addUserKey(0, myfunction, false);
 		openKey.setText(UserKeyAlignment.BottomLeft, "start certesien");
-		stop = gripperBar.addUserKey(1, myfunction_2, false);
+		stop = gripperBar.addUserKey(2, myfunction_2, false);
 		stop.setText(UserKeyAlignment.BottomLeft, "stop certesien");
 		gripperBar.publish();
 
@@ -182,25 +182,23 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 					var = true;
 					while (var == true) {
 						robot.move(positionHold(mode, 1, TimeUnit.SECONDS));
-						getLogger().info("toujours en mode cartesien");
-						
+						getLogger().info("toujours en mode cartesien");					
 					}
-					}				
-				
-			//}
+				}								
 		}
 	};
 	IUserKeyListener myfunction_2 = new IUserKeyListener() {
 		@Override
 		public void onKeyEvent(IUserKey key, UserKeyEvent event) {
+			if (event == UserKeyEvent.KeyDown) {
 			getLogger().info("btn 1 appuyé quitter le mode cartesien");
 						
-				run = false;
+			run = false;
 			var = false;
 			firedCurrPos = robot.getCurrentCartesianPosition(legLift
 							.getDefaultMotionFrame());
 					getLogger().info("infos position: " + firedCurrPos.toString());
-				
+			}	
 		}
 	};
 
