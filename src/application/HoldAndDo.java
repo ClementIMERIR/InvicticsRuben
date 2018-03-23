@@ -267,7 +267,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		
 		robot.move(linRel(0.0, 0.0, 0.0).setJointVelocityRel(0.5));
 		
-		if(deltaY > 0){
+		if(deltaY >= 0){
 			for(double i = 0 ; i < distanceToDo ; i += largeurOutil) 
 			{
 				robot.move(linRel(deltaX, deltaY, 0.0).setJointVelocityRel(0.5));
@@ -275,7 +275,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 				
 				robot.move(linRel(decalageOutilX, decalageOutilY, 0).setJointVelocityRel(0.5));				
 			}			
-		} else if(deltaY < 0)
+		} else
 		{
 			deltaY=Math.abs(deltaY);
 			for(double i = 0 ; i < distanceToDo ; i += largeurOutil) 
