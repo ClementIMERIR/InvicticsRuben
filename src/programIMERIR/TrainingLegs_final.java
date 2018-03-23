@@ -187,7 +187,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 				while (cmp <= 30) {
 					robot.move(positionHold(mode, 1, TimeUnit.SECONDS));
 					getLogger().info("toujours en mode cartesien pendant 2 secondes");
-					ThreadUtil.milliSleep(200);
+					ThreadUtil.milliSleep(2000);
 					cmp ++;
 				}
 				var = false;			
