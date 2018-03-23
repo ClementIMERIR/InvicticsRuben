@@ -299,13 +299,13 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		pliers.getFrame("Sander").move(linRel(-deltaY, deltaX, 0).setJointVelocityRel(0.5));
 		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
 		
-		getLogger().info("pliers avec DeltaY En Premier et DeltaX Négatif");
+		/*getLogger().info("pliers avec DeltaY En Premier et DeltaX Négatif");
 		
 		pliers.getFrame("Sander").move(linRel(deltaY, -deltaX, 0).setJointVelocityRel(0.5));
 		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
 		pliers.getFrame("Sander").move(linRel(-deltaY, -deltaX, 0).setJointVelocityRel(0.5));
 		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
-		
+		*/
 		getLogger().info("Robot avec DeltaX Positif");
 		
 		robot.move(linRel(deltaX, deltaY, 0).setJointVelocityRel(0.5));
