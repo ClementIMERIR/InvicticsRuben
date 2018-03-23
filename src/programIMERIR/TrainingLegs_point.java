@@ -132,7 +132,7 @@ public class TrainingLegs_point extends RoboticsAPIApplication {
 	
 			leg.getFrame("/PNP_enfant").attachTo(legLift.getFrame("/Dummy/PNP_parent"));
 			while(answer !=1){
-				for(int i=0;i<nbcycle;i++){
+				for(int i=0;i<5;i++){
 					leg.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(-angle),0,0).setCartVelocity(vitesse));
 					leg.getFrame("Genoux").move(linRel(0,0,0,Math.toRadians(angle),0,0).setCartVelocity(vitesse));
 				}
