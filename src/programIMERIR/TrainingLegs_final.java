@@ -185,7 +185,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 						getLogger().info("toujours en mode cartesien");					
 					}
 				}
-				if (event == UserKeyEvent.SecondKeyDown) {
+				else if (event == UserKeyEvent.SecondKeyDown) {
 					getLogger().info("btn 1 appuyé quitter le mode cartesien");
 					var = false;			
 					run = false;
