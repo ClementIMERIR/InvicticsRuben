@@ -176,7 +176,7 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		@Override
 		public void onKeyEvent(IUserKey key, UserKeyEvent event) {
 			// quand le boutton est clicker bouger le robot en cartesien.
-			if (myfunction.equals(openKey)) {//si btn 0 on active le mode cartesien
+			if (key.getSlot() == 0) {//si btn 0 on active le mode cartesien
 				if (event == UserKeyEvent.KeyDown) {
 					getLogger().info("START appuyé mode cartesien actif");
 					var = true;
