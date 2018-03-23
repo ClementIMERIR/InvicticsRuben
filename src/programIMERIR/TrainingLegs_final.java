@@ -183,16 +183,17 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 					while (var == true) {
 						robot.move(positionHold(mode, 1, TimeUnit.SECONDS));
 						getLogger().info("toujours en mode cartesien");
+						if (event == UserKeyEvent.SecondKeyDown) {
+							getLogger().info("STOP appuyé");
+							var = false;
+						}
 					}
 					firedCurrPos = robot.getCurrentCartesianPosition(legLift
 							.getDefaultMotionFrame());
 					getLogger().info(
 							"infos position: " + firedCurrPos.toString());
 				}
-				if (event == UserKeyEvent.SecondKeyDown) {
-					getLogger().info("STOP appuyé");
-					var = false;
-				}
+				
 			}
 		}
 	};
