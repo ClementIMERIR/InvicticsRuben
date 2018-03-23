@@ -14,6 +14,7 @@ import javax.inject.Named;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.JointPosition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.geometricModel.AbstractFrame;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.ITransformationProvider;
@@ -21,10 +22,10 @@ import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.SceneGraphObject;
 import com.kuka.roboticsAPI.geometricModel.StaticTransformationProvider;
 import com.kuka.roboticsAPI.geometricModel.Tool;
-import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.geometricModel.math.ITransformation;
 import com.kuka.roboticsAPI.geometricModel.math.XyzAbcTransformation;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.roboticsAPI.persistenceModel.templateModel.TemplateElement;
 import com.kuka.roboticsAPI.uiModel.userKeys.IUserKey;
 import com.kuka.roboticsAPI.uiModel.userKeys.IUserKeyBar;
 import com.kuka.roboticsAPI.uiModel.userKeys.IUserKeyListener;
@@ -32,12 +33,11 @@ import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyAlignment;
 import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyEvent;
 import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyLED;
 import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyLEDSize;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 
 /**
  * 
  * @author Clément Bourdarie
- * @author Alexandre
- * @version 1.6
  */
 public class HoldAndDo extends RoboticsAPIApplication {
 	@Inject
@@ -45,11 +45,10 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	@Inject
 	@Named("Pliers")
 	private Tool pliers;
-
+	private ArrayList<JointPosition> alJPositions = new ArrayList<JointPosition>();
 	private CartesianImpedanceControlMode mode;
 //	private JointImpedanceControlMode mode;
 	private double[] jointPosition;
-	private JointPosition jPosition;
 	
 	private IUserKeyBar buttonBar;
 	private IUserKey allowMovementKey;
@@ -64,7 +63,6 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	
 	//Variables polishing
 	private ArrayList<ObjectFrame> framePoints;
-	private ArrayList<JointPosition> jointPositions = null;
 	double largeurOutil = 60;
 	
 	@Override
@@ -95,7 +93,6 @@ public class HoldAndDo extends RoboticsAPIApplication {
 				if(event.equals(UserKeyEvent.KeyUp)){
 					polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 
-					moving = false;//Stop compliant mode
 					polish();
 
 					polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Red, UserKeyLEDSize.Small);
@@ -157,8 +154,6 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		{ add(null); add(null); add(null); add(null); } };
 		
-		jointPositions = new ArrayList<JointPosition>();
-		
 		currentPointIndex = 0;
 	}
 
@@ -205,64 +200,152 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		polishKey.setLED(UserKeyAlignment.MiddleLeft, UserKeyLED.Green, UserKeyLEDSize.Small);
 
 		/*-----------------------------TODO make the polishing function--------------------------------------------------------*/
-
-		double minX = 9999;
+				
+		ObjectFrame refFirstPoint = framePoints.get(0);
+		ObjectFrame refSecondPoint = framePoints.get(1);
+		ObjectFrame refThirdPoint = framePoints.get(2);
+		ObjectFrame refDiagPoint = framePoints.get(3);
+		int index = 0;
+		int index2 = 0;
+		int index3 = 0;
+		int index4 = 0;
 		
-		double deltaX = 0;
-		double deltaY = 0;
-		int startingPointIndex = 0;//The one that has the tiniest X
+		getLogger().info("Recherche du plus petit X");
 		
-		double distanceToDo = 0;
-		double decalageOutilX = 0;
-		double decalageOutilY = 0;
+		//Recherche du plus petit X et attribution de son index
+		for(int i = 0; i < framePoints.size(); i++){
+			refFirstPoint = refFirstPoint.getX() < framePoints.get(i).getX() ? refFirstPoint : framePoints.get(i);
+			index = refFirstPoint != framePoints.get(i) ? index : i;
+		}
 		
-		ObjectFrame refFrame1 = framePoints.get(0);//Plus petit X, point de reference.
-		ObjectFrame refFrame2 = framePoints.get(1);//Deuxieme plus petit X.
-		ObjectFrame refFrame3 = framePoints.get(2);//Plus grande distance (diagonale).
-		ObjectFrame refFrame4 = framePoints.get(3);//Le point non utilisé
-
-		for(int i = 0; i < framePoints.size() ; i++){
-			ObjectFrame point = framePoints.get(i);
-			
-			//Prendre le point avec le plus petit X
-			if(point.getX() < minX){
-				refFrame1 = point;
-				minX = point.getX();
-				startingPointIndex = i;
+		for (int l = 0; l < framePoints.size(); l++) {
+			if(l != index)
+			{
+				refDiagPoint = refFirstPoint.distanceTo(framePoints.get(l)) > refFirstPoint.distanceTo(refDiagPoint) ? framePoints.get(l) : refDiagPoint;
+				index4 = refDiagPoint != framePoints.get(l) ? index4 : l;
 			}
-			refFrame3 = refFrame1.distanceTo(point) > refFrame1.distanceTo(refFrame3) ? point : refFrame3;
 		}
-
-		//Recherche du deuxième plus petit X
-		for (ObjectFrame point : framePoints) {
-			if(point.distanceTo(refFrame1) != 0){
-				refFrame2 = point.getX() < refFrame2.getX() ? point : refFrame2;
+		
+		getLogger().info("Recherche du second X");
+		
+		//Recherche du second X
+		for (int j = 0; j < framePoints.size(); j++) {
+			if(j != index && j != index4)
+			{
+				refSecondPoint = refSecondPoint.getX() < framePoints.get(j).getX() ? refSecondPoint : framePoints.get(j);
 			}
-			//On enregistre le point qui n'a pas été utilisé
-			refFrame4 = point.getX() != refFrame1.getX() && point.getX() != refFrame2.getX() && point.getX() != refFrame3.getX() ? point : refFrame4;
+			index2 = refSecondPoint != framePoints.get(j) ? index2 : j;
 		}
 		
-		deltaX = refFrame2.getX() - refFrame1.getX();
-		deltaY = refFrame2.getY() - refFrame1.getY();
+		getLogger().info("Recherche du troisième X");
 		
-		decalageOutilX = largeurOutil * (deltaX / (Math.abs(deltaX) + Math.abs(deltaY)));
-		decalageOutilY = largeurOutil * (deltaY / (Math.abs(deltaX) + Math.abs(deltaY)));
-		
-		distanceToDo = refFrame1.distanceTo(refFrame4);
-		distanceToDo = Math.abs(distanceToDo);
-		
-		jPosition = jointPositions.get(startingPointIndex);
-		robot.move(ptp( jPosition.get(0), jPosition.get(1), jPosition.get(2), jPosition.get(3), jPosition.get(4), jPosition.get(5), jPosition.get(6)).setJointVelocityRel(0.5));
+		//Recherche du troisième X pas dans la diagonale
+		for (int k = 0; k < framePoints.size(); k++) {
+			if(k != index && k != index2 && k != index4)
+			{
+				refThirdPoint = refThirdPoint.getX() < framePoints.get(k).getX() ? refThirdPoint: framePoints.get(k);
+				index3 = k;
+			}	
+		}
 
-		World.Current.getRootFrame();
+		getLogger().info("Calcul des deltas");
 		
-		for(double i = 0 ; i < distanceToDo ; i += largeurOutil) 
-		{
-			robot.move(linRel(deltaX, deltaY, 0.0).setJointVelocityRel(0.5));
-			robot.move(linRel(-deltaX, -deltaY, 0.0).setJointVelocityRel(0.5));
-			
-			robot.move(linRel(decalageOutilX, decalageOutilY, 0).setJointVelocityRel(0.5));				
-		}
+		//Calcul des deltas entre les différents points
+		double deltaX = refSecondPoint.getX() - refFirstPoint.getX();
+		double deltaY = refSecondPoint.getY() - refFirstPoint.getY();
+		double deltaX2 = refThirdPoint.getX() - refFirstPoint.getX();
+		double deltaY2 = refThirdPoint.getY() - refFirstPoint.getY();
+		
+		getLogger().info("Paramètres");
+		
+		//Attribution des paramètres pour le passage
+		double varX = refFirstPoint.getX();
+		//Attribution du décalage à effectuer
+		double decalage = 4;
+		
+		getLogger().info("Déplacement du robot");
+		
+		//On replace au point avec le plus petit X
+		JointPosition JPosition = alJPositions.get(index);
+		JointPosition JPosition2 = alJPositions.get(index2);
+		JointPosition JPosition3 = alJPositions.get(index3);
+		JointPosition JPosition4 = alJPositions.get(index4);
+		
+		robot.move(ptp(JPosition4.get(0),JPosition4.get(1),JPosition4.get(2),JPosition4.get(3),JPosition4.get(4),JPosition4.get(5),JPosition4.get(6)).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition3.get(0),JPosition3.get(1),JPosition3.get(2),JPosition3.get(3),JPosition3.get(4),JPosition3.get(5),JPosition3.get(6)).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition2.get(0),JPosition2.get(1),JPosition2.get(2),JPosition2.get(3),JPosition2.get(4),JPosition2.get(5),JPosition2.get(6)).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		
+		//Test1 - Parcours possible de toutes les positions pour aller du point 1 au point 2
+		getLogger().info("Test de tous les déplacements possibles");
+		getLogger().info("pliers avec DeltaX Positif");
+		
+		robot.move(linRel(deltaX, deltaY, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		robot.move(linRel(deltaX, -deltaY, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		
+		getLogger().info("pliers avec DeltaX Négatif");
+		
+		pliers.getFrame("Sander").move(linRel(0, deltaY, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		pliers.getFrame("Sander").move(linRel(0, -deltaY, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		
+		getLogger().info("pliers avec DeltaY En Premier et DeltaX Positif");
+		
+		pliers.getFrame("Sander").move(linRel(deltaY, deltaX, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		pliers.getFrame("Sander").move(linRel(-deltaY, deltaX, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		
+		getLogger().info("pliers avec DeltaY En Premier et DeltaX Négatif");
+		
+		pliers.getFrame("Sander").move(linRel(deltaX, 0, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		pliers.getFrame("Sander").move(linRel(-deltaX, 0, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		
+		getLogger().info("Robot avec DeltaX Positif");
+		
+		robot.move(linRel(deltaX, deltaY, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		robot.move(linRel(deltaX, -deltaY, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		
+		/*getLogger().info("Robot avec DeltaX Négatif");
+		
+		robot.move(linRel(-deltaX, deltaY, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		robot.move(linRel(-deltaX, -deltaY, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		*/
+		getLogger().info("Robot avec DeltaY En Premier et DeltaX Positif");
+		
+		robot.move(linRel(deltaY, deltaX, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		robot.move(linRel(-deltaY, deltaX, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		
+		getLogger().info("Robot avec DeltaY En Premier et DeltaX Négatif");
+		
+		robot.move(linRel(deltaY, -deltaX, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		robot.move(linRel(-deltaY, -deltaX, 0).setJointVelocityRel(0.5));
+		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		
+		
+		/*getLogger().info("Do While");
+		//Tant que le point en diagonale n'est pas atteint
+		//Aller-retour puis décalage 
+		do{
+			pliers.getFrame("Sander").move(linRel(deltaX, deltaY, 0).setJointVelocityRel(0.5));
+			pliers.getFrame("Sander").move(linRel(-deltaX, -deltaY, 0).setJointVelocityRel(0.5));
+			pliers.getFrame("Sander").move(linRel(deltaX2 / decalage, deltaY2 / decalage, 0).setJointVelocityRel(0.5));
+			//Incrémentation de la variable d'arrêt
+			varX += deltaX2 / decalage;
+		}while(varX < refThirdPoint.getX());*/
+		
 
 		/*-------------------------------------------------------------------------------------------------------------------*/
 		
@@ -274,19 +357,21 @@ public class HoldAndDo extends RoboticsAPIApplication {
 	 * Register the current state as a position.
 	 */
 	private void registerPosition(){
-		getLogger().info(new StringBuilder("Enregistrement de la position ").append(currentPointIndex+1).append("...").toString());
+		getLogger().info(
+				new StringBuilder("Enregistrement de la position ").append(currentPointIndex+1).append("...").toString());
 
 		currentPointIndex++;
-		
-		jointPositions.add(robot.getCurrentJointPosition());
+		alJPositions.add(robot.getCurrentJointPosition());
 		
 		//parameters
-		String pointNameString = new StringBuilder("NP").append(String.valueOf(currentPointIndex)).toString();//NP1,NP2,NP3,NP4.
+		String pointNameString = 
+				new StringBuilder("NP").append(String.valueOf(currentPointIndex)).toString();//NP1,NP2,NP3,NP4.
 		SceneGraphObject owner = pliers;
 		
 		Frame toolVector = robot.getPositionInformation(pliers.getFrame("/Sander")).getCurrentCartesianPosition();
 
-		ITransformation transformation = XyzAbcTransformation.ofTranslation(toolVector.getX(), toolVector.getY(), toolVector.getZ());
+		ITransformation transformation = XyzAbcTransformation.ofTranslation(toolVector.getX(), 
+				toolVector.getY(), toolVector.getZ());
 		
 		ITransformationProvider transformationProvider = new StaticTransformationProvider(transformation);
 		ObjectFrame parent = getApplicationData().getFrame("/Workspace");
@@ -294,27 +379,8 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		framePoints.set(currentPointIndex - 1, newPointFrame);
 		
-		currentPointIndex = currentPointIndex == 4 ? 1 : currentPointIndex;
-		
+		currentPointIndex = currentPointIndex == 4 ? 0 : currentPointIndex;
+
 		getLogger().info("Enregistrement de la position terminé");
 	}
 }
-
-/**
- * Saves
- * //Calculer la distance entre ce point, et les 3 autres points pour éliminer la diagonale
-	//Entre les points restants, récupérer celui avec le second x le plus petit
-	
-	//deltaX = X deuxième point - X premier point
-	//deltaY = Y deuxième point - Y premier point
-	//Le ponçage incrémentera de deltaX et deltaY dans le mouvement aller, et le décrémentera dans le retour
-	//Ensuite, test si deltaX ou deltaY est le plus grand (retenir qui est le plus grand) puis faire le plus petit sur le plus grand
-	//deltaPetit/(deltaPetit + deltaGrand) = un pourcentage de 0 à 1/2
-	//cela nous donnera le rapport pour le déplacement de l'outil pour continuer le ponçage
-	//deltaPetit (soit l'incrément X soit l'incrément Y) utilisera le pourcentage obtenu dans le déplacement de l'outil en faisant : largeurOutil x résultat du rapport
-	//deltaGrand (soit l'incrément X soit l'incrément Y) utilisera le pourcentage obtenu dans le déplacement de l'outil en faisant : largeurOutil x (1- résultat du rapport)
-	
-	//ensuite récupérer le point non utilisé qui n'est pas le point de la diagonale
-	//calculer la distance entre notre origine (le point avec le plus petit x) et celui ci pour avoir la longueur a garder dans la boucle for
-	//cela nous donnera la valeur a ne pas dépasser pour le (i = 0 ; i < distance Origine jusqu'au point concerné ; i+= largeurOutil)
- */
