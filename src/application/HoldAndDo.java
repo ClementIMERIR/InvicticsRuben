@@ -277,7 +277,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
 		
 		//Test1 - Parcours possible de toutes les positions pour aller du point 1 au point 2
-		getLogger().info("Test de tous les déplacements possibles");
+		/*getLogger().info("Test de tous les déplacements possibles");
 		getLogger().info("pliers avec DeltaX Positif");
 		
 		pliers.getFrame("Sander").move(linRel(deltaX, deltaY, 0).setJointVelocityRel(0.5));
@@ -333,18 +333,18 @@ public class HoldAndDo extends RoboticsAPIApplication {
 		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
 		robot.move(linRel(-deltaY, -deltaX, 0).setJointVelocityRel(0.5));
 		robot.move(ptp(JPosition.get(0),JPosition.get(1),JPosition.get(2),JPosition.get(3),JPosition.get(4),JPosition.get(5),JPosition.get(6)).setJointVelocityRel(0.5));
+		*/
 		
-		
-		/*getLogger().info("Do While");
+		getLogger().info("Do While");
 		//Tant que le point en diagonale n'est pas atteint
 		//Aller-retour puis décalage 
 		do{
-			pliers.getFrame("Sander").move(linRel(deltaY, deltaX, 0).setJointVelocityRel(0.5));
-			pliers.getFrame("Sander").move(linRel(-deltaY, -deltaX, 0).setJointVelocityRel(0.5));
-			pliers.getFrame("Sander").move(linRel(-deltaY2 / decalage, -deltaX2 / decalage, 0).setJointVelocityRel(0.5));
+			pliers.getFrame("Sander").move(linRel(deltaX, deltaY, 0).setJointVelocityRel(0.5));
+			pliers.getFrame("Sander").move(linRel(-deltaX, -deltaY, 0).setJointVelocityRel(0.5));
+			pliers.getFrame("Sander").move(linRel(deltaX2 / decalage, deltaY2 / decalage, 0).setJointVelocityRel(0.5));
 			//Incrémentation de la variable d'arrêt
 			varX += deltaX2 / decalage;
-		}while(varX < refThirdPoint.getX());*/
+		}while(varX < refThirdPoint.getX());
 		
 
 		/*-------------------------------------------------------------------------------------------------------------------*/
