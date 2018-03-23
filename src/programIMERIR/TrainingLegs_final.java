@@ -101,9 +101,9 @@ public class TrainingLegs_final extends RoboticsAPIApplication {
 		nom = getApplicationData().getProcessData("name").getValue();
 
 		gripperBar = getApplicationUI().createUserKeyBar("Gripper");
-		openKey = gripperBar.addUserKey(0, myfunction, false);
+		openKey = gripperBar.addDoubleUserKey(0, myfunction, false);
 		openKey.setText(UserKeyAlignment.BottomLeft, "start certesien");
-		stop = gripperBar.addUserKey(1, myfunction_2, false);
+		stop = gripperBar.addUserKey(2, myfunction_2, false);
 		stop.setText(UserKeyAlignment.BottomLeft, "stop certesien");
 		gripperBar.publish();
 
