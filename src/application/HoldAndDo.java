@@ -283,7 +283,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 				robot.move(linRel(deltaX, -deltaY, 0.0).setJointVelocityRel(0.5));
 				robot.move(linRel(-deltaX, deltaY, 0.0).setJointVelocityRel(0.5));
 				
-				robot.move(linRel(decalageOutilX, -decalageOutilY, 0).setJointVelocityRel(0.5));				
+				robot.move(linRel(-decalageOutilX, decalageOutilY, 0).setJointVelocityRel(0.5));				
 			}
 		}
 
