@@ -303,7 +303,7 @@ public class HoldAndDo extends RoboticsAPIApplication {
 
 		framePoints.set(currentPointIndex - 1, newPointFrame);
 		
-		currentPointIndex = currentPointIndex == 4 ? 1 : currentPointIndex;
+		currentPointIndex = currentPointIndex == 4 ? 0 : currentPointIndex;
 		
 		getLogger().info("Enregistrement de la position terminé");
 	}
